@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-180 -175 360 200" role="img" aria-label="Arbre du voyageur">
+  <title>Arbre du voyageur</title>
+  <defs>
+    <path id="palme" d="M0 0C-13-38-17-88 0-152C17-88 13-38 0 0Z"/>
+  </defs>
+  <g fill="currentColor">
+    <use href="#palme" transform="rotate(-78)"/>
+    <use href="#palme" transform="rotate(-58)"/>
+    <use href="#palme" transform="rotate(-38)"/>
+    <use href="#palme" transform="rotate(-19)"/>
+    <use href="#palme"/>
+    <use href="#palme" transform="rotate(19)"/>
+    <use href="#palme" transform="rotate(38)"/>
+    <use href="#palme" transform="rotate(58)"/>
+    <use href="#palme" transform="rotate(78)"/>
+    <path d="M-7 0h14l3 25h-20Z"/>
+  </g>
+</svg>

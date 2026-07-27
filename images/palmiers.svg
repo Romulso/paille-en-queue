@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -34 344 334" role="img" aria-label="Cocotiers">
+  <title>Cocotiers</title>
+  <defs>
+    <!-- Palme qui s'élance puis retombe : le geste du cocotier -->
+    <path id="palme-coco" d="M0 0C42-28 98-34 152 6 106 6 48 12 4 15Z"/>
+    <g id="cocotier">
+      <!-- Stipe élancé et penché -->
+      <path d="M-11 196C-5 132 3 76 14 30L28 34C15 80 8 134 7 196Z"/>
+      <g transform="translate(21 30)">
+        <use href="#palme-coco" transform="rotate(-158)"/>
+        <use href="#palme-coco" transform="rotate(-124)"/>
+        <use href="#palme-coco" transform="rotate(-88)"/>
+        <use href="#palme-coco" transform="rotate(-52)"/>
+        <use href="#palme-coco" transform="rotate(-16)"/>
+        <use href="#palme-coco" transform="rotate(22)"/>
+        <circle cx="-3" cy="12" r="6"/>
+        <circle cx="9" cy="17" r="5"/>
+      </g>
+    </g>
+  </defs>
+  <g fill="currentColor">
+    <use href="#cocotier" transform="translate(86 100)"/>
+    <use href="#cocotier" transform="translate(238 152) scale(.66) rotate(7)"/>
+  </g>
+</svg>

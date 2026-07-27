@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 180" preserveAspectRatio="none" role="img" aria-label="Vagues du lagon">
+  <title>Vagues du lagon</title>
+  <g fill="currentColor">
+    <path fill-opacity=".35"
+      d="M0 74C96 44 192 44 288 74S480 134 576 104 768 44 864 74s192 60 288 30 192-60 288-30v106H0Z"/>
+    <path fill-opacity=".6"
+      d="M0 116C104 88 208 100 312 118S520 148 624 124 832 78 936 96s208 52 312 40 152-24 192-32v76H0Z"/>
+    <path d="M0 150C120 134 240 142 360 154s240 14 360 2 240-26 360-14 240 20 360 12v26H0Z"/>
+  </g>
+</svg>

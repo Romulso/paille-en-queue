@@ -148,6 +148,58 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 }
 .sombre h1, .sombre h2, .sombre h3 { color: #fff; }
 
+/* ---------- Décors réunionnais ----------
+   Deux silhouettes posées en filigrane : les remparts des cirques au bas des
+   sections sombres, l'arbre du voyageur dans l'angle des sections claires.
+   Les SVG servent de masque, ce qui permet de les teinter en CSS. */
+.sombre,
+.section-creme,
+.pied {
+  position: relative;
+  overflow: hidden;
+}
+.sombre > *,
+.section-creme > *,
+.pied > * { position: relative; z-index: 1; }
+
+/* Bande décorative en bas de section : remparts pour les sections sombres,
+   lagon pour le pied de page. */
+.sombre::after,
+.pied::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(80px, 13vw, 180px);
+  background: var(--safran);
+  opacity: .07;
+  -webkit-mask: url("images/pitons.svg") bottom center / 100% 100% no-repeat;
+  mask: url("images/pitons.svg") bottom center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.pied::after {
+  opacity: .09;
+  height: clamp(60px, 9vw, 130px);
+  -webkit-mask-image: url("images/lagon.svg");
+  mask-image: url("images/lagon.svg");
+}
+
+.section-creme::before {
+  content: "";
+  position: absolute;
+  top: -5%;
+  right: -7%;
+  width: min(42vw, 360px);
+  aspect-ratio: 36 / 20;
+  background: var(--vetiver);
+  opacity: .06;
+  transform: rotate(196deg);
+  -webkit-mask: url("images/ravenale.svg") center / contain no-repeat;
+  mask: url("images/ravenale.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+
 .tete-section { margin-bottom: clamp(28px, 5vw, 48px); }
 .tete-section .chapo { margin-top: 14px; }
 
@@ -427,6 +479,36 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   pointer-events: none;
 }
 
+/* Cocotiers dans l'angle bas de la bannière, soleil dans l'angle haut :
+   la plage et le lagon, en filigrane derrière le texte. */
+.heros::after {
+  content: "";
+  position: absolute;
+  left: -6%;
+  bottom: -14%;
+  width: min(58vw, 440px);
+  aspect-ratio: 344 / 334;
+  background: #fff;
+  opacity: .08;
+  -webkit-mask: url("images/palmiers.svg") bottom left / contain no-repeat;
+  mask: url("images/palmiers.svg") bottom left / contain no-repeat;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Soleil posé bas à gauche : les cocotiers, dessinés juste après, passent
+   devant lui — l'image d'un soleil qui descend derrière les palmes. */
+.heros-soleil {
+  position: absolute;
+  bottom: 4%;
+  left: 3%;
+  width: min(30vw, 230px);
+  opacity: .11;
+  filter: brightness(0) invert(1);
+  z-index: -1;
+  pointer-events: none;
+}
+
 /* Carte flottante « demander un devis » */
 .heros-encart {
   background: rgba(255, 249, 240, .97);
@@ -682,6 +764,25 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 .photo-vide.t4 { background: linear-gradient(148deg, #0d7d8c, #084651); }
 .photo-vide.t5 { background: linear-gradient(148deg, #e0503f, #a8321f); }
 .photo-vide.t6 { background: linear-gradient(148deg, #f5c85b, #d18b1c); }
+
+/* ---------- Suppléments ---------- */
+.grille-supplements {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.supplement {
+  position: relative;
+  padding: 26px 24px;
+  border-radius: var(--rayon);
+  border: 1px dashed var(--doux);
+  background: var(--vanille);
+}
+.section-creme .supplement { background: #fff; }
+.supplement h3 { font-size: 21px; margin-bottom: 4px; }
+.supplement .prix { display: block; font-size: 26px; margin-bottom: 10px; }
+.supplement .prix small { text-align: left; margin-top: 2px; }
+.supplement p { font-size: 14.5px; color: var(--encre-douce); }
 
 .liste-buffet {
   list-style: none;
@@ -1129,6 +1230,21 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq .reponse { padding: 0 20px 20px; color: var(--encre-douce); font-size: 15.5px; }
 .faq .reponse p + p { margin-top: 10px; }
+.faq .reponse ul { list-style: none; margin-top: 12px; }
+.faq .reponse li {
+  position: relative;
+  padding: 5px 0 5px 20px;
+}
+.faq .reponse li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--curcuma);
+}
 
 /* ---------- Appel final ---------- */
 .appel {
@@ -1158,6 +1274,21 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   filter: brightness(0) invert(1);
   pointer-events: none;
 }
+/* Soleil levant dans l'angle du bloc d'appel. */
+.appel::before {
+  content: "";
+  position: absolute;
+  top: -18%;
+  right: -6%;
+  width: min(38vw, 280px);
+  aspect-ratio: 1;
+  background: var(--safran);
+  opacity: .16;
+  -webkit-mask: url("images/soleil.svg") center / contain no-repeat;
+  mask: url("images/soleil.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+.appel > * { position: relative; z-index: 1; }
 
 /* ---------- Pied de page ---------- */
 .pied {

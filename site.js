@@ -9,7 +9,13 @@
   const $ = (sel, racine = document) => racine.querySelector(sel);
   const $$ = (sel, racine = document) => [...racine.querySelectorAll(sel)];
 
-  const euros = (n) => `${n} €`;
+  // 10 → « 10 € », 0.4 → « 0,40 € », null → « sur devis ».
+  const euros = (n) => {
+    if (n === null || n === undefined) return "sur devis";
+    return Number.isInteger(n)
+      ? `${n} €`
+      : `${n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+  };
   const echapper = (s) => String(s).replace(/[&<>"]/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -211,6 +217,15 @@
       zoneBuffet.innerHTML = d.buffet.elements
         .map((e) => `<li>${echapper(e)}</li>`).join("");
     }
+    const zoneSupplements = $("#zone-supplements");
+    if (zoneSupplements && d.supplements) {
+      zoneSupplements.innerHTML = d.supplements.map((s) => `
+        <article class="supplement apparait">
+          <h3>${echapper(s.nom)}</h3>
+          <span class="prix">${euros(s.prix)}${s.prix === null ? "" : `<small>${echapper(s.unite)}</small>`}</span>
+          <p>${echapper(s.description)}</p>
+        </article>`).join("");
+    }
 
     // Les mentions commerciales sont écrites en dur dans le HTML (lisibles
     // sans JavaScript) et rafraîchies ici si data/carte.json a changé.
@@ -329,6 +344,19 @@
           <input type="checkbox" name="Entrées et boissons" value="${echapper(p.nom)}">
           ${echapper(p.nom)} <span class="choix-prix">${euros(p.prix)} ${echapper(p.unite || "")}</span>
         </label>`).join("");
+
+      // Les suppléments portent leur prix : le client sait ce qu'il coche.
+      const zoneSup = $("#zone-choix-supplements");
+      if (zoneSup && d.supplements) {
+        zoneSup.innerHTML = d.supplements.map((s) => {
+          const tarif = s.prix === null ? euros(null) : `${euros(s.prix)} ${s.unite}`;
+          return `
+          <label class="choix">
+            <input type="checkbox" name="Prestations en supplément" value="${echapper(`${s.nom} (${tarif})`)}">
+            ${echapper(s.nom)} <span class="choix-prix">${echapper(tarif)}</span>
+          </label>`;
+        }).join("");
+      }
 
       const selMenu = $("#formule");
       if (selMenu) {

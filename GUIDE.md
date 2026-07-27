@@ -97,17 +97,22 @@ Pour recevoir les demandes directement par e-mail, il faut un petit service
 intermédiaire. **Formspree** est le plus simple et gratuit jusqu'à
 50 demandes par mois :
 
-1. Créer un compte sur <https://formspree.io> avec l'adresse de Karine.
-2. Créer un formulaire ; Formspree donne une adresse du type
-   `https://formspree.io/f/xxxxxxxx`.
-3. Coller cette adresse dans `data/config.json`, ligne `formulaireEndpoint` :
+1. Créer un compte sur <https://formspree.io> avec l'adresse de Karine
+   (**cette étape doit être faite par vous** : elle demande de choisir un mot
+   de passe et de confirmer l'adresse e-mail).
+2. Créer un formulaire, appelé par exemple « Devis site ». Formspree donne une
+   adresse du type `https://formspree.io/f/xxxxxxxx`.
+3. Ouvrir `admin.html`, onglet **Réglages**, coller cette adresse dans le champ
+   « Adresse d'envoi du formulaire de devis », puis **Télécharger config.json**
+   et remplacer `data/config.json`.
+4. Remettre le site en ligne (`git add -A && git commit -m "Formulaire branché"
+   && git push`). Terminé — chaque demande arrive par e-mail, proprement
+   formatée.
+5. Envoyer une demande de test depuis le site : Formspree demande de confirmer
+   la première réception en cliquant sur un lien dans l'e-mail.
 
-```json
-"formulaireEndpoint": "https://formspree.io/f/xxxxxxxx",
-```
-
-4. Remettre le site en ligne. Terminé — chaque demande arrive par e-mail,
-   proprement formatée.
+Le tout premier envoi peut arriver dans les indésirables : marquez-le comme
+« non indésirable » une fois pour toutes.
 
 **Web3Forms** (<https://web3forms.com>, gratuit jusqu'à 250 demandes/mois) est
 une alternative sans création de compte. Il faut alors renseigner deux lignes :
@@ -163,7 +168,10 @@ modifier une, cherchez la phrase dans les fichiers et changez les deux endroits.
 | Zone de livraison | 30 km autour de Montpeyroux |
 | Frais de livraison | 5 € jusqu'à 10 km, 10 € au-delà |
 | Cuisine sur place | à partir de 50 convives |
-| Jamais compris | le service, la vaisselle et le pain (en supplément sur demande) |
+| Jamais compris | le service, la vaisselle et le pain |
+| Pain | 1 € par personne |
+| Vaisselle | 0,40 € par personne — assiettes et couverts carton et bois |
+| Service à table | sur devis, selon la durée et le nombre de convives |
 | Supplément menus | +2 € pour un plat poisson, crevettes ou morue |
 | Acompte | 30 % à la signature, solde à la livraison |
 | Validité du devis | 1 mois |

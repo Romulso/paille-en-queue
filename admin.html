@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Gestion du contenu — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); padding-bottom: 40px; }
@@ -83,6 +83,7 @@
     <button role="tab" id="o-avis" aria-controls="p-avis" aria-selected="false">Avis clients</button>
     <button role="tab" id="o-plats" aria-controls="p-plats" aria-selected="false">Plats</button>
     <button role="tab" id="o-menus" aria-controls="p-menus" aria-selected="false">Menus</button>
+    <button role="tab" id="o-reglages" aria-controls="p-reglages" aria-selected="false">Réglages</button>
   </div>
 
   <!-- ---------- Marchés ---------- -->
@@ -188,6 +189,27 @@
         <button class="mini" type="button" data-copier="carte">Copier le contenu</button>
       </div>
       <p class="etat" data-etat="carte"></p>
+    </div>
+  </section>
+
+  <!-- ---------- Réglages ---------- -->
+  <section class="panneau" id="p-reglages" role="tabpanel" aria-labelledby="o-reglages" hidden>
+    <p class="intro">
+      Les coordonnées, le réglage du formulaire de devis et les liens vers les
+      réseaux sociaux. Un champ laissé vide masque simplement l'information.
+    </p>
+    <div id="liste-reglages"></div>
+    <div class="publier">
+      <b>Publier les réglages</b>
+      <ol>
+        <li>Cliquez sur « Télécharger config.json ».</li>
+        <li>Remplacez le fichier <code>data/config.json</code> du site par celui-ci.</li>
+      </ol>
+      <div class="actions-pub">
+        <button class="mini" type="button" data-telecharger="config">Télécharger config.json</button>
+        <button class="mini" type="button" data-copier="config">Copier le contenu</button>
+      </div>
+      <p class="etat" data-etat="config"></p>
     </div>
   </section>
 
@@ -440,6 +462,38 @@
     });
   }
 
+  /* ---------- Réglages ---------- */
+  const REGLAGES = [
+    ["telephone", "Téléphone affiché", "input"],
+    ["telephoneLien", "Téléphone pour le bouton d'appel (format +33…)", "input"],
+    ["email", "Adresse e-mail", "input"],
+    ["villeAffichee", "Ville affichée publiquement", "input"],
+    ["formulaireEndpoint", "Adresse d'envoi du formulaire de devis", "input",
+      "Collez ici l'adresse fournie par Formspree, du type https://formspree.io/f/xxxxxxxx. " +
+      "Laissée vide, la demande s'ouvre dans la messagerie du visiteur au lieu d'arriver par e-mail."],
+    ["facebook", "Lien Facebook", "input", "Laissez vide pour masquer le lien."],
+    ["instagram", "Lien Instagram", "input", "Laissez vide pour masquer le lien."],
+  ];
+
+  function dessinerReglages() {
+    const zone = $("#liste-reglages");
+    zone.innerHTML = "";
+    const f = fiche("Coordonnées et formulaire", null);
+    REGLAGES.forEach(([cle, etiquette, type, aide]) => {
+      const g = document.createElement("div");
+      g.className = "grille-champs";
+      g.append(champ(etiquette, donnees.config[cle], (v) => { donnees.config[cle] = v; }, type));
+      if (aide) {
+        const p = document.createElement("p");
+        p.style.cssText = "font-size:13px;color:var(--encre-tenue);margin-top:6px";
+        p.textContent = aide;
+        g.append(p);
+      }
+      f.append(g);
+    });
+    zone.append(f);
+  }
+
   /* ---------- Publication ---------- */
   const serialiser = (nom) => JSON.stringify(donnees[nom], null, 2) + "\n";
 
@@ -471,8 +525,8 @@
   }));
 
   /* ---------- Démarrage ---------- */
-  Promise.all([charger("marches"), charger("avis"), charger("carte")])
-    .then(() => { dessinerMarches(); dessinerAvis(); dessinerCarte(); dessinerMenus(); })
+  Promise.all([charger("marches"), charger("avis"), charger("carte"), charger("config")])
+    .then(() => { dessinerMarches(); dessinerAvis(); dessinerCarte(); dessinerMenus(); dessinerReglages(); })
     .catch((e) => {
       console.error(e);
       $(".admin").insertAdjacentHTML("beforeend",

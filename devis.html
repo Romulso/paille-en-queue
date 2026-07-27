@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://romulso.github.io/paille-en-queue/devis.html">
 <meta name="robots" content="index, follow">
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -178,14 +178,11 @@
           <div class="rangee">
             <div class="champ">
               <label>Prestations en supplément <span class="facultatif">(facultatif)</span></label>
-              <div class="choix-multiples">
-                <label class="choix"><input type="checkbox" name="Prestations en supplément" value="Service à table"> Service à table</label>
-                <label class="choix"><input type="checkbox" name="Prestations en supplément" value="Vaisselle"> Vaisselle</label>
-                <label class="choix"><input type="checkbox" name="Prestations en supplément" value="Pain"> Pain</label>
-              </div>
+              <div class="choix-multiples" id="zone-choix-supplements"></div>
               <span class="aide">
                 Ces trois éléments ne sont jamais compris dans nos prix. Cochez-les
-                si vous les souhaitez : ils seront chiffrés à part sur le devis.
+                si vous les souhaitez : ils apparaîtront en lignes distinctes sur
+                le devis.
               </span>
             </div>
           </div>
@@ -325,7 +322,7 @@
   <a class="pastille pastille-pleine" href="#form-devis">Aller au formulaire</a>
 </div>
 
-<script src="site.js?v=1"></script>
+<script src="site.js?v=2"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

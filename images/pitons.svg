@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none" role="img" aria-label="Silhouette des pitons et des cirques">
+  <title>Silhouette des pitons et des cirques</title>
+  <!-- Remparts lointains, estompés par la brume -->
+  <path fill="currentColor" fill-opacity=".38"
+    d="M0 250 82 208 150 132 206 178 268 44 330 128 392 86 448 180 512 144 588 206 654 96 720 164 790 124 860 196 940 158 1024 110 1090 168 1160 72 1230 150 1300 196 1372 152 1440 190V320H0Z"/>
+  <!-- Premier plan : arêtes vives, ravines et rempart du volcan -->
+  <path fill="currentColor"
+    d="M0 300 110 268 188 196 232 224 318 72 372 140 410 120 452 238 520 206 566 262 648 150 690 208 742 178 806 246 900 214 980 238 1058 166 1104 196 1178 120 1236 190 1310 242 1390 214 1440 252V320H0Z"/>
+</svg>

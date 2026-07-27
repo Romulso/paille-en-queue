@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demander un devis — Le Paille en Queue, traiteur créole en Dordogne</title>
+<meta name="description" content="Demandez votre devis gratuit pour un repas créole livré ou un événement en Dordogne. Réponse de Karine sous 48 h. À partir de 10 parts.">
+<link rel="canonical" href="https://romulso.github.io/paille-en-queue/devis.html">
+<meta name="robots" content="index, follow">
+<script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="style.css?v=1">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<meta name="theme-color" content="#c4291f">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Demander un devis — Le Paille en Queue">
+<meta property="og:description" content="Devis gratuit sous 48 h pour vos repas créoles livrés et vos événements en Dordogne.">
+<meta property="og:url" content="https://romulso.github.io/paille-en-queue/devis.html">
+</head>
+<body>
+
+<header class="entete">
+  <div class="entete-interieur">
+    <a class="marque" href="index.html">
+      <img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+      <span class="marque-texte">
+        <span class="marque-nom">Le Paille en Queue</span>
+        <span class="marque-sous">Spécialités créoles</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="carte.html">La carte</a>
+      <a href="evenements.html">Événements</a>
+      <a href="marches.html">Marchés</a>
+      <a href="faq.html">Questions</a>
+    </nav>
+    <div class="entete-actions">
+      <a class="pastille tel-entete" href="tel:+33627352328" data-cfg-href="telephoneLien|tel:"><span data-cfg="telephone">06 27 35 23 28</span></a>
+      <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="menu-mobile" id="menu-mobile" aria-label="Navigation mobile">
+    <a href="carte.html">La carte et les menus</a>
+    <a href="evenements.html">Événements et collectivités</a>
+    <a href="marches.html">Nos marchés</a>
+    <a href="faq.html">Questions fréquentes</a>
+    <a href="index.html#histoire">Notre histoire</a>
+    <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-tete">
+    <div class="enveloppe-etroite">
+      <p class="fil"><a href="index.html">Accueil</a> · Demander un devis</p>
+      <span class="sur-titre">Gratuit et sans engagement</span>
+      <h1>Composons votre repas</h1>
+      <p class="chapo">
+        Trois minutes suffisent. Plus vous en dites, plus le devis sera précis —
+        mais si vous n'êtes sûr de rien, remplissez seulement le début : Karine
+        vous rappellera pour affiner.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-creme">
+    <div class="enveloppe-etroite">
+
+      <div class="message-formulaire message-succes" id="message-succes" role="status"></div>
+      <div class="message-formulaire message-erreur" id="message-erreur" role="alert">
+        L'envoi n'a pas abouti. Vous pouvez réessayer, ou joindre Karine
+        directement au <a href="tel:+33627352328"><b>06 27 35 23 28</b></a>.
+      </div>
+
+      <form class="formulaire" id="form-devis" novalidate>
+
+        <fieldset>
+          <legend><span class="legende-num" aria-hidden="true">1</span>Votre événement</legend>
+
+          <div class="rangee">
+            <div class="champ">
+              <label for="type">De quoi s'agit-il&nbsp;?</label>
+              <select id="type" name="Type d'événement" required>
+                <option value="">Choisissez…</option>
+                <option>Repas livré à domicile</option>
+                <option>Anniversaire ou fête de famille</option>
+                <option>Mariage</option>
+                <option>Baptême ou communion</option>
+                <option>Repas d'entreprise ou séminaire</option>
+                <option>Inauguration ou pot professionnel</option>
+                <option>Fête communale ou repas des aînés</option>
+                <option>Repas d'association ou de club sportif</option>
+                <option>Autre</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="rangee rangee-3">
+            <div class="champ">
+              <label for="date">Date</label>
+              <input type="date" id="date" name="Date de l'événement" required>
+            </div>
+            <div class="champ">
+              <label for="heure">Heure de service <span class="facultatif">(si connue)</span></label>
+              <input type="time" id="heure" name="Heure de service">
+            </div>
+            <div class="champ">
+              <label for="convives">Nombre de convives</label>
+              <input type="number" id="convives" name="Nombre de convives" min="10" step="1" placeholder="10" required>
+              <span class="aide">À partir de 10. Au-delà de 50, nous cuisinons sur place.</span>
+            </div>
+          </div>
+
+          <div class="rangee rangee-2">
+            <div class="champ">
+              <label for="commune">Commune</label>
+              <input type="text" id="commune" name="Commune" placeholder="Montpeyroux, Bergerac…" required>
+              <span class="aide" data-mention-livraison>Livraison dans un rayon de 30 km autour de Montpeyroux : 5 € jusqu'à 10 km, 10 € au-delà.</span>
+            </div>
+            <div class="champ">
+              <label for="lieu">Type de lieu <span class="facultatif">(facultatif)</span></label>
+              <select id="lieu" name="Type de lieu">
+                <option value="">Choisissez…</option>
+                <option>Domicile</option>
+                <option>Salle des fêtes ou salle louée</option>
+                <option>Locaux d'entreprise</option>
+                <option>En extérieur</option>
+                <option>Autre</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legende-num" aria-hidden="true">2</span>Ce qui vous ferait plaisir</legend>
+
+          <div class="rangee rangee-2">
+            <div class="champ">
+              <label for="formule">Formule envisagée</label>
+              <select id="formule" name="Formule envisagée">
+                <option value="">Je ne sais pas encore, conseillez-moi</option>
+                <option>Plats à la carte uniquement</option>
+                <option>Buffet créole (apéritif dînatoire)</option>
+                <!-- Les menus sont ajoutés depuis data/carte.json -->
+              </select>
+            </div>
+            <div class="champ">
+              <label for="budget">Budget par personne <span class="facultatif">(facultatif)</span></label>
+              <select id="budget" name="Budget par personne">
+                <option value="">Sans idée précise</option>
+                <option>Autour de 10 à 15 €</option>
+                <option>Autour de 15 à 20 €</option>
+                <option>Autour de 20 à 25 €</option>
+                <option>25 € et plus</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="rangee">
+            <div class="champ">
+              <label>Les plats qui vous tentent <span class="facultatif">(facultatif, tout est modifiable ensuite)</span></label>
+              <div class="choix-multiples" id="zone-choix-plats"></div>
+            </div>
+          </div>
+
+          <div class="rangee">
+            <div class="champ">
+              <label>Entrées, apéritif et punch <span class="facultatif">(facultatif)</span></label>
+              <div class="choix-multiples" id="zone-choix-entrees"></div>
+            </div>
+          </div>
+
+          <div class="rangee">
+            <div class="champ">
+              <label>Prestations en supplément <span class="facultatif">(facultatif)</span></label>
+              <div class="choix-multiples">
+                <label class="choix"><input type="checkbox" name="Prestations en supplément" value="Service à table"> Service à table</label>
+                <label class="choix"><input type="checkbox" name="Prestations en supplément" value="Vaisselle"> Vaisselle</label>
+                <label class="choix"><input type="checkbox" name="Prestations en supplément" value="Pain"> Pain</label>
+              </div>
+              <span class="aide">
+                Ces trois éléments ne sont jamais compris dans nos prix. Cochez-les
+                si vous les souhaitez : ils seront chiffrés à part sur le devis.
+              </span>
+            </div>
+          </div>
+
+          <div class="rangee">
+            <div class="champ">
+              <label for="precisions">Précisions</label>
+              <textarea id="precisions" name="Précisions" placeholder="Allergies, régimes particuliers, convives sans porc, enfants, service souhaité, contraintes du lieu… Tout ce qui peut nous aider."></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legende-num" aria-hidden="true">3</span>Pour vous répondre</legend>
+
+          <div class="rangee rangee-2">
+            <div class="champ">
+              <label for="nom">Nom et prénom</label>
+              <input type="text" id="nom" name="Nom" autocomplete="name" required>
+            </div>
+            <div class="champ">
+              <label for="structure">Entreprise, association, commune <span class="facultatif">(facultatif)</span></label>
+              <input type="text" id="structure" name="Structure" autocomplete="organization">
+            </div>
+          </div>
+
+          <div class="rangee rangee-2">
+            <div class="champ">
+              <label for="telephone">Téléphone</label>
+              <input type="tel" id="telephone" name="Téléphone" autocomplete="tel" placeholder="06 12 34 56 78" required>
+            </div>
+            <div class="champ">
+              <label for="courriel">E-mail</label>
+              <input type="email" id="courriel" name="E-mail" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="choix-multiples">
+            <label class="choix">
+              <input type="checkbox" name="Accord de rappel" value="oui" required>
+              J'accepte d'être recontacté au sujet de cette demande
+            </label>
+          </div>
+
+          <!-- Champ invisible destiné aux robots : un humain ne le remplit jamais. -->
+          <div class="pot-de-miel" aria-hidden="true">
+            <label for="site-web">Ne pas remplir</label>
+            <input type="text" id="site-web" name="site-web" tabindex="-1" autocomplete="off">
+          </div>
+        </fieldset>
+
+        <div class="envoi">
+          <button type="submit" class="pastille pastille-pleine" id="bouton-envoi">Envoyer ma demande</button>
+          <small>
+            Réponse sous 48 h. Vos informations servent uniquement à établir ce
+            devis et ne sont transmises à personne.
+          </small>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="enveloppe-etroite">
+      <div class="tete-section">
+        <span class="sur-titre">Et ensuite</span>
+        <h2>Ce qui se passe après l'envoi</h2>
+      </div>
+      <div class="frise">
+        <div class="etape">
+          <h3>Karine vous lit</h3>
+          <p>Elle regarde la date, vérifie sa disponibilité et vous rappelle si un point mérite d'être précisé.</p>
+        </div>
+        <div class="etape">
+          <h3>Vous recevez le devis</h3>
+          <p>Détaillé, sous 48 h, valable un mois. Aucun engagement à ce stade.</p>
+        </div>
+        <div class="etape">
+          <h3>Vous réservez la date</h3>
+          <p>Le devis signé et 30 % d'acompte bloquent la date. Le solde se règle à la livraison.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="enveloppe">
+    <div class="pied-grille">
+      <div class="pied-marque">
+        <img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+        <p>Traiteur créole et réunionnais en Dordogne depuis 2009.</p>
+      </div>
+      <div class="pied-contact">
+        <h3>Nous joindre</h3>
+        <ul>
+          <li><a href="tel:+33627352328" data-cfg-href="telephoneLien|tel:"><b data-cfg="telephone">06 27 35 23 28</b></a></li>
+          <li><a href="mailto:Lepailleenqueue33@gmail.com" data-cfg-href="email|mailto:"><span data-cfg="email">Lepailleenqueue33@gmail.com</span></a></li>
+          <li><span data-cfg="villeAffichee">Montpeyroux (24)</span></li>
+        </ul>
+        <ul>
+          <li><a href="#" data-reseau="facebook" hidden>Facebook</a></li>
+          <li><a href="#" data-reseau="instagram" hidden>Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Le site</h3>
+        <ul>
+          <li><a href="carte.html">La carte et les menus</a></li>
+          <li><a href="evenements.html">Événements et collectivités</a></li>
+          <li><a href="marches.html">Nos marchés</a></li>
+          <li><a href="faq.html">Questions fréquentes</a></li>
+          <li><a href="devis.html">Demander un devis</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Bon à savoir</h3>
+        <ul>
+          <li>Commande à partir de 10 parts</li>
+          <li>Devis gratuit sous 48 h</li>
+          <li>30 % d'acompte à la signature</li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <span>© 2009–<span id="annee">2026</span> Le Paille en Queue — Karine Danna</span>
+      <span>SIRET <span data-cfg="siret">51134341000037</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="barre-mobile">
+  <a class="pastille" href="tel:+33627352328" data-cfg-href="telephoneLien|tel:">Appeler</a>
+  <a class="pastille pastille-pleine" href="#form-devis">Aller au formulaire</a>
+</div>
+
+<script src="site.js?v=1"></script>
+<script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
+</body>
+</html>

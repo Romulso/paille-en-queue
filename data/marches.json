@@ -1,0 +1,5 @@
+{
+  "_lisezmoi": "Les marchés où Karine est présente. Modifiable depuis admin.html (onglet Marchés). « jour » : lundi…dimanche pour un marché hebdomadaire, ou une date au format AAAA-MM-JJ pour une date unique. « type » : matin ou nocturne. Tant que la liste est vide, la page affiche une invitation à téléphoner.",
+
+  "marches": []
+}

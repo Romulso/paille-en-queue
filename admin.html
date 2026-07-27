@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Gestion du contenu — Le Paille en Queue</title>
+<link rel="stylesheet" href="style.css?v=1">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<style>
+  body { background: var(--vanille-2); padding-bottom: 40px; }
+  .admin { max-width: 900px; margin: 0 auto; padding: 30px 20px 70px; }
+  .admin h1 { font-size: clamp(27px, 6vw, 40px); }
+  .admin h1 em { display: block; font-style: normal; font-size: .48em; color: var(--piment); letter-spacing: -.01em; }
+
+  .onglets { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 22px; }
+  .onglets button {
+    padding: 10px 18px; border-radius: 100px; border: 1.5px solid var(--ligne);
+    background: transparent; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: .2s;
+  }
+  .onglets button[aria-selected="true"] { background: var(--encre); border-color: var(--encre); color: var(--vanille); }
+
+  .panneau[hidden] { display: none; }
+  .panneau > p.intro { color: var(--encre-douce); font-size: 15px; margin-bottom: 20px; max-width: 68ch; }
+
+  .fiche {
+    background: #fff; border: 1px solid var(--ligne); border-radius: var(--rayon-s);
+    padding: 16px 18px; margin-bottom: 12px;
+  }
+  .fiche-tete { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .fiche-tete strong { font-family: var(--titre); font-size: 18px; margin-right: auto; }
+  .grille-champs { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .grille-champs.deux { grid-template-columns: 2fr 1fr; } }
+  .grille-champs label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--encre-tenue); display: block; margin-bottom: 5px; }
+  .grille-champs input, .grille-champs textarea, .grille-champs select {
+    width: 100%; padding: 10px 13px; border: 1.5px solid var(--ligne);
+    border-radius: 10px; background: var(--vanille); font-size: 15px;
+  }
+  .grille-champs textarea { min-height: 74px; resize: vertical; line-height: 1.5; }
+  .grille-champs input:focus, .grille-champs textarea:focus, .grille-champs select:focus {
+    outline: none; border-color: var(--lagon); box-shadow: 0 0 0 3px rgba(13,125,140,.15);
+  }
+  .interrupteur { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+
+  .mini {
+    border: 1.5px solid var(--ligne); background: #fff; color: var(--encre-douce); cursor: pointer;
+    font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 100px; transition: .2s;
+  }
+  .mini:hover { border-color: var(--encre); color: var(--encre); }
+  .mini-danger:hover { border-color: var(--piment); color: var(--piment); }
+
+  .publier {
+    position: sticky; bottom: 12px; margin-top: 26px;
+    border: 2px dashed var(--curcuma); background: var(--vanille);
+    border-radius: var(--rayon); padding: 20px;
+  }
+  .publier b { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--piment); }
+  .publier ol { margin: 10px 0 14px 20px; font-size: 14.5px; color: var(--encre-douce); }
+  .publier ol li { margin: 5px 0; }
+  .publier .actions-pub { display: flex; flex-wrap: wrap; gap: 9px; }
+  .etat { font-size: 13.5px; color: var(--vetiver); font-weight: 600; min-height: 1.4em; margin-top: 10px; }
+
+  .avertissement {
+    border-left: 3px solid var(--piment); background: rgba(196,41,31,.06);
+    padding: 14px 18px; border-radius: 0 var(--rayon-s) var(--rayon-s) 0;
+    font-size: 14.5px; color: var(--encre-douce); margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="admin">
+
+  <h1>Le Paille en Queue<em>gestion du contenu</em></h1>
+  <p class="chapo" style="margin-top:12px">
+    Page privée : aucun lien du site ne mène ici. Modifiez ce que vous voulez,
+    puis téléchargez le fichier et remplacez-le dans le dossier <code>data/</code>
+    du site. Rien n'est publié tant que vous ne l'avez pas fait.
+  </p>
+
+  <div class="onglets" role="tablist">
+    <button role="tab" id="o-marches" aria-controls="p-marches" aria-selected="true">Marchés</button>
+    <button role="tab" id="o-avis" aria-controls="p-avis" aria-selected="false">Avis clients</button>
+    <button role="tab" id="o-plats" aria-controls="p-plats" aria-selected="false">Plats</button>
+    <button role="tab" id="o-menus" aria-controls="p-menus" aria-selected="false">Menus</button>
+  </div>
+
+  <!-- ---------- Marchés ---------- -->
+  <section class="panneau" id="p-marches" role="tabpanel" aria-labelledby="o-marches">
+    <p class="intro">
+      Les marchés où vous tenez le stand. Pour un marché chaque semaine, choisissez
+      le jour ; pour une date unique (marché de Noël, fête locale), choisissez
+      « Date précise ». La page Marchés se met à jour toute seule.
+    </p>
+    <div id="liste-marches"></div>
+    <button class="mini" type="button" id="ajouter-marche">+ Ajouter un marché</button>
+    <div class="publier">
+      <b>Publier les marchés</b>
+      <ol>
+        <li>Cliquez sur « Télécharger marches.json ».</li>
+        <li>Remplacez le fichier <code>data/marches.json</code> du site par celui-ci.</li>
+        <li>Mettez le site en ligne comme d'habitude.</li>
+      </ol>
+      <div class="actions-pub">
+        <button class="mini" type="button" data-telecharger="marches">Télécharger marches.json</button>
+        <button class="mini" type="button" data-copier="marches">Copier le contenu</button>
+      </div>
+      <p class="etat" data-etat="marches"></p>
+    </div>
+  </section>
+
+  <!-- ---------- Avis ---------- -->
+  <section class="panneau" id="p-avis" role="tabpanel" aria-labelledby="o-avis" hidden>
+    <div class="avertissement">
+      <b>N'inscrivez ici que de vrais avis</b>, avec l'accord de la personne.
+      Publier un faux témoignage est une pratique commerciale trompeuse, punie
+      par la loi — et cela se repère vite. Tant que la liste est vide, la section
+      n'apparaît tout simplement pas sur le site.
+    </div>
+    <p class="intro">
+      Trois ou quatre avis bien choisis valent mieux que vingt. Privilégiez ceux
+      qui parlent d'un événement précis : un mariage, un repas de club, une fête
+      communale.
+    </p>
+    <div id="liste-avis"></div>
+    <button class="mini" type="button" id="ajouter-avis">+ Ajouter un avis</button>
+    <div class="publier">
+      <b>Publier les avis</b>
+      <ol>
+        <li>Cliquez sur « Télécharger avis.json ».</li>
+        <li>Remplacez le fichier <code>data/avis.json</code> du site par celui-ci.</li>
+      </ol>
+      <div class="actions-pub">
+        <button class="mini" type="button" data-telecharger="avis">Télécharger avis.json</button>
+        <button class="mini" type="button" data-copier="avis">Copier le contenu</button>
+      </div>
+      <p class="etat" data-etat="avis"></p>
+    </div>
+  </section>
+
+  <!-- ---------- Plats ---------- -->
+  <section class="panneau" id="p-plats" role="tabpanel" aria-labelledby="o-plats" hidden>
+    <p class="intro">
+      La carte à la part. « Mise en avant » place le plat parmi les six signatures
+      de la page d'accueil. Le nom du fichier photo est le nom court : déposez
+      dans <code>images/</code> un fichier <code>nom-court.jpg</code> et la photo
+      apparaît d'elle-même.
+    </p>
+    <h2 style="font-size:20px;margin:24px 0 12px">Plats</h2>
+    <div id="liste-plats"></div>
+    <button class="mini" type="button" id="ajouter-plat">+ Ajouter un plat</button>
+
+    <h2 style="font-size:20px;margin:32px 0 12px">Entrées et apéritif</h2>
+    <div id="liste-entrees"></div>
+
+    <h2 style="font-size:20px;margin:32px 0 12px">Boissons</h2>
+    <div id="liste-boissons"></div>
+
+    <div class="publier">
+      <b>Publier la carte</b>
+      <ol>
+        <li>Cliquez sur « Télécharger carte.json ».</li>
+        <li>Remplacez le fichier <code>data/carte.json</code> du site par celui-ci.</li>
+      </ol>
+      <div class="actions-pub">
+        <button class="mini" type="button" data-telecharger="carte">Télécharger carte.json</button>
+        <button class="mini" type="button" data-copier="carte">Copier le contenu</button>
+      </div>
+      <p class="etat" data-etat="carte"></p>
+    </div>
+  </section>
+
+  <!-- ---------- Menus ---------- -->
+  <section class="panneau" id="p-menus" role="tabpanel" aria-labelledby="o-menus" hidden>
+    <p class="intro">
+      Les trois formules complètes. Dans les listes, écrivez <b>une ligne par
+      élément</b>. Laissez le « prix maximum » vide si la formule a un prix unique.
+    </p>
+    <div id="liste-menus"></div>
+    <div class="publier">
+      <b>Publier les menus</b>
+      <ol>
+        <li>Cliquez sur « Télécharger carte.json » (menus et plats sont dans le même fichier).</li>
+        <li>Remplacez le fichier <code>data/carte.json</code> du site par celui-ci.</li>
+      </ol>
+      <div class="actions-pub">
+        <button class="mini" type="button" data-telecharger="carte">Télécharger carte.json</button>
+        <button class="mini" type="button" data-copier="carte">Copier le contenu</button>
+      </div>
+      <p class="etat" data-etat="carte"></p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const donnees = {};
+
+  const JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
+
+  /* Un nom court sans accent ni espace, utilisé pour le fichier photo. */
+  const abreger = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+  async function charger(nom) {
+    const r = await fetch(`data/${nom}.json`, { cache: "no-cache" });
+    donnees[nom] = await r.json();
+    return donnees[nom];
+  }
+
+  /* ---------- Onglets ---------- */
+  $$('[role="tab"]').forEach((onglet) => {
+    onglet.addEventListener("click", () => {
+      $$('[role="tab"]').forEach((o) => {
+        const actif = o === onglet;
+        o.setAttribute("aria-selected", String(actif));
+        $(`#${o.getAttribute("aria-controls")}`).hidden = !actif;
+      });
+    });
+  });
+
+  /* ---------- Fabrique de champs ---------- */
+  function champ(etiquette, valeur, surSaisie, type = "input", options) {
+    const enveloppe = document.createElement("div");
+    const id = "c" + Math.random().toString(36).slice(2, 9);
+    const el = document.createElement(type === "zone" ? "textarea" : type === "liste" ? "select" : "input");
+    el.id = id;
+    if (type === "nombre") el.type = "number";
+    if (type === "liste") {
+      options.forEach((o) => {
+        const opt = document.createElement("option");
+        opt.value = typeof o === "string" ? o : o.v;
+        opt.textContent = typeof o === "string" ? o : o.t;
+        el.append(opt);
+      });
+    }
+    el.value = valeur ?? "";
+    el.addEventListener("input", () => surSaisie(el.value));
+    el.addEventListener("change", () => surSaisie(el.value));
+    enveloppe.innerHTML = `<label for="${id}">${etiquette}</label>`;
+    enveloppe.append(el);
+    return enveloppe;
+  }
+
+  function fiche(titre, surSuppression) {
+    const f = document.createElement("div");
+    f.className = "fiche";
+    const tete = document.createElement("div");
+    tete.className = "fiche-tete";
+    tete.innerHTML = `<strong>${titre}</strong>`;
+    if (surSuppression) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "mini mini-danger";
+      b.textContent = "Supprimer";
+      b.addEventListener("click", () => { if (confirm("Supprimer définitivement ?")) surSuppression(); });
+      tete.append(b);
+    }
+    f.append(tete);
+    return f;
+  }
+
+  /* ---------- Marchés ---------- */
+  function dessinerMarches() {
+    const zone = $("#liste-marches");
+    zone.innerHTML = "";
+    const liste = donnees.marches.marches;
+    if (!liste.length) {
+      zone.innerHTML = '<p class="intro">Aucun marché pour l\'instant. La page affiche une invitation à téléphoner.</p>';
+    }
+    liste.forEach((m, i) => {
+      const f = fiche(m.lieu || "Nouveau marché", () => { liste.splice(i, 1); dessinerMarches(); });
+      const g1 = document.createElement("div");
+      g1.className = "grille-champs deux";
+      g1.append(
+        champ("Lieu (commune, place)", m.lieu, (v) => { m.lieu = v; $("strong", f).textContent = v || "Nouveau marché"; }),
+        champ("Type", m.type, (v) => { m.type = v; }, "liste",
+          [{ v: "matin", t: "Marché du matin" }, { v: "nocturne", t: "Marché nocturne" }]),
+      );
+      const estDate = /^\d{4}-\d{2}-\d{2}$/.test(m.jour || "");
+      const g2 = document.createElement("div");
+      g2.className = "grille-champs deux";
+      const selecteurJour = champ("Quand", estDate ? "date" : (m.jour || "samedi"), (v) => {
+        m.jour = v === "date" ? new Date().toISOString().slice(0, 10) : v;
+        dessinerMarches();
+      }, "liste", [...JOURS.map((j) => ({ v: j, t: `Tous les ${j}s` })), { v: "date", t: "Date précise" }]);
+      g2.append(selecteurJour, champ("Horaire", m.horaire, (v) => { m.horaire = v; }));
+      f.append(g1, g2);
+      if (estDate) {
+        const g3 = document.createElement("div");
+        g3.className = "grille-champs";
+        const c = champ("Date", m.jour, (v) => { m.jour = v; });
+        $("input", c).type = "date";
+        g3.append(c);
+        f.append(g3);
+      }
+      const g4 = document.createElement("div");
+      g4.className = "grille-champs";
+      g4.append(champ("Précision (facultatif)", m.precision, (v) => { m.precision = v; }));
+      f.append(g4);
+      zone.append(f);
+    });
+  }
+
+  $("#ajouter-marche").addEventListener("click", () => {
+    donnees.marches.marches.push({ lieu: "", jour: "samedi", type: "matin", horaire: "8 h – 13 h", precision: "" });
+    dessinerMarches();
+  });
+
+  /* ---------- Avis ---------- */
+  function dessinerAvis() {
+    const zone = $("#liste-avis");
+    zone.innerHTML = "";
+    const liste = donnees.avis.avis;
+    if (!liste.length) {
+      zone.innerHTML = '<p class="intro">Aucun avis pour l\'instant. La section reste masquée sur le site.</p>';
+    }
+    liste.forEach((a, i) => {
+      const f = fiche(a.auteur || "Nouvel avis", () => { liste.splice(i, 1); dessinerAvis(); });
+      const g1 = document.createElement("div");
+      g1.className = "grille-champs";
+      g1.append(champ("Le témoignage", a.texte, (v) => { a.texte = v; }, "zone"));
+      const g2 = document.createElement("div");
+      g2.className = "grille-champs deux";
+      g2.append(
+        champ("Qui ? (prénom, structure)", a.auteur, (v) => { a.auteur = v; $("strong", f).textContent = v || "Nouvel avis"; }),
+        champ("Note sur 5", a.note ?? 5, (v) => { a.note = Math.min(5, Math.max(1, Number(v) || 5)); }, "nombre"),
+      );
+      const g3 = document.createElement("div");
+      g3.className = "grille-champs";
+      g3.append(champ("Contexte (ex. « Mariage à Bergerac, 90 convives »)", a.contexte, (v) => { a.contexte = v; }));
+      f.append(g1, g2, g3);
+      zone.append(f);
+    });
+  }
+
+  $("#ajouter-avis").addEventListener("click", () => {
+    donnees.avis.avis.push({ texte: "", auteur: "", note: 5, contexte: "" });
+    dessinerAvis();
+  });
+
+  /* ---------- Plats, entrées, boissons ---------- */
+  function dessinerProduits(zoneId, liste, avecVedette, avecCategorie, ajoutable) {
+    const zone = $(zoneId);
+    zone.innerHTML = "";
+    liste.forEach((p, i) => {
+      const f = fiche(p.nom || "Nouveau plat", ajoutable ? () => { liste.splice(i, 1); dessinerCarte(); } : null);
+      // Le nom du fichier photo découle du nom du plat : on le tient à jour
+      // pendant la frappe pour éviter d'afficher une information périmée.
+      const champPhoto = champ("Nom du fichier photo attendu dans images/", `${p.slug}.jpg`, () => {});
+      $("input", champPhoto).readOnly = true;
+
+      const g1 = document.createElement("div");
+      g1.className = "grille-champs deux";
+      g1.append(
+        champ("Nom", p.nom, (v) => {
+          p.nom = v;
+          p.slug = abreger(v);
+          $("strong", f).textContent = v || "Nouveau plat";
+          $("input", champPhoto).value = `${p.slug}.jpg`;
+        }),
+        champ("Prix en euros", p.prix, (v) => { p.prix = Number(v) || 0; }, "nombre"),
+      );
+      const g2 = document.createElement("div");
+      g2.className = "grille-champs";
+      g2.append(champ("Description", p.description, (v) => { p.description = v; }, "zone"));
+      f.append(g1, g2);
+
+      const g3 = document.createElement("div");
+      g3.className = "grille-champs deux";
+      if (avecCategorie) {
+        g3.append(champ("Catégorie", p.categorie, (v) => { p.categorie = v; }, "liste", [
+          { v: "volaille", t: "Volaille" }, { v: "porc", t: "Porc" },
+          { v: "boeuf-agneau", t: "Bœuf et agneau" }, { v: "mer", t: "Poisson et crevettes" },
+        ]));
+      } else {
+        g3.append(champ("Unité (ex. « les 16 »)", p.unite, (v) => { p.unite = v; }));
+      }
+      if (avecVedette) {
+        const b = document.createElement("div");
+        const id = "v" + i + zoneId;
+        b.innerHTML = `<label>Mise en avant</label>
+          <label class="interrupteur"><input type="checkbox" id="${id}"${p.vedette ? " checked" : ""}> Page d'accueil</label>`;
+        b.querySelector("input").addEventListener("change", (e) => { p.vedette = e.target.checked; });
+        g3.append(b);
+      }
+      f.append(g3);
+
+      const g4 = document.createElement("div");
+      g4.className = "grille-champs";
+      g4.append(champPhoto);
+      f.append(g4);
+      zone.append(f);
+    });
+  }
+
+  function dessinerCarte() {
+    dessinerProduits("#liste-plats", donnees.carte.plats, true, true, true);
+    dessinerProduits("#liste-entrees", donnees.carte.entrees, true, false, false);
+    dessinerProduits("#liste-boissons", donnees.carte.boissons, false, false, false);
+  }
+
+  $("#ajouter-plat").addEventListener("click", () => {
+    donnees.carte.plats.push({ nom: "", slug: "", prix: 10, categorie: "volaille", vedette: false, description: "" });
+    dessinerCarte();
+  });
+
+  /* ---------- Menus ---------- */
+  function dessinerMenus() {
+    const zone = $("#liste-menus");
+    zone.innerHTML = "";
+    donnees.carte.menus.forEach((m) => {
+      const f = fiche(m.nom, null);
+      const g1 = document.createElement("div");
+      g1.className = "grille-champs deux";
+      g1.append(
+        champ("Nom de la formule", m.nom, (v) => { m.nom = v; m.slug = abreger(v); $("strong", f).textContent = v; }),
+        champ("Prix par personne", m.prix, (v) => { m.prix = Number(v) || 0; }, "nombre"),
+      );
+      const g2 = document.createElement("div");
+      g2.className = "grille-champs deux";
+      g2.append(
+        champ("Résumé", m.resume, (v) => { m.resume = v; }),
+        champ("Prix maximum (facultatif)", m.prixMax ?? "", (v) => { m.prixMax = v === "" ? null : Number(v); }, "nombre"),
+      );
+      f.append(g1, g2);
+      [["Entrée", "entree"], ["Plats au choix", "plats"], ["Dessert", "dessert"], ["Compris", "inclus"]]
+        .forEach(([titre, cle]) => {
+          const g = document.createElement("div");
+          g.className = "grille-champs";
+          g.append(champ(`${titre} — une ligne par élément`, (m[cle] || []).join("\n"),
+            (v) => { m[cle] = v.split("\n").map((s) => s.trim()).filter(Boolean); }, "zone"));
+          f.append(g);
+        });
+      zone.append(f);
+    });
+  }
+
+  /* ---------- Publication ---------- */
+  const serialiser = (nom) => JSON.stringify(donnees[nom], null, 2) + "\n";
+
+  function annoncer(nom, texte) {
+    $$(`[data-etat="${nom}"]`).forEach((el) => {
+      el.textContent = texte;
+      setTimeout(() => { el.textContent = ""; }, 4000);
+    });
+  }
+
+  $$("[data-telecharger]").forEach((b) => b.addEventListener("click", () => {
+    const nom = b.dataset.telecharger;
+    const lien = document.createElement("a");
+    lien.href = URL.createObjectURL(new Blob([serialiser(nom)], { type: "application/json" }));
+    lien.download = `${nom}.json`;
+    lien.click();
+    URL.revokeObjectURL(lien.href);
+    annoncer(nom, `${nom}.json téléchargé. Remplacez le fichier dans data/ puis mettez le site en ligne.`);
+  }));
+
+  $$("[data-copier]").forEach((b) => b.addEventListener("click", async () => {
+    const nom = b.dataset.copier;
+    try {
+      await navigator.clipboard.writeText(serialiser(nom));
+      annoncer(nom, "Contenu copié dans le presse-papiers.");
+    } catch {
+      annoncer(nom, "Copie impossible : utilisez plutôt le téléchargement.");
+    }
+  }));
+
+  /* ---------- Démarrage ---------- */
+  Promise.all([charger("marches"), charger("avis"), charger("carte")])
+    .then(() => { dessinerMarches(); dessinerAvis(); dessinerCarte(); dessinerMenus(); })
+    .catch((e) => {
+      console.error(e);
+      $(".admin").insertAdjacentHTML("beforeend",
+        '<div class="avertissement">Impossible de lire les fichiers du dossier <code>data/</code>. ' +
+        'Cette page doit être ouverte depuis le site en ligne, ou depuis un petit serveur local — ' +
+        'pas par un double-clic sur le fichier.</div>');
+    });
+})();
+</script>
+</body>
+</html>

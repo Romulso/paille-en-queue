@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La carte et les menus — Le Paille en Queue, traiteur créole en Dordogne</title>
+<meta name="description" content="Rougail saucisses, caris, samoussas, accras, bouchons : la carte complète du Paille en Queue, de 10 à 12 € la part, et trois menus créoles de 18 à 30 € par personne. Livraison à partir de 10 parts en Dordogne.">
+<link rel="canonical" href="https://romulso.github.io/paille-en-queue/carte.html">
+<script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="style.css?v=1">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<meta name="theme-color" content="#c4291f">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="La carte et les menus — Le Paille en Queue">
+<meta property="og:description" content="15 plats créoles de 10 à 12 € la part et 3 menus de 18 à 30 € par personne.">
+<meta property="og:url" content="https://romulso.github.io/paille-en-queue/carte.html">
+</head>
+<body>
+
+<header class="entete">
+  <div class="entete-interieur">
+    <a class="marque" href="index.html">
+      <img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+      <span class="marque-texte">
+        <span class="marque-nom">Le Paille en Queue</span>
+        <span class="marque-sous">Spécialités créoles</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="carte.html">La carte</a>
+      <a href="evenements.html">Événements</a>
+      <a href="marches.html">Marchés</a>
+      <a href="faq.html">Questions</a>
+    </nav>
+    <div class="entete-actions">
+      <a class="pastille tel-entete" href="tel:+33627352328" data-cfg-href="telephoneLien|tel:"><span data-cfg="telephone">06 27 35 23 28</span></a>
+      <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="menu-mobile" id="menu-mobile" aria-label="Navigation mobile">
+    <a href="carte.html">La carte et les menus</a>
+    <a href="evenements.html">Événements et collectivités</a>
+    <a href="marches.html">Nos marchés</a>
+    <a href="faq.html">Questions fréquentes</a>
+    <a href="index.html#histoire">Notre histoire</a>
+    <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-tete">
+    <div class="enveloppe">
+      <p class="fil"><a href="index.html">Accueil</a> · La carte</p>
+      <span class="sur-titre">Cuisine réunionnaise</span>
+      <h1>La carte et les menus</h1>
+      <p class="chapo">
+        Tout est cuisiné maison, le jour même. Les plats se commandent à la part,
+        à partir de 10 parts, ou en menu complet pour un événement.
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- Plats à la part ---------- -->
+  <section class="section">
+    <div class="enveloppe">
+      <div class="tete-section">
+        <span class="sur-titre">À la part</span>
+        <h2>Nos plats</h2>
+        <p class="chapo" data-mention-part>Tous les plats sont servis avec le riz et la sauce piquante.</p>
+      </div>
+
+      <div class="barre-filtres" role="group" aria-label="Filtrer les plats">
+        <button type="button" class="filtre" data-categorie="tout" aria-pressed="true">Tout voir</button>
+        <button type="button" class="filtre" data-categorie="volaille" aria-pressed="false">Volaille</button>
+        <button type="button" class="filtre" data-categorie="porc" aria-pressed="false">Porc</button>
+        <button type="button" class="filtre" data-categorie="boeuf-agneau" aria-pressed="false">Bœuf et agneau</button>
+        <button type="button" class="filtre" data-categorie="mer" aria-pressed="false">Poisson et crevettes</button>
+      </div>
+
+      <div class="grille-plats" id="zone-plats"></div>
+
+      <p class="note-carte">
+        <b data-mention-minimum>Commande à partir de 10 parts.</b>
+        <span>Prix par part, de 10 à 12 € selon le plat.</span>
+        <span>Riz et sauce piquante compris.</span>
+        <span data-mention-delai>Commande à passer 4 à 5 jours à l'avance.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- Entrées et apéritif ---------- -->
+  <section class="section section-creme">
+    <div class="enveloppe">
+      <div class="tete-section">
+        <span class="sur-titre">Pour commencer</span>
+        <h2>Entrées et apéritif</h2>
+        <p class="chapo">
+          Pliés, roulés et frits à la maison. C'est par là que commence
+          n'importe quelle fête créole qui se respecte.
+        </p>
+      </div>
+      <div class="grille-plats" id="zone-entrees"></div>
+
+      <div class="tete-section" style="margin-top: 56px">
+        <span class="sur-titre">Pour trinquer</span>
+        <h2>Notre punch</h2>
+      </div>
+      <div class="grille-plats" id="zone-boissons"></div>
+      <p class="note-carte">
+        <span><b>L'abus d'alcool est dangereux pour la santé.</b> À consommer avec modération.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- Buffet ---------- -->
+  <section class="section sombre">
+    <div class="enveloppe duo">
+      <div>
+        <span class="sur-titre">Cocktails et vins d'honneur</span>
+        <h2>Le buffet créole</h2>
+        <p class="chapo">
+          Pour une inauguration, un vin d'honneur ou une soirée d'association,
+          nous composons un buffet à partager. Les gens circulent, se servent,
+          et la soirée démarre toute seule.
+        </p>
+        <div class="groupe-boutons">
+          <a class="pastille pastille-or" href="devis.html">Composer mon buffet</a>
+        </div>
+      </div>
+      <ul class="liste-buffet" id="zone-buffet"></ul>
+    </div>
+  </section>
+
+  <!-- ---------- Menus ---------- -->
+  <section class="section" id="menus">
+    <div class="enveloppe">
+      <div class="tete-section">
+        <span class="sur-titre">Formules complètes</span>
+        <h2>Nos trois menus</h2>
+        <p class="chapo">
+          Entrée, plat au choix et dessert, pensés pour les repas d'événement.
+          Le plat est choisi à l'avance pour toute la table, ou proposé au choix
+          des convives : on en discute ensemble au moment du devis.
+        </p>
+      </div>
+      <div class="grille-menus" id="zone-menus"></div>
+      <p class="note-carte">
+        <span><b>Prix par personne.</b></span>
+        <span data-mention-non-compris>Le service, la vaisselle et le pain ne sont jamais compris dans nos prix. Ils peuvent être ajoutés au devis sur demande.</span>
+        <span>Devis valable 1 mois.</span>
+        <span>30 % d'acompte à la signature, solde à la livraison.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- Appel final ---------- -->
+  <section class="section section-creme">
+    <div class="enveloppe">
+      <div class="appel">
+        <img class="appel-oiseau" src="images/oiseau.svg" alt="" aria-hidden="true">
+        <h2>On compose votre repas&nbsp;?</h2>
+        <p>
+          Cochez les plats qui vous font envie, indiquez la date et le nombre de
+          convives : Karine vous renvoie un devis détaillé sous 48 h.
+        </p>
+        <div class="groupe-boutons">
+          <a class="pastille pastille-or" href="devis.html">Demander un devis</a>
+          <a class="pastille" href="tel:+33627352328" data-cfg-href="telephoneLien|tel:">Appeler <span data-cfg="telephone">06 27 35 23 28</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="enveloppe">
+    <div class="pied-grille">
+      <div class="pied-marque">
+        <img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+        <p>Traiteur créole et réunionnais en Dordogne depuis 2009.</p>
+      </div>
+      <div class="pied-contact">
+        <h3>Nous joindre</h3>
+        <ul>
+          <li><a href="tel:+33627352328" data-cfg-href="telephoneLien|tel:"><b data-cfg="telephone">06 27 35 23 28</b></a></li>
+          <li><a href="mailto:Lepailleenqueue33@gmail.com" data-cfg-href="email|mailto:"><span data-cfg="email">Lepailleenqueue33@gmail.com</span></a></li>
+          <li><span data-cfg="villeAffichee">Montpeyroux (24)</span></li>
+        </ul>
+        <ul>
+          <li><a href="#" data-reseau="facebook" hidden>Facebook</a></li>
+          <li><a href="#" data-reseau="instagram" hidden>Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Le site</h3>
+        <ul>
+          <li><a href="carte.html">La carte et les menus</a></li>
+          <li><a href="evenements.html">Événements et collectivités</a></li>
+          <li><a href="marches.html">Nos marchés</a></li>
+          <li><a href="faq.html">Questions fréquentes</a></li>
+          <li><a href="devis.html">Demander un devis</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Bon à savoir</h3>
+        <ul>
+          <li>Commande à partir de 10 parts</li>
+          <li>Devis gratuit sous 48 h</li>
+          <li>30 % d'acompte à la signature</li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <span>© 2009–<span id="annee">2026</span> Le Paille en Queue — Karine Danna</span>
+      <span>SIRET <span data-cfg="siret">51134341000037</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="barre-mobile">
+  <a class="pastille" href="tel:+33627352328" data-cfg-href="telephoneLien|tel:">Appeler</a>
+  <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
+</div>
+
+<script src="site.js?v=1"></script>
+<script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
+</body>
+</html>

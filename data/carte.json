@@ -1,0 +1,260 @@
+{
+  "_lisezmoi": "La carte complète. Modifiable depuis admin.html (onglet Carte). Les prix sont en euros, par part. Le champ « image » pointe vers images/<nom-du-fichier> : tant que le fichier n'existe pas, le site affiche un joli aplat coloré à la place.",
+
+  "mentionPart": "Tous les plats sont servis avec le riz et la sauce piquante.",
+  "mentionMinimum": "Commande à partir de 10 parts.",
+  "mentionNonCompris": "Le service, la vaisselle et le pain ne sont jamais compris dans nos prix. Ils peuvent être ajoutés au devis sur demande.",
+  "mentionLivraison": "Livraison dans un rayon de 30 km autour de Montpeyroux : 5 € jusqu'à 10 km, 10 € au-delà.",
+  "mentionDelai": "Commande à passer 4 à 5 jours à l'avance.",
+
+  "plats": [
+    {
+      "nom": "Rougail saucisses",
+      "slug": "rougail-saucisses",
+      "prix": 10,
+      "categorie": "porc",
+      "vedette": true,
+      "description": "Le plat du dimanche à La Réunion. Saucisses fumées mijotées longuement dans une sauce tomate parfumée au gingembre, au curcuma, à l'oignon et au thym."
+    },
+    {
+      "nom": "Rougail morue",
+      "slug": "rougail-morue",
+      "prix": 12,
+      "categorie": "mer",
+      "vedette": false,
+      "description": "Morue dessalée et effeuillée, tomates fraîches, oignons et gingembre. Un classique créole franc et iodé."
+    },
+    {
+      "nom": "Cari poulet",
+      "slug": "cari-poulet",
+      "prix": 10,
+      "categorie": "volaille",
+      "vedette": false,
+      "description": "Le cari de base de la cuisine réunionnaise : poulet doré puis mijoté avec oignon, ail, gingembre, curcuma et tomate."
+    },
+    {
+      "nom": "Poulet massalé",
+      "slug": "poulet-massale",
+      "prix": 10,
+      "categorie": "volaille",
+      "vedette": true,
+      "description": "Poulet au massalé, le mélange d'épices grillées de l'océan Indien : coriandre, cumin, girofle, cannelle. Chaleureux et très parfumé."
+    },
+    {
+      "nom": "Poulet coco",
+      "slug": "poulet-coco",
+      "prix": 10,
+      "categorie": "volaille",
+      "vedette": false,
+      "description": "Poulet fondant au lait de coco, adouci par les épices. Le plat qui met tout le monde d'accord, y compris les enfants."
+    },
+    {
+      "nom": "Poulet ananas",
+      "slug": "poulet-ananas",
+      "prix": 10,
+      "categorie": "volaille",
+      "vedette": false,
+      "description": "Sucré-salé créole : poulet mijoté et ananas caramélisé. Surprenant et redoutablement efficace en buffet."
+    },
+    {
+      "nom": "Poulet colombo",
+      "slug": "poulet-colombo",
+      "prix": 10,
+      "categorie": "volaille",
+      "vedette": false,
+      "description": "Poulet au colombo, épice des Antilles adoptée dans tout l'océan Indien. Rond, doux, légèrement acidulé."
+    },
+    {
+      "nom": "Curry de dinde",
+      "slug": "curry-dinde",
+      "prix": 10,
+      "categorie": "volaille",
+      "vedette": false,
+      "description": "Dinde mijotée au curry, une viande légère qui passe très bien en repas d'entreprise et en grande tablée."
+    },
+    {
+      "nom": "Porc colombo",
+      "slug": "porc-colombo",
+      "prix": 10,
+      "categorie": "porc",
+      "vedette": false,
+      "description": "Échine de porc mijotée au colombo jusqu'à s'effilocher, dans une sauce généreuse."
+    },
+    {
+      "nom": "Porc ananas",
+      "slug": "porc-ananas",
+      "prix": 10,
+      "categorie": "porc",
+      "vedette": false,
+      "description": "Porc caramélisé à l'ananas, l'accord sucré-salé qui fait la signature de la cuisine des îles."
+    },
+    {
+      "nom": "Lentilles boucané",
+      "slug": "lentilles-boucane",
+      "prix": 10,
+      "categorie": "porc",
+      "vedette": true,
+      "description": "Lentilles fondantes et poitrine de porc fumée au bois : le boucané. Le plat réunionnais le plus réconfortant qui soit."
+    },
+    {
+      "nom": "Bœuf massalé",
+      "slug": "boeuf-massale",
+      "prix": 10,
+      "categorie": "boeuf-agneau",
+      "vedette": false,
+      "description": "Bœuf longuement mijoté au massalé, jusqu'à ce que la viande se défasse à la cuillère."
+    },
+    {
+      "nom": "Cari d'agneau",
+      "slug": "cari-agneau",
+      "prix": 12,
+      "categorie": "boeuf-agneau",
+      "vedette": false,
+      "description": "Agneau en cari, relevé de gingembre frais et de curcuma. Une valeur sûre pour les repas de fête."
+    },
+    {
+      "nom": "Cari poisson ou crevettes",
+      "slug": "cari-poisson-crevettes",
+      "prix": 12,
+      "categorie": "mer",
+      "vedette": true,
+      "description": "Cari de poisson (espadon selon arrivage) ou de crevettes, monté sur un massalé léger pour ne pas couvrir le produit."
+    },
+    {
+      "nom": "Crevettes coco",
+      "slug": "crevettes-coco",
+      "prix": 12,
+      "categorie": "mer",
+      "vedette": true,
+      "description": "Crevettes nacrées dans un lait de coco parfumé au combava et au gingembre. Le plat le plus demandé sur les buffets."
+    }
+  ],
+
+  "entrees": [
+    {
+      "nom": "Samoussas",
+      "slug": "samoussas",
+      "prix": 1,
+      "unite": "la pièce",
+      "vedette": true,
+      "description": "Pliés et frits à la commande. Six garnitures : thon, porc, poulet, poisson, fromage et végan."
+    },
+    {
+      "nom": "Accras de morue",
+      "slug": "accras-morue",
+      "prix": 7,
+      "unite": "les 16",
+      "vedette": true,
+      "description": "Beignets de morue moelleux au cœur, croustillants dehors. Ils ne survivent jamais longtemps à l'apéritif."
+    },
+    {
+      "nom": "Bouchons",
+      "slug": "bouchons",
+      "prix": 5,
+      "unite": "les 6",
+      "vedette": true,
+      "description": "Les petites bouchées vapeur réunionnaises, héritage chinois de l'île. Servies avec leur sauce."
+    }
+  ],
+
+  "buffet": {
+    "titre": "En buffet",
+    "texte": "Pour un cocktail, un vin d'honneur ou une inauguration, nous composons un buffet créole à partager.",
+    "elements": [
+      "Bouchons",
+      "Samoussas",
+      "Accras de morue",
+      "Boudins créoles",
+      "Brochettes tomate-fromage",
+      "Brochettes de crevettes à la plancha"
+    ]
+  },
+
+  "boissons": [
+    {
+      "nom": "Punch planteur",
+      "slug": "punch-planteur",
+      "prix": 12,
+      "unite": "le litre",
+      "description": "Notre planteur maison, préparé la veille pour que les fruits aient le temps de parfumer le rhum."
+    }
+  ],
+
+  "menus": [
+    {
+      "nom": "Menu Créole",
+      "slug": "menu-creole",
+      "prix": 18,
+      "prixMax": null,
+      "resume": "L'essentiel de la table réunionnaise, en trois services.",
+      "entree": [
+        "Salade d'accras de morue",
+        "2 samoussas au choix"
+      ],
+      "plats": [
+        "Cari poisson ou crevettes",
+        "Poulet coco, ananas, massalé ou colombo",
+        "Porc, dinde ou rougail saucisses"
+      ],
+      "dessert": [
+        "Salade de fruits de saison"
+      ],
+      "inclus": [
+        "Riz et sauce piquante"
+      ]
+    },
+    {
+      "nom": "Menu Lagon",
+      "slug": "menu-lagon",
+      "prix": 24,
+      "prixMax": 26,
+      "supplementMotif": "avec un plat poisson, crevettes ou morue",
+      "resume": "Une entrée à l'assiette et des plats plus généreux : le menu des grandes occasions.",
+      "entree": [
+        "Assiette de brochettes de crevettes à la plancha",
+        "2 samoussas au choix",
+        "Accras de morue"
+      ],
+      "plats": [
+        "Poulet colombo",
+        "Curry de dinde",
+        "Bœuf massalé",
+        "Crevettes coco",
+        "Cari d'agneau"
+      ],
+      "dessert": [
+        "Salade de fruits exotiques selon la saison",
+        "Part de gâteau"
+      ],
+      "inclus": [
+        "Riz et sauce piquante"
+      ]
+    },
+    {
+      "nom": "Menu Volcan",
+      "slug": "menu-volcan",
+      "prix": 28,
+      "prixMax": 30,
+      "supplementMotif": "avec un plat poisson, crevettes ou morue",
+      "resume": "Notre menu le plus abouti, construit autour des produits les plus nobles de la carte.",
+      "entree": [
+        "Crevettes coco",
+        "2 samoussas au choix",
+        "Accras de morue"
+      ],
+      "plats": [
+        "Bœuf massalé",
+        "Cari d'agneau",
+        "Cari crevettes ou poisson (espadon)",
+        "Curry de dinde aux cèpes"
+      ],
+      "dessert": [
+        "Salade de fruits de saison",
+        "Part de gâteau"
+      ],
+      "inclus": [
+        "Riz et sauce piquante"
+      ]
+    }
+  ]
+}

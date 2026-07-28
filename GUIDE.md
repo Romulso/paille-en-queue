@@ -165,7 +165,7 @@ modifier une, cherchez la phrase dans les fichiers et changez les deux endroits.
 |---|---|
 | Commande minimum | 10 parts |
 | Délai de commande | 4 à 5 jours avant la date |
-| Zone de livraison | 30 km autour de Montpeyroux |
+| Zone de déplacement | 50 km autour de Montpeyroux, au-delà sur devis |
 | Frais de livraison | 5 € jusqu'à 10 km, 10 € au-delà |
 | Cuisine sur place | à partir de 50 convives |
 | Jamais compris | le service, la vaisselle et le pain |

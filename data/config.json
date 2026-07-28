@@ -21,7 +21,7 @@
   "acompte": 30,
   "validiteDevis": "1 mois",
   "delaiCommande": "4 à 5 jours",
-  "rayonLivraisonKm": 30,
+  "rayonLivraisonKm": 50,
   "fraisLivraisonProche": 5,
   "fraisLivraisonLoin": 10,
   "seuilCuisineSurPlace": 50,

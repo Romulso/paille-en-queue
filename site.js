@@ -103,7 +103,7 @@
         const nom = cadre.dataset.nom || img.alt || "";
         let somme = 0;
         for (const c of nom) somme += c.charCodeAt(0);
-        cadre.classList.add("photo-vide", `t${(somme % 6) + 1}`);
+        cadre.classList.add("photo-vide", `t${(somme % 8) + 1}`);
       };
       img.addEventListener("error", secours);
       if (img.complete && img.naturalWidth === 0) secours();
@@ -314,12 +314,21 @@
     const liste = d && Array.isArray(d.avis) ? d.avis : [];
     if (!liste.length) { section.hidden = true; return; }
 
-    $("#zone-avis").innerHTML = liste.map((a) => `
+    $("#zone-avis").innerHTML = liste.map((a) => {
+      const initiale = (a.auteur || "?").trim().charAt(0).toUpperCase();
+      return `
       <article class="avis apparait">
         ${a.note ? `<div class="etoiles" aria-label="${a.note} sur 5">${"★".repeat(a.note)}${"☆".repeat(5 - a.note)}</div>` : ""}
         <p>« ${echapper(a.texte)} »</p>
-        <footer><b>${echapper(a.auteur)}</b>${a.contexte ? echapper(a.contexte) : ""}</footer>
-      </article>`).join("");
+        <footer>
+          <span class="avatar" aria-hidden="true">${echapper(initiale)}</span>
+          <span>
+            <b>${echapper(a.auteur)}</b>
+            ${a.contexte ? `<small>${echapper(a.contexte)}</small>` : ""}
+          </span>
+        </footer>
+      </article>`;
+    }).join("");
     section.hidden = false;
     apparitions();
   }
@@ -373,6 +382,22 @@
           if (m) selMenu.value = m.nom;
         }
       }
+    }
+
+    // Reprise du formulaire court de l'accueil : on ne redemande pas ce que
+    // le visiteur vient de saisir.
+    const params = new URLSearchParams(location.search);
+    let repris = false;
+    [["date", "#date"], ["convives", "#convives"], ["type", "#type"]]
+      .forEach(([cle, selecteur]) => {
+        const valeur = params.get(cle);
+        const champ = $(selecteur);
+        if (valeur && champ) { champ.value = valeur; repris = true; }
+      });
+    if (repris || params.get("menu")) {
+      requestAnimationFrame(() => {
+        $("#form-devis").scrollIntoView({ block: "start", behavior: "smooth" });
+      });
     }
 
     // La date ne peut pas être dans le passé.

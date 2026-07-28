@@ -34,6 +34,19 @@
   --vetiver-fonce: #0a3629;
   --lagon: #0d7d8c;
 
+  /* L'île : la mer et le ciel, le sable, l'écume et le noir de l'oiseau. */
+  --mer: #0b6a86;
+  --mer-profonde: #063c50;
+  --ciel: #8ecfe0;
+  --sable: #e6d3b3;
+  --sable-clair: #f3e4cb;
+  --ecume: #ffffff;
+  --noir-oiseau: #171210;
+
+  /* Le drapeau du volcan : bleu de la mer, rayons du soleil, rouge du feu.
+     Utilisé en filet, jamais en aplat, pour rester une allusion. */
+  --drapeau: linear-gradient(90deg, var(--mer) 0%, var(--safran) 50%, var(--piment) 100%);
+
   /* Neutres chauds */
   --vanille: #fff9f0;
   --vanille-2: #fbeddb;
@@ -114,10 +127,10 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 }
 .sur-titre::before {
   content: "";
-  width: 26px;
-  height: 2px;
-  background: currentColor;
-  border-radius: 2px;
+  width: 34px;
+  height: 3px;
+  background: var(--drapeau);
+  border-radius: 3px;
 }
 .sombre .sur-titre { color: var(--safran); }
 
@@ -146,6 +159,8 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   background: var(--vetiver-fonce);
   color: var(--clair);
 }
+/* Variante océan : la même section, en bleu profond plutôt qu'en vert. */
+.sombre-mer { background: var(--mer-profonde); }
 .sombre h1, .sombre h2, .sombre h3 { color: #fff; }
 
 /* ---------- Décors réunionnais ----------
@@ -178,9 +193,11 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   mask: url("images/pitons.svg") bottom center / 100% 100% no-repeat;
   pointer-events: none;
 }
+/* Le lagon prend la couleur de l'eau, pas celle du soleil. */
 .pied::after {
-  opacity: .09;
+  opacity: .16;
   height: clamp(60px, 9vw, 130px);
+  background: var(--ciel);
   -webkit-mask-image: url("images/lagon.svg");
   mask-image: url("images/lagon.svg");
 }
@@ -571,10 +588,14 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   letter-spacing: .01em;
 }
 .bandeau-piste span { display: inline-flex; align-items: center; gap: 34px; }
+/* L'oiseau sépare les plats : la marque revient à chaque nom. */
 .bandeau-piste span::after {
-  content: "◆";
-  font-size: 8px;
-  color: var(--safran);
+  content: "";
+  width: 26px;
+  height: 15px;
+  background: var(--safran);
+  -webkit-mask: url("images/oiseau.svg") center / contain no-repeat;
+  mask: url("images/oiseau.svg") center / contain no-repeat;
 }
 @keyframes defile {
   from { transform: translateX(0); }
@@ -608,7 +629,7 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   position: absolute;
   inset: 0 0 auto 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--piment), var(--curcuma));
+  background: var(--drapeau);
 }
 .offre-icone {
   width: 46px;
@@ -764,6 +785,8 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 .photo-vide.t4 { background: linear-gradient(148deg, #0d7d8c, #084651); }
 .photo-vide.t5 { background: linear-gradient(148deg, #e0503f, #a8321f); }
 .photo-vide.t6 { background: linear-gradient(148deg, #f5c85b, #d18b1c); }
+.photo-vide.t7 { background: linear-gradient(148deg, #0b6a86, #063c50); }
+.photo-vide.t8 { background: linear-gradient(148deg, #d9b98a, #a67c48); }
 
 /* ---------- Suppléments ---------- */
 .grille-supplements {
@@ -986,25 +1009,111 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 /* ---------- Avis ---------- */
 .grille-avis {
   display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
 }
 .avis {
-  padding: 28px 26px;
+  padding: 30px 28px;
   border-radius: var(--rayon);
-  background: rgba(255, 255, 255, .07);
-  border: 1px solid var(--ligne-sombre);
+  background: var(--vanille);
+  border: 1px solid var(--ligne);
 }
-.avis p { font-size: 16px; color: var(--clair); }
+.section-creme .avis { background: #fff; }
+.avis p { font-size: 15.5px; color: var(--encre-douce); font-style: italic; }
 .avis footer {
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid var(--ligne-sombre);
-  font-size: 13.5px;
-  color: var(--doux);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 20px;
+  padding-top: 17px;
+  border-top: 1px solid var(--ligne);
 }
-.avis footer b { display: block; color: #fff; font-size: 15px; }
-.etoiles { color: var(--safran); font-size: 15px; letter-spacing: 3px; margin-bottom: 12px; }
+.avis footer b { display: block; font-size: 15px; color: var(--encre); font-style: normal; }
+.avis footer small { color: var(--encre-tenue); font-size: 13px; }
+.etoiles { color: var(--curcuma); font-size: 16px; letter-spacing: 3px; margin-bottom: 14px; }
+
+/* Pastille d'initiale, à défaut de photo du client. */
+.avatar {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(140deg, var(--curcuma), var(--piment));
+  color: #fff;
+  font-family: var(--titre);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+/* ---------- Bloc réservation ---------- */
+.reservation {
+  display: grid;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  box-shadow: var(--ombre-forte);
+}
+@media (min-width: 900px) {
+  .reservation { grid-template-columns: 1fr 1.15fr; }
+}
+.reservation-gauche {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(30px, 5vw, 52px);
+  color: #fff;
+  background:
+    radial-gradient(90% 120% at 88% 6%, rgba(245, 200, 91, .38), transparent 58%),
+    linear-gradient(150deg, var(--piment) 0%, var(--piment-fonce) 58%, #4a1a16 100%);
+}
+.reservation-gauche h2 { color: #fff; }
+.reservation-gauche > p { color: rgba(255, 255, 255, .87); margin-top: 14px; }
+.reservation-gauche .sur-titre { color: var(--safran); }
+.reservation-oiseau {
+  position: absolute;
+  right: -12%;
+  bottom: -18%;
+  width: min(58%, 260px);
+  opacity: .14;
+  filter: brightness(0) invert(1);
+  pointer-events: none;
+}
+.reservation-gauche > *:not(.reservation-oiseau) { position: relative; z-index: 1; }
+
+.reservation-liste { list-style: none; margin-top: 26px; }
+.reservation-liste li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .22);
+  font-size: 15px;
+}
+.reservation-liste li:last-child { border-bottom: 0; }
+.reservation-liste li::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: var(--safran);
+}
+
+.reservation-droite {
+  padding: clamp(30px, 5vw, 52px);
+  background: var(--vanille);
+}
+.section-creme .reservation-droite { background: #fff; }
+.reservation-droite .rangee { margin-top: 0; margin-bottom: 16px; }
+.reservation-droite .pastille { width: 100%; margin-top: 6px; }
+.reservation-droite .aide-envoi {
+  display: block;
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--encre-tenue);
+}
 
 /* ---------- Marchés ---------- */
 .grille-marches {

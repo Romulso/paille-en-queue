@@ -7,7 +7,7 @@
 <meta name="description" content="Traiteur réunionnais en Dordogne depuis 2009. Repas créoles livrés à domicile à partir de 10 parts, buffets, événements d'entreprise, associations sportives et communes. Devis gratuit sous 48 h.">
 <link rel="canonical" href="https://romulso.github.io/paille-en-queue/">
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -113,7 +113,7 @@
         <p>Dites-nous simplement ce que vous préparez, on s'occupe du reste.</p>
         <ul>
           <li>Repas livré chez vous, à partir de 10 parts</li>
-          <li>Livraison jusqu'à 30 km autour de Montpeyroux</li>
+          <li>Déplacement jusqu'à 50 km autour de Montpeyroux</li>
           <li>Cuisiné sur place à partir de 50 convives</li>
           <li>Devis gratuit et sans engagement</li>
         </ul>
@@ -160,7 +160,7 @@
             <li>À partir de 10 parts</li>
             <li>Plats à la carte, de 10 à 12 € la part</li>
             <li>Riz et sauce piquante compris</li>
-            <li>Livraison de 5 à 10 € jusqu'à 30 km</li>
+            <li>Déplacement jusqu'à 50 km, livraison 5 à 10 €</li>
           </ul>
           <a class="lien-fleche" href="carte.html">Voir la carte</a>
         </article>
@@ -219,7 +219,7 @@
   </section>
 
   <!-- ---------- Déroulé ---------- -->
-  <section class="section sombre">
+  <section class="section sombre sombre-mer">
     <div class="enveloppe">
       <div class="tete-section apparait">
         <span class="sur-titre">C'est simple</span>
@@ -287,29 +287,73 @@
   </section>
 
   <!-- ---------- Avis (masqué tant qu'il n'y en a pas) ---------- -->
-  <section class="section sombre" id="section-avis" hidden>
+  <section class="section section-creme" id="section-avis" hidden>
     <div class="enveloppe">
       <div class="tete-section apparait">
         <span class="sur-titre">Ils nous ont fait confiance</span>
-        <h2>Ce qu'en disent nos clients</h2>
+        <h2>Les retours de nos clients</h2>
       </div>
       <div class="grille-avis" id="zone-avis"></div>
     </div>
   </section>
 
-  <!-- ---------- Appel final ---------- -->
-  <section class="section">
+  <!-- ---------- Réservation ----------
+       Formulaire court en méthode GET : le navigateur compose lui-même
+       l'adresse de devis.html, qui pré-remplit les champs correspondants. -->
+  <section class="section" id="reserver">
     <div class="enveloppe">
-      <div class="appel apparait">
-        <img class="appel-oiseau" src="images/oiseau.svg" alt="" aria-hidden="true">
-        <h2>Une date en tête&nbsp;?</h2>
-        <p>
-          Dites-nous ce que vous organisez. Karine vous répond sous 48 h avec un
-          devis détaillé, gratuit et sans engagement.
-        </p>
-        <div class="groupe-boutons">
-          <a class="pastille pastille-or" href="devis.html">Demander un devis</a>
-          <a class="pastille" href="tel:+33627352328" data-cfg-href="telephoneLien|tel:">Appeler <span data-cfg="telephone">06 27 35 23 28</span></a>
+      <div class="reservation apparait">
+        <div class="reservation-gauche">
+          <img class="reservation-oiseau" src="images/oiseau.svg" alt="" aria-hidden="true">
+          <span class="sur-titre">Réserver</span>
+          <h2>Un repas à organiser&nbsp;?</h2>
+          <p>
+            Dites-nous l'essentiel, Karine vous répond sous 48 h avec un devis
+            détaillé, gratuit et sans engagement.
+          </p>
+          <ul class="reservation-liste">
+            <li>À partir de 10 parts</li>
+            <li>Nous nous déplaçons jusqu'à 50 km — au-delà, sur devis</li>
+            <li>Cuisiné sur place à partir de 50 convives</li>
+            <li>Commande 4 à 5 jours à l'avance</li>
+          </ul>
+        </div>
+
+        <div class="reservation-droite">
+          <form action="devis.html" method="get">
+            <div class="rangee rangee-2">
+              <div class="champ">
+                <label for="r-date">Date</label>
+                <input type="date" id="r-date" name="date">
+              </div>
+              <div class="champ">
+                <label for="r-convives">Convives</label>
+                <input type="number" id="r-convives" name="convives" min="10" step="1" placeholder="10">
+              </div>
+            </div>
+            <div class="rangee">
+              <div class="champ">
+                <label for="r-type">Type d'événement</label>
+                <select id="r-type" name="type">
+                  <option value="">Choisissez…</option>
+                  <option>Repas livré à domicile</option>
+                  <option>Anniversaire ou fête de famille</option>
+                  <option>Mariage</option>
+                  <option>Baptême ou communion</option>
+                  <option>Repas d'entreprise ou séminaire</option>
+                  <option>Inauguration ou pot professionnel</option>
+                  <option>Fête communale ou repas des aînés</option>
+                  <option>Repas d'association ou de club sportif</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+            </div>
+            <button class="pastille pastille-pleine" type="submit">Recevoir mon devis</button>
+            <small class="aide-envoi">
+              Vous compléterez les plats et vos coordonnées à l'étape suivante.
+              Ou appelez le <a href="tel:+33627352328" data-cfg-href="telephoneLien|tel:"><b data-cfg="telephone">06 27 35 23 28</b></a>.
+            </small>
+          </form>
         </div>
       </div>
     </div>
@@ -368,7 +412,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
 </div>
 
-<script src="site.js?v=2"></script>
+<script src="site.js?v=3"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

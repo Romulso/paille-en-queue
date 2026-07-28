@@ -188,10 +188,9 @@ modifier une, cherchez la phrase dans les fichiers et changez les deux endroits.
 | Acompte | 30 % à la signature, solde à la livraison |
 | Validité du devis | 1 mois |
 
-> **À vérifier :** le PDF de référence mentionnait « boule de pain comprise »
-> dans le menu à 24/26 € et « pain compris » dans celui à 28/30 €. Le pain ayant
-> été retiré des prix, ces deux lignes ont été supprimées des menus. Si le pain
-> doit rester compris dans ces deux formules, il faut les rétablir.
+Le pain figurait comme compris dans les menus à 24/26 € et 28/30 € sur l'ancien
+PDF de référence. Ce n'est plus le cas : il est facturé en supplément, comme la
+vaisselle et le service. Point tranché, les menus sont à jour.
 
 ---
 
@@ -200,11 +199,17 @@ modifier une, cherchez la phrase dans les fichiers et changez les deux endroits.
 - [ ] **Les photos** — c'est ce qui manque le plus au site aujourd'hui.
 - [ ] **Le logo en haute définition** — celui du PDF fait 213 × 161 pixels.
 - [ ] **Le nom de domaine**, puis la mise à jour des URL (section 3).
-- [ ] **Le service d'envoi du formulaire** (section 4).
-- [ ] **Les marchés** — communes, jours et horaires, à saisir dans `admin.html`.
-- [ ] **Le médiateur de la consommation** — obligatoire à mentionner pour toute
-      vente aux particuliers (article L.616-1 du code de la consommation).
-      Adhésion ~30 €/an. À ajouter dans les mentions légales.
+- [x] **Le service d'envoi du formulaire** — Formspree branché (section 4).
+      Reste à envoyer une demande de test et à confirmer le premier envoi.
+- [x] **Les marchés** — saisis. Les horaires précis restent à ajouter, et les
+      marchés nocturnes s'effaceront d'eux-mêmes après le 31 août.
+- [ ] **Le médiateur de la consommation** — à trancher. La lecture courante des
+      articles L.612-1 et L.616-1 du code de la consommation est que
+      l'obligation vise **tout professionnel qui vend à des consommateurs**, et
+      non les seules ventes en ligne ; c'est aussi la position affichée par la
+      DGCCRF. Un traiteur qui facture des particuliers serait donc concerné.
+      Adhésion ~30 €/an. À confirmer avec la CCI ou un conseil, puis à ajouter
+      aux mentions légales le cas échéant.
 - [ ] **La TVA** — si l'entreprise y est assujettie, ajouter le numéro de TVA
       intracommunautaire aux mentions légales.
 - [ ] **Une adresse e-mail au nom du domaine** — `contact@lepailleenqueue.fr`

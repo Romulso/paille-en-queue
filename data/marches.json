@@ -1,5 +1,46 @@
 {
-  "_lisezmoi": "Les marchés où Karine est présente. Modifiable depuis admin.html (onglet Marchés). « jour » : lundi…dimanche pour un marché hebdomadaire, ou une date au format AAAA-MM-JJ pour une date unique. « type » : matin ou nocturne. Tant que la liste est vide, la page affiche une invitation à téléphoner.",
+  "_lisezmoi": "Les marchés où Karine est présente. Modifiable depuis admin.html (onglet Marchés). « jour » : lundi…dimanche pour un marché hebdomadaire, ou une date au format AAAA-MM-JJ pour une date unique. « type » : matin ou nocturne. « jusquau » (facultatif, AAAA-MM-JJ) borne un marché de saison : passée cette date, il disparaît tout seul de la page. Tant que la liste est vide, la page affiche une invitation à téléphoner.",
 
-  "marches": []
+  "marches": [
+    {
+      "lieu": "Le Pizou",
+      "jour": "mardi",
+      "type": "nocturne",
+      "horaire": "",
+      "precision": "Marché nocturne d'été",
+      "jusquau": "2026-08-31"
+    },
+    {
+      "lieu": "Saint-Laurent-des-Hommes",
+      "jour": "mercredi",
+      "type": "nocturne",
+      "horaire": "",
+      "precision": "Marché nocturne d'été",
+      "jusquau": "2026-08-31"
+    },
+    {
+      "lieu": "Communes variables",
+      "jour": "vendredi",
+      "type": "matin",
+      "horaire": "",
+      "precision": "La commune change d'une semaine à l'autre : appelez-nous pour savoir où nous sommes.",
+      "jusquau": ""
+    },
+    {
+      "lieu": "Communes variables",
+      "jour": "samedi",
+      "type": "matin",
+      "horaire": "",
+      "precision": "La commune change d'une semaine à l'autre : appelez-nous pour savoir où nous sommes.",
+      "jusquau": ""
+    },
+    {
+      "lieu": "Saint-Seurin-sur-l'Isle",
+      "jour": "dimanche",
+      "type": "matin",
+      "horaire": "",
+      "precision": "",
+      "jusquau": ""
+    }
+  ]
 }

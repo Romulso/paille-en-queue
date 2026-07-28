@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Gestion du contenu — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); padding-bottom: 40px; }
@@ -321,15 +321,22 @@
         f.append(g3);
       }
       const g4 = document.createElement("div");
-      g4.className = "grille-champs";
-      g4.append(champ("Précision (facultatif)", m.precision, (v) => { m.precision = v; }));
+      g4.className = "grille-champs deux";
+      const finSaison = champ("Dernier jour (facultatif)", m.jusquau, (v) => { m.jusquau = v; });
+      $("input", finSaison).type = "date";
+      g4.append(champ("Précision (facultatif)", m.precision, (v) => { m.precision = v; }), finSaison);
       f.append(g4);
+
+      const note = document.createElement("p");
+      note.style.cssText = "font-size:13px;color:var(--encre-tenue);margin-top:8px";
+      note.textContent = "Un marché de saison disparaît tout seul de la page le lendemain de son dernier jour. Laissez vide pour un marché toute l'année.";
+      f.append(note);
       zone.append(f);
     });
   }
 
   $("#ajouter-marche").addEventListener("click", () => {
-    donnees.marches.marches.push({ lieu: "", jour: "samedi", type: "matin", horaire: "8 h – 13 h", precision: "" });
+    donnees.marches.marches.push({ lieu: "", jour: "samedi", type: "matin", horaire: "", precision: "", jusquau: "" });
     dessinerMarches();
   });
 

@@ -261,11 +261,25 @@
   /* ---------- Marchés ---------- */
   const JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
 
+  // Les marchés hebdomadaires viennent en premier, dans l'ordre de la semaine ;
+  // les dates uniques ensuite, par ordre chronologique.
+  const rang = (m) => {
+    const i = JOURS.indexOf(m.jour);
+    return i >= 0 ? i : 100 + Number(String(m.jour).replace(/-/g, ""));
+  };
+
   async function marches() {
     const zone = $("#zone-marches");
     if (!zone) return;
     const d = await charger("marches");
-    const liste = d && Array.isArray(d.marches) ? d.marches : [];
+    const tous = d && Array.isArray(d.marches) ? d.marches : [];
+
+    // Un marché de saison disparaît de lui-même passée sa date de fin : mieux
+    // vaut une case vide qu'un client qui se déplace pour rien.
+    const aujourdhui = new Date().toISOString().slice(0, 10);
+    const liste = tous
+      .filter((m) => !m.jusquau || m.jusquau >= aujourdhui)
+      .sort((a, b) => rang(a) - rang(b));
 
     if (!liste.length) {
       zone.innerHTML = `
@@ -297,6 +311,8 @@
             <h3>${echapper(m.lieu)}</h3>
             ${m.horaire ? `<p>${echapper(m.horaire)}</p>` : ""}
             ${m.precision ? `<p>${echapper(m.precision)}</p>` : ""}
+            ${m.jusquau ? `<p>Jusqu'au ${new Date(`${m.jusquau}T12:00:00`)
+              .toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</p>` : ""}
             <span class="marche-type ${m.type === "nocturne" ? "nocturne" : ""}">
               ${m.type === "nocturne" ? "Marché nocturne" : "Marché du matin"}
             </span>

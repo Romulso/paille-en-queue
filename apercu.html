@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Aperçu — direction visuelle proposée · Le Paille en Queue</title>
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<style>
+/* =========================================================
+   MAQUETTE — direction visuelle proposée
+   Page autonome : elle n'utilise ni style.css ni site.js et ne
+   modifie en rien le site en ligne. À supprimer si non retenue.
+   ========================================================= */
+
+@font-face { font-family:"Fraunces"; src:url("fonts/Fraunces-var.woff2") format("woff2"); font-weight:300 900; font-display:swap; }
+@font-face { font-family:"Outfit"; src:url("fonts/Outfit-var.woff2") format("woff2"); font-weight:200 800; font-display:swap; }
+
+:root{
+  --terracotta:#b64a2e;
+  --piment:#c4291f;
+  --piment-fonce:#7e1a11;
+  --curcuma:#e6a12a;
+  --safran:#f2c14e;
+  --tropical:#0f4436;
+  --tropical-nuit:#072a20;
+  --cuivre:#b87333;
+  --or:#c9a227;
+  --sable:#f6ead7;
+  --creme:#fdf6ea;
+  --creme-2:#f6e8d3;
+  --encre:#221812;
+  --encre-douce:#6a5346;
+  --encre-tenue:#9a8272;
+  --ligne:rgba(34,24,18,.14);
+  --ligne-claire:rgba(253,246,234,.2);
+  --titre:"Fraunces","Iowan Old Style",Georgia,serif;
+  --sans:"Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --rayon:22px;
+  --ombre:0 3px 8px rgba(34,24,18,.05),0 26px 60px -26px rgba(126,26,17,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--creme);color:var(--encre);line-height:1.65;font-size:16.5px;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--titre);font-weight:600;line-height:1.06;letter-spacing:-.02em}
+h1{font-size:clamp(38px,8.5vw,84px)}
+h2{font-size:clamp(28px,5.6vw,50px)}
+h3{font-size:clamp(19px,3vw,25px)}
+:focus-visible{outline:3px solid var(--cuivre);outline-offset:3px}
+
+/* ---------- Textures : vannerie et bois brut ---------- */
+.tex-vannerie{background-image:
+  repeating-linear-gradient(45deg,rgba(184,115,51,.09) 0 5px,transparent 5px 11px),
+  repeating-linear-gradient(-45deg,rgba(184,115,51,.09) 0 5px,transparent 5px 11px)}
+.tex-bois{background-image:
+  repeating-linear-gradient(91deg,rgba(90,58,35,.06) 0 2px,transparent 2px 9px),
+  repeating-linear-gradient(89deg,rgba(90,58,35,.045) 0 1px,transparent 1px 19px)}
+
+.enveloppe{max-width:1200px;margin:0 auto;padding:0 22px}
+.etroit{max-width:820px;margin:0 auto;padding:0 22px}
+.section{padding:clamp(64px,11vw,116px) 0;position:relative;overflow:hidden}
+.s-sable{background:var(--creme-2)}
+.s-sombre{background:var(--tropical-nuit);color:var(--sable)}
+.s-sombre h2,.s-sombre h3{color:#fff}
+
+.surtitre{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--cuivre);margin-bottom:16px}
+.surtitre::before{content:"";width:30px;height:1.5px;background:currentColor}
+.s-sombre .surtitre{color:var(--safran)}
+.chapo{font-size:clamp(16.5px,2.1vw,19.5px);color:var(--encre-douce);max-width:60ch}
+.s-sombre .chapo{color:rgba(246,234,215,.78)}
+.tete{margin-bottom:clamp(30px,5vw,52px)}
+.tete .chapo{margin-top:16px}
+
+/* ---------- Boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:15px 30px;border:1.5px solid var(--ligne);border-radius:100px;background:transparent;font-size:15.5px;font-weight:600;text-decoration:none;cursor:pointer;transition:.25s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn-plein{background:var(--piment);border-color:var(--piment);color:#fff;box-shadow:0 12px 28px -12px rgba(196,41,31,.8)}
+.btn-plein:hover{background:var(--piment-fonce);border-color:var(--piment-fonce)}
+.btn-or{background:linear-gradient(135deg,var(--safran),var(--cuivre));border-color:transparent;color:#3a2410;box-shadow:0 12px 28px -12px rgba(184,115,51,.85)}
+.btn-clair{border-color:rgba(255,255,255,.45);color:#fff}
+.btn-clair:hover{background:rgba(255,255,255,.1);border-color:#fff}
+.boutons{display:flex;flex-wrap:wrap;gap:13px;margin-top:30px}
+
+/* ---------- Bandeau maquette ---------- */
+.bandeau-maquette{position:sticky;top:0;z-index:90;background:var(--encre);color:var(--sable);font-size:13.5px;padding:9px 22px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;justify-content:center;text-align:center}
+.bandeau-maquette b{color:var(--safran);letter-spacing:.1em;text-transform:uppercase;font-size:11.5px}
+
+/* ---------- En-tête ---------- */
+.entete{position:absolute;top:0;left:0;right:0;z-index:40;padding:20px 0}
+.entete-in{max-width:1200px;margin:0 auto;padding:0 22px;display:flex;align-items:center;gap:20px}
+.marque{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto}
+.marque img{width:56px}
+.marque span{display:block;line-height:1.1}
+.marque .nom{font-family:var(--titre);font-size:19px;font-weight:600;color:#fff}
+.marque .sous{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--safran);font-weight:600}
+.nav-h{display:none;gap:26px}
+.nav-h a{color:rgba(255,255,255,.88);text-decoration:none;font-size:15px;font-weight:500}
+.nav-h a:hover{color:var(--safran)}
+@media(min-width:960px){.nav-h{display:flex}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:min(100svh,860px);display:flex;align-items:flex-end;color:#fff;isolation:isolate;overflow:hidden}
+.hero-photo{position:absolute;inset:0;z-index:-3;background:
+  radial-gradient(70% 60% at 24% 26%,rgba(242,193,78,.5),transparent 62%),
+  linear-gradient(155deg,#8d2a17 0%,#5d1d12 42%,#0f4436 100%)}
+.hero-photo::after{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(118deg,rgba(255,255,255,.05) 0 1px,transparent 1px 8px)}
+.hero-voile{position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(20,10,6,.88) 0%,rgba(20,10,6,.42) 42%,rgba(20,10,6,.2) 100%)}
+.hero-volcan{position:absolute;left:0;right:0;bottom:0;z-index:-2;opacity:.3}
+.hero-in{padding:clamp(120px,20vw,170px) 0 clamp(48px,8vw,90px);width:100%}
+.hero h1{text-wrap:balance;max-width:15ch}
+.hero h1 em{font-style:normal;display:block;background:linear-gradient(96deg,var(--safran),var(--cuivre));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:22px;font-size:clamp(17px,2.2vw,20.5px);color:rgba(255,255,255,.86);max-width:52ch}
+.pastille-hero{display:inline-flex;align-items:center;gap:11px;padding:9px 20px 9px 11px;border-radius:100px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);font-size:12.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;margin-bottom:26px}
+.pastille-hero b{background:var(--safran);color:#3a2410;border-radius:100px;padding:4px 12px;font-size:11.5px}
+.hero-defile{position:absolute;right:28px;bottom:118px;writing-mode:vertical-rl;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.55);display:none}
+@media(min-width:960px){.hero-defile{display:block}}
+
+/* ---------- Emplacements photo ---------- */
+.photo{position:relative;overflow:hidden;border-radius:var(--rayon);background:linear-gradient(145deg,#c4291f,#7e1a11);display:grid;place-items:center;text-align:center;padding:22px}
+.photo::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(48deg,rgba(255,255,255,.055) 0 3px,transparent 3px 9px)}
+.photo span{position:relative;font-family:var(--titre);font-size:clamp(16px,2.2vw,21px);color:rgba(255,255,255,.96);text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.photo small{position:relative;display:block;margin-top:7px;font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.p2{background:linear-gradient(145deg,#e6a12a,#a85f10)}
+.p3{background:linear-gradient(145deg,#0f4436,#062a20)}
+.p4{background:linear-gradient(145deg,#b87333,#7a4418)}
+.p5{background:linear-gradient(145deg,#d8542f,#8d2a17)}
+.p6{background:linear-gradient(145deg,#f2c14e,#c08a12)}
+
+/* ---------- Histoire ---------- */
+.duo{display:grid;gap:40px;align-items:center}
+@media(min-width:900px){.duo{grid-template-columns:1fr 1.05fr;gap:64px}.duo.inv .duo-media{order:2}}
+.duo-media .photo{aspect-ratio:4/5;box-shadow:var(--ombre)}
+.duo p+p{margin-top:15px}
+.duo p{color:var(--encre-douce)}
+.s-sombre .duo p{color:rgba(246,234,215,.8)}
+.influences{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.influences span{padding:8px 17px;border:1px solid var(--ligne-claire);border-radius:100px;font-size:13.5px;color:var(--safran)}
+
+/* ---------- Menu interactif ---------- */
+.onglets{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:32px}
+.onglet{padding:11px 22px;border-radius:100px;border:1.5px solid var(--ligne);background:transparent;font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:.22s}
+.onglet:hover{border-color:var(--cuivre);color:var(--cuivre)}
+.onglet[aria-selected="true"]{background:var(--encre);border-color:var(--encre);color:var(--creme)}
+.grille-plats{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(268px,1fr))}
+.plat{background:var(--creme);border:1px solid var(--ligne);border-radius:var(--rayon);overflow:hidden;transition:.3s;display:flex;flex-direction:column}
+.s-sable .plat{background:#fff}
+.plat:hover{transform:translateY(-5px);box-shadow:var(--ombre)}
+.plat .photo{border-radius:0;aspect-ratio:4/3}
+.plat-corps{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1}
+.plat-tete{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.plat h3{font-size:20px}
+.plat p{font-size:14.5px;color:var(--encre-douce);margin-top:9px}
+.prix{font-family:var(--titre);font-size:22px;font-weight:600;color:var(--terracotta);white-space:nowrap}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:4px 11px;border-radius:100px}
+.t-epice{background:rgba(196,41,31,.12);color:var(--piment-fonce)}
+.t-vege{background:rgba(15,68,54,.12);color:var(--tropical)}
+.t-signature{background:linear-gradient(135deg,var(--safran),var(--cuivre));color:#3a2410}
+
+/* ---------- Terroir ---------- */
+.grille-terroir{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.terroir{padding:32px 26px;border-radius:var(--rayon);border:1px solid var(--ligne-claire);background:rgba(255,255,255,.05);text-align:center}
+.terroir-ico{width:56px;height:56px;margin:0 auto 18px;color:var(--safran)}
+.terroir h3{font-size:21px;margin-bottom:9px}
+.terroir p{font-size:14.5px;color:rgba(246,234,215,.75)}
+
+/* ---------- Galerie ---------- */
+.galerie{display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:760px){.galerie{grid-template-columns:repeat(4,1fr)}}
+.galerie .photo{aspect-ratio:1}
+.galerie .g-large{grid-column:span 2;grid-row:span 2;aspect-ratio:1}
+
+/* ---------- Avis ---------- */
+.grille-avis{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.avis{padding:30px 28px;border-radius:var(--rayon);background:var(--creme);border:1px solid var(--ligne)}
+.etoiles{color:var(--curcuma);letter-spacing:3px;font-size:16px;margin-bottom:14px}
+.avis p{font-size:15.5px;color:var(--encre-douce);font-style:italic}
+.avis footer{display:flex;align-items:center;gap:13px;margin-top:20px;padding-top:17px;border-top:1px solid var(--ligne)}
+.avatar{width:44px;height:44px;border-radius:50%;flex:0 0 auto;background:linear-gradient(140deg,var(--cuivre),var(--terracotta));display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px}
+.avis footer b{display:block;font-size:15px}
+.avis footer small{color:var(--encre-tenue);font-size:13px}
+
+/* ---------- Réservation ---------- */
+.resa{border-radius:var(--rayon);overflow:hidden;display:grid;box-shadow:var(--ombre)}
+@media(min-width:900px){.resa{grid-template-columns:1fr 1.15fr}}
+.resa-gauche{padding:clamp(32px,5vw,52px);background:linear-gradient(150deg,var(--terracotta),var(--piment-fonce));color:#fff;position:relative;overflow:hidden}
+.resa-gauche h2{color:#fff}
+.resa-gauche p{color:rgba(255,255,255,.85);margin-top:14px}
+.resa-liste{list-style:none;margin-top:26px}
+.resa-liste li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.2);font-size:15px}
+.resa-liste li:last-child{border-bottom:0}
+.resa-liste li::before{content:"";flex:0 0 auto;width:9px;height:9px;margin-top:8px;border-radius:50%;background:var(--safran)}
+.resa-droite{padding:clamp(32px,5vw,52px);background:var(--creme)}
+.rangee{display:grid;gap:16px;margin-bottom:16px}
+@media(min-width:600px){.rangee.deux{grid-template-columns:1fr 1fr}}
+.champ label{display:block;font-size:13.5px;font-weight:600;margin-bottom:7px}
+.champ input,.champ select{width:100%;padding:14px 16px;border:1.5px solid var(--ligne);border-radius:13px;background:#fff;font-family:inherit;font-size:16px}
+.champ input:focus,.champ select:focus{outline:none;border-color:var(--cuivre);box-shadow:0 0 0 3px rgba(184,115,51,.16)}
+
+/* ---------- Localisation ---------- */
+.grille-loc{display:grid;gap:26px}
+@media(min-width:880px){.grille-loc{grid-template-columns:1.2fr .8fr}}
+.carte-lieu{border-radius:var(--rayon);min-height:320px;background:
+  linear-gradient(rgba(15,68,54,.08),rgba(15,68,54,.08)),
+  repeating-linear-gradient(0deg,rgba(34,24,18,.09) 0 1px,transparent 1px 42px),
+  repeating-linear-gradient(90deg,rgba(34,24,18,.09) 0 1px,transparent 1px 42px),
+  var(--creme-2);
+  display:grid;place-items:center;text-align:center;padding:26px;border:1px solid var(--ligne)}
+.infos-loc{display:grid;gap:14px;align-content:start}
+.info-bloc{padding:22px 24px;border-radius:var(--rayon);background:var(--creme);border:1px solid var(--ligne)}
+.info-bloc h3{font-size:17px;margin-bottom:8px}
+.info-bloc p{font-size:15px;color:var(--encre-douce)}
+
+/* ---------- Pied ---------- */
+.pied{background:var(--tropical-nuit);color:rgba(246,234,215,.72);padding:clamp(56px,8vw,88px) 0 30px;position:relative;overflow:hidden}
+.pied-grille{display:grid;gap:36px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.pied h3{font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--safran);font-weight:700;margin-bottom:16px}
+.pied a{color:inherit;text-decoration:none}
+.pied a:hover{color:#fff}
+.pied ul{list-style:none}
+.pied li{padding:5px 0}
+.pied img{width:112px;filter:brightness(0) invert(1);opacity:.9;margin-bottom:16px}
+.reseaux{display:flex;gap:11px;margin-top:16px}
+.reseaux a{width:42px;height:42px;border-radius:50%;border:1px solid var(--ligne-claire);display:grid;place-items:center;transition:.25s}
+.reseaux a:hover{background:var(--safran);border-color:var(--safran);color:var(--tropical-nuit)}
+.reseaux svg{width:19px;height:19px}
+.infolettre{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.infolettre input{flex:1 1 170px;padding:13px 16px;border-radius:100px;border:1px solid var(--ligne-claire);background:rgba(255,255,255,.07);color:#fff;font-family:inherit;font-size:15px}
+.infolettre input::placeholder{color:rgba(246,234,215,.5)}
+.pied-bas{margin-top:44px;padding-top:24px;border-top:1px solid var(--ligne-claire);font-size:13px;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+
+/* ---------- Barre collée ---------- */
+.sticky{position:fixed;left:14px;right:14px;bottom:14px;z-index:80;display:flex;gap:10px;padding:10px;border-radius:100px;background:rgba(34,24,18,.94);backdrop-filter:blur(12px);box-shadow:0 14px 36px -12px rgba(0,0,0,.6)}
+.sticky .btn{flex:1;padding:13px 16px;font-size:14.5px}
+.sticky .btn:not(.btn-or){color:#fff;border-color:rgba(255,255,255,.3)}
+@media(min-width:960px){.sticky{left:auto;right:26px;bottom:26px;width:auto}.sticky .btn{flex:0 0 auto;padding:14px 26px}}
+
+/* ---------- Apparition ---------- */
+.fade{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.3,1)}
+.fade.vu{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.fade{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="bandeau-maquette">
+  <b>Maquette</b>
+  <span>Le site en ligne n'est pas modifié. Photos et avis sont des emplacements.</span>
+</div>
+
+<main>
+
+  <!-- ---------- 1 · Hero ---------- -->
+  <section class="hero">
+    <header class="entete">
+      <div class="entete-in">
+        <a class="marque" href="index.html">
+          <img src="images/logo-blanc.png" alt="Le Paille en Queue" width="192" height="151">
+          <span>
+            <span class="nom">Le Paille en Queue</span>
+            <span class="sous">Spécialités créoles</span>
+          </span>
+        </a>
+        <nav class="nav-h">
+          <a href="#histoire">Notre histoire</a>
+          <a href="#menu">La carte</a>
+          <a href="#terroir">Le terroir</a>
+          <a href="#galerie">Galerie</a>
+          <a href="#reserver">Réserver</a>
+        </nav>
+      </div>
+    </header>
+    <div class="hero-photo"></div>
+    <div class="hero-voile"></div>
+    <svg class="hero-volcan" viewBox="0 0 1440 300" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="#04150f" d="M0 300 200 214 318 158 402 96 470 58 530 92 596 148 690 206 812 168 906 112 968 142 1046 196 1160 232 1290 190 1380 216 1440 244V300Z"/>
+      <path fill="#04150f" fill-opacity=".55" d="M0 300 130 246 262 190 360 124 452 40 548 118 640 178 760 214 880 156 990 100 1084 158 1200 210 1320 176 1440 208V300Z"/>
+    </svg>
+
+    <div class="enveloppe hero-in">
+      <span class="pastille-hero"><b>Depuis 2009</b> Traiteur créole en Dordogne</span>
+      <h1>Le goût de la<em>kaz créole.</em></h1>
+      <p>
+        Caris mijotés à la marmite, rougail saucisses qui embaume la cour,
+        samoussas pliés au petit jour. Karine cuisine la Réunion de son enfance
+        et l'apporte à votre table.
+      </p>
+      <div class="boutons">
+        <a class="btn btn-or" href="#reserver">Réserver un repas</a>
+        <a class="btn btn-clair" href="#menu">Découvrir la carte</a>
+      </div>
+    </div>
+    <span class="hero-defile">Défiler</span>
+  </section>
+
+  <!-- ---------- 2 · Notre histoire ---------- -->
+  <section class="section s-sombre tex-bois" id="histoire">
+    <div class="enveloppe duo">
+      <div class="duo-media fade">
+        <div class="photo p4"><span>Karine, marmite au feu de bois</span><small>Emplacement photo</small></div>
+      </div>
+      <div class="fade">
+        <span class="surtitre">Notre histoire</span>
+        <h2>Cinq cuisines dans une seule marmite</h2>
+        <p>
+          La cuisine réunionnaise n'appartient à personne et vient de partout.
+          Les Malbars y ont apporté le massalé et le curcuma, les Chinois les
+          bouchons vapeur, les Malgaches le rougail, les Africains le boucané au
+          feu de bois, les Européens la marmite en fonte.
+        </p>
+        <p>
+          Karine a grandi dans cette cuisine-là, celle où l'on met le riz à
+          gonfler avant même de savoir combien on sera à table. Depuis 2009,
+          elle la fait voyager sur les marchés de Dordogne, et aujourd'hui dans
+          vos salles des fêtes, vos jardins et vos bureaux.
+        </p>
+        <div class="influences">
+          <span>Indien</span><span>Africain</span><span>Chinois</span>
+          <span>Malgache</span><span>Européen</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 3 · Menu interactif ---------- -->
+  <section class="section" id="menu">
+    <div class="enveloppe">
+      <div class="tete fade">
+        <span class="surtitre">La carte</span>
+        <h2>Ce qui sort de la cuisine</h2>
+        <p class="chapo">
+          Tout est mijoté le jour même. Les plats sont servis avec le riz et la
+          sauce piquante, à partir de 10 parts.
+        </p>
+      </div>
+
+      <div class="onglets" role="tablist">
+        <button class="onglet" role="tab" aria-selected="true" data-cat="tout">Tout voir</button>
+        <button class="onglet" role="tab" aria-selected="false" data-cat="entrees">Entrées</button>
+        <button class="onglet" role="tab" aria-selected="false" data-cat="caris">Caris</button>
+        <button class="onglet" role="tab" aria-selected="false" data-cat="rougails">Rougails</button>
+        <button class="onglet" role="tab" aria-selected="false" data-cat="accomp">Accompagnements</button>
+        <button class="onglet" role="tab" aria-selected="false" data-cat="desserts">Desserts</button>
+      </div>
+
+      <div class="grille-plats" id="plats"></div>
+    </div>
+  </section>
+
+  <!-- ---------- 4 · Terroir ---------- -->
+  <section class="section s-sombre tex-vannerie" id="terroir">
+    <div class="enveloppe">
+      <div class="tete fade">
+        <span class="surtitre">Les produits</span>
+        <h2>Ce qui donne le goût</h2>
+        <p class="chapo">
+          Quatre produits sans lesquels rien de tout cela n'aurait la même
+          saveur. Le reste — légumes, viandes, volailles — vient de nos
+          producteurs de Dordogne.
+        </p>
+      </div>
+      <div class="grille-terroir">
+        <article class="terroir fade">
+          <svg class="terroir-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M24 4c-3 8-3 16 0 24 3-8 3-16 0-24Z"/><path d="M24 28v16"/><path d="M18 42h12"/>
+          </svg>
+          <h3>Vanille Bourbon</h3>
+          <p>La gousse charnue de l'océan Indien, celle qui parfume les desserts et le punch planteur.</p>
+        </article>
+        <article class="terroir fade">
+          <svg class="terroir-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <circle cx="24" cy="27" r="13"/><path d="M24 14c0-5 3-8 8-9-1 6-3 8-8 9Z"/>
+          </svg>
+          <h3>Combava</h3>
+          <p>Le petit agrume vert au parfum inimitable. Une pincée de zeste suffit à réveiller un cari.</p>
+        </article>
+        <article class="terroir fade">
+          <svg class="terroir-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M14 22c0-6 4-10 10-10s10 4 10 10-4 18-10 18-10-12-10-18Z"/><path d="M24 12V6"/><path d="M18 8l3 4M30 8l-3 4"/>
+          </svg>
+          <h3>Safran péi</h3>
+          <p>Le curcuma frais, appelé safran à La Réunion. C'est lui qui donne aux caris leur or profond.</p>
+        </article>
+        <article class="terroir fade">
+          <svg class="terroir-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <ellipse cx="24" cy="30" rx="11" ry="13"/><path d="M24 17c-4-5-8-7-12-8 2 5 6 8 12 8Zm0 0c4-5 8-7 12-8-2 5-6 8-12 8Z"/>
+          </svg>
+          <h3>Ananas Victoria</h3>
+          <p>Petit, très sucré, peu acide. Il fait la signature de nos plats sucrés-salés au porc et au poulet.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 5 · Galerie ---------- -->
+  <section class="section s-sable" id="galerie">
+    <div class="enveloppe">
+      <div class="tete fade">
+        <span class="surtitre">En images</span>
+        <h2>L'ambiance</h2>
+      </div>
+      <div class="galerie fade">
+        <div class="photo g-large p5"><span>Buffet créole dressé</span><small>Emplacement photo</small></div>
+        <div class="photo p2"><span>Samoussas</span><small>Photo</small></div>
+        <div class="photo p3"><span>Le stand du marché</span><small>Photo</small></div>
+        <div class="photo p6"><span>Épices en gros plan</span><small>Photo</small></div>
+        <div class="photo"><span>Cari en marmite</span><small>Photo</small></div>
+        <div class="photo p4"><span>Punch planteur</span><small>Photo</small></div>
+        <div class="photo p2"><span>Table dressée</span><small>Photo</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 6 · Avis ---------- -->
+  <section class="section">
+    <div class="enveloppe">
+      <div class="tete fade">
+        <span class="surtitre">Ils nous ont fait confiance</span>
+        <h2>Les retours de nos clients</h2>
+        <p class="chapo">
+          Emplacements de mise en page. Ils accueilleront de vrais témoignages,
+          recueillis avec l'accord des personnes.
+        </p>
+      </div>
+      <div class="grille-avis">
+        <article class="avis fade">
+          <div class="etoiles" aria-label="5 sur 5">★★★★★</div>
+          <p>« Le témoignage du client apparaîtra ici, sur trois à quatre lignes, avec le nom de l'événement et le nombre de convives. »</p>
+          <footer><span class="avatar">A</span><span><b>Prénom N.</b><small>Type d'événement, commune</small></span></footer>
+        </article>
+        <article class="avis fade">
+          <div class="etoiles" aria-label="5 sur 5">★★★★★</div>
+          <p>« Emplacement d'un deuxième témoignage. Trois ou quatre avis bien choisis valent mieux que vingt génériques. »</p>
+          <footer><span class="avatar">B</span><span><b>Prénom N.</b><small>Type d'événement, commune</small></span></footer>
+        </article>
+        <article class="avis fade">
+          <div class="etoiles" aria-label="5 sur 5">★★★★★</div>
+          <p>« Emplacement d'un troisième témoignage, idéalement celui d'une entreprise ou d'une commune. »</p>
+          <footer><span class="avatar">C</span><span><b>Structure</b><small>Repas de fin d'année</small></span></footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 7 · Réservation ---------- -->
+  <section class="section s-sable" id="reserver">
+    <div class="enveloppe">
+      <div class="resa fade">
+        <div class="resa-gauche tex-vannerie">
+          <span class="surtitre" style="color:var(--safran)">Réserver</span>
+          <h2>Un repas à organiser&nbsp;?</h2>
+          <p>Dites-nous l'essentiel, Karine vous répond sous 48 h avec un devis détaillé.</p>
+          <ul class="resa-liste">
+            <li>À partir de 10 parts</li>
+            <li>Livraison jusqu'à 30 km — 5 à 10 €</li>
+            <li>Cuisiné sur place dès 50 convives</li>
+            <li>Commande 4 à 5 jours à l'avance</li>
+          </ul>
+        </div>
+        <div class="resa-droite">
+          <div class="rangee deux">
+            <div class="champ"><label for="d">Date</label><input id="d" type="date"></div>
+            <div class="champ"><label for="c">Convives</label><input id="c" type="number" min="10" placeholder="10"></div>
+          </div>
+          <div class="rangee">
+            <div class="champ"><label for="t">Type d'événement</label>
+              <select id="t"><option>Repas livré à domicile</option><option>Mariage</option><option>Repas d'entreprise</option><option>Fête communale</option><option>Club ou association</option></select>
+            </div>
+          </div>
+          <div class="rangee deux">
+            <div class="champ"><label for="n">Nom</label><input id="n" type="text"></div>
+            <div class="champ"><label for="tel">Téléphone</label><input id="tel" type="tel"></div>
+          </div>
+          <a class="btn btn-plein" href="devis.html" style="width:100%">Recevoir mon devis</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 8 · Localisation ---------- -->
+  <section class="section">
+    <div class="enveloppe">
+      <div class="tete fade">
+        <span class="surtitre">Nous trouver</span>
+        <h2>Où et quand</h2>
+      </div>
+      <div class="grille-loc fade">
+        <div class="carte-lieu">
+          <div>
+            <strong style="font-family:var(--titre);font-size:22px;display:block;margin-bottom:8px">Zone d'intervention</strong>
+            <p style="color:var(--encre-douce);font-size:15px;max-width:38ch">
+              Emplacement de la carte : un cercle de 30 km autour de Montpeyroux,
+              sans adresse précise affichée.
+            </p>
+          </div>
+        </div>
+        <div class="infos-loc">
+          <div class="info-bloc">
+            <h3>Zone de livraison</h3>
+            <p>30 km autour de Montpeyroux (24). 5 € jusqu'à 10 km, 10 € au-delà.</p>
+          </div>
+          <div class="info-bloc">
+            <h3>Nos marchés</h3>
+            <p>Retrouvez le stand sur les marchés du matin et les marchés nocturnes. Calendrier à venir.</p>
+          </div>
+          <div class="info-bloc">
+            <h3>Nous joindre</h3>
+            <p><b>06 27 35 23 28</b><br>Lepailleenqueue33@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied tex-bois">
+  <div class="enveloppe">
+    <div class="pied-grille">
+      <div>
+        <img src="images/logo-blanc.png" alt="Le Paille en Queue">
+        <p style="font-size:14.5px;max-width:30ch">Traiteur créole et réunionnais en Dordogne depuis 2009.</p>
+        <div class="reseaux">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12Z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h3>Le site</h3>
+        <ul>
+          <li><a href="#histoire">Notre histoire</a></li>
+          <li><a href="#menu">La carte</a></li>
+          <li><a href="#terroir">Le terroir</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#reserver">Réserver</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Bon à savoir</h3>
+        <ul>
+          <li>Commande à partir de 10 parts</li>
+          <li>Devis gratuit sous 48 h</li>
+          <li>30 % d'acompte à la signature</li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Newsletter</h3>
+        <p style="font-size:14.5px">Les dates de marchés et les menus de saison, une fois par mois.</p>
+        <form class="infolettre" onsubmit="return false">
+          <input type="email" placeholder="Votre e-mail" aria-label="Votre e-mail">
+          <button class="btn btn-or" type="submit">S'inscrire</button>
+        </form>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <span>© 2009–2026 Le Paille en Queue — Karine Danna</span>
+      <span>SIRET 51134341000037</span>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky">
+  <a class="btn" href="tel:+33627352328">Appeler</a>
+  <a class="btn btn-or" href="#reserver">Réserver</a>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* La carte de la maquette. « ? » signale un plat cité dans le brief mais
+     absent de la carte actuelle : à confirmer avant toute mise en ligne. */
+  const CARTE = [
+    {c:"entrees", n:"Samoussas", p:"1 €", d:"Thon, porc, poulet, poisson, fromage ou végan. Pliés et frits à la commande.", t:["signature"]},
+    {c:"entrees", n:"Accras de morue", p:"7 € les 16", d:"Moelleux au cœur, croustillants dehors.", t:[]},
+    {c:"entrees", n:"Bouchons", p:"5 € les 6", d:"Les bouchées vapeur, héritage chinois de l'île.", t:[]},
+    {c:"caris", n:"Cari poulet", p:"10 €", d:"Oignon, ail, gingembre, curcuma et tomate. Le cari de base.", t:[]},
+    {c:"caris", n:"Cari d'agneau", p:"12 €", d:"Relevé de gingembre frais et de safran péi.", t:["epice"]},
+    {c:"caris", n:"Cari poisson ou crevettes", p:"12 €", d:"Espadon selon arrivage, sur un massalé léger.", t:["signature"]},
+    {c:"caris", n:"Poulet massalé", p:"10 €", d:"Coriandre, cumin, girofle, cannelle grillés.", t:["epice","signature"]},
+    {c:"caris", n:"Crevettes coco", p:"12 €", d:"Lait de coco parfumé au combava.", t:["signature"]},
+    {c:"caris", n:"Bœuf massalé", p:"10 €", d:"Mijoté jusqu'à se défaire à la cuillère.", t:["epice"]},
+    {c:"rougails", n:"Rougail saucisses", p:"10 €", d:"Le plat du dimanche. Saucisses fumées, tomate, gingembre, thym.", t:["signature"]},
+    {c:"rougails", n:"Rougail morue", p:"12 €", d:"Morue effeuillée, tomates fraîches, oignons.", t:[]},
+    {c:"rougails", n:"Lentilles boucané", p:"10 €", d:"Lentilles fondantes et poitrine fumée au bois.", t:["signature"]},
+    {c:"accomp", n:"Riz blanc", p:"compris", d:"Servi avec chaque plat, ainsi que la sauce piquante.", t:[]},
+    {c:"accomp", n:"Grains", p:"? à confirmer", d:"Haricots rouges ou lentilles en accompagnement — cité dans le brief, absent de la carte actuelle.", t:["vege"]},
+    {c:"accomp", n:"Rougail tomate", p:"? à confirmer", d:"Le condiment frais servi à part — à confirmer.", t:["vege","epice"]},
+    {c:"desserts", n:"Salade de fruits de saison", p:"comprise", d:"Incluse dans les menus complets.", t:["vege"]},
+    {c:"desserts", n:"Gâteau patate", p:"? à confirmer", d:"Le dessert créole par excellence — cité dans le brief, absent de la carte actuelle.", t:["vege"]},
+  ];
+
+  const LIBELLES = {epice:"Épicé", vege:"Végétarien", signature:"Signature"};
+  const zone = document.getElementById("plats");
+  let teinte = 0;
+
+  const rendre = (cat) => {
+    teinte = 0;
+    zone.innerHTML = CARTE.filter((x) => cat === "tout" || x.c === cat).map((x) => {
+      const classes = ["", "p2", "p3", "p4", "p5", "p6"][teinte++ % 6];
+      return `
+        <article class="plat">
+          <div class="photo ${classes}"><span>${x.n}</span><small>Emplacement photo</small></div>
+          <div class="plat-corps">
+            <div class="plat-tete"><h3>${x.n}</h3><span class="prix">${x.p}</span></div>
+            <p>${x.d}</p>
+            ${x.t.length ? `<div class="tags">${x.t.map((t) => `<span class="tag t-${t}">${LIBELLES[t]}</span>`).join("")}</div>` : ""}
+          </div>
+        </article>`;
+    }).join("");
+    observer();
+  };
+
+  document.querySelectorAll(".onglet").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll(".onglet").forEach((o) => o.setAttribute("aria-selected", String(o === b)));
+    rendre(b.dataset.cat);
+  }));
+
+  /* Apparition au défilement, avec filet de sécurité si l'observateur
+     ne se déclenche pas (onglet en arrière-plan). */
+  let obs;
+  function observer() {
+    const cibles = document.querySelectorAll(".fade:not(.vu)");
+    if (!cibles.length) return;
+    if (!("IntersectionObserver" in window)) {
+      cibles.forEach((e) => e.classList.add("vu"));
+      return;
+    }
+    obs = obs || new IntersectionObserver((entrees) => {
+      entrees.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("vu"); obs.unobserve(e.target); } });
+    }, {rootMargin: "0px 0px -8% 0px", threshold: .05});
+    cibles.forEach((e) => obs.observe(e));
+    clearTimeout(observer.t);
+    observer.t = setTimeout(() => document.querySelectorAll(".fade").forEach((e) => e.classList.add("vu")), 2500);
+  }
+
+  /* Parallaxe légère sur la bannière. */
+  const volcan = document.querySelector(".hero-volcan");
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    addEventListener("scroll", () => {
+      const y = Math.min(scrollY, 700);
+      volcan.style.transform = `translateY(${y * 0.18}px)`;
+    }, {passive: true});
+  }
+
+  rendre("tout");
+  observer();
+})();
+</script>
+</body>
+</html>

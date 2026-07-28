@@ -34,6 +34,6 @@
   "_newsletter": "Adresse d'inscription fournie par Brevo, Mailchimp ou équivalent. Laissée vide, l'inscription part par e-mail via la messagerie du visiteur.",
   "newsletterEndpoint": "",
   "_reseaux": "Laisser vide pour masquer le lien.",
-  "facebook": "",
+  "facebook": "https://www.facebook.com/share/1FLfRCbbv9/?mibextid=wwXIfr",
   "instagram": ""
 }

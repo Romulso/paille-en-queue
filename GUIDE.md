@@ -203,13 +203,8 @@ vaisselle et le service. Point tranché, les menus sont à jour.
       Reste à envoyer une demande de test et à confirmer le premier envoi.
 - [x] **Les marchés** — saisis. Les horaires précis restent à ajouter, et les
       marchés nocturnes s'effaceront d'eux-mêmes après le 31 août.
-- [ ] **Le médiateur de la consommation** — à trancher. La lecture courante des
-      articles L.612-1 et L.616-1 du code de la consommation est que
-      l'obligation vise **tout professionnel qui vend à des consommateurs**, et
-      non les seules ventes en ligne ; c'est aussi la position affichée par la
-      DGCCRF. Un traiteur qui facture des particuliers serait donc concerné.
-      Adhésion ~30 €/an. À confirmer avec la CCI ou un conseil, puis à ajouter
-      aux mentions légales le cas échéant.
+- **Médiateur de la consommation** — écarté sur décision du gérant, le site ne
+  vendant pas en ligne. Aucune mention n'est donc portée aux mentions légales.
 - [ ] **La TVA** — si l'entreprise y est assujettie, ajouter le numéro de TVA
       intracommunautaire aux mentions légales.
 - [ ] **Une adresse e-mail au nom du domaine** — `contact@lepailleenqueue.fr`

@@ -1,22 +1,18 @@
 {
   "_lisezmoi": "Réglages généraux du site. Modifiable depuis admin.html (onglet Réglages).",
-
   "entreprise": "Le Paille en Queue",
   "baseline": "Spécialités créoles",
   "gerante": "Karine Danna",
   "creation": 2009,
-
   "telephone": "06 27 35 23 28",
   "telephoneLien": "+33627352328",
   "email": "Lepailleenqueue33@gmail.com",
   "villeAffichee": "Montpeyroux (24)",
   "departement": "Dordogne",
-
   "adresseLegale": "26 Passage de la Forge, 24610 Montpeyroux",
   "siret": "51134341000037",
   "rcs": "RCS Bordeaux",
   "ape": "4789Z",
-
   "minimumParts": 10,
   "acompte": 30,
   "validiteDevis": "1 mois",
@@ -26,16 +22,17 @@
   "fraisLivraisonLoin": 10,
   "seuilCuisineSurPlace": 50,
   "_nonCompris": "Jamais inclus dans les prix : facturés en supplément si le client les demande.",
-  "nonCompris": ["Service", "Vaisselle", "Pain"],
-
+  "nonCompris": [
+    "Service",
+    "Vaisselle",
+    "Pain"
+  ],
   "_endpoint": "Laisser vide tant que le formulaire n'est pas branché : les demandes partiront alors par e-mail via le logiciel de messagerie du client. Voir GUIDE.md, section « Recevoir les demandes de devis ».",
-  "formulaireEndpoint": "",
+  "formulaireEndpoint": "https://formspree.io/f/mkodyzaq",
   "_champsCaches": "Champs ajoutés à l'envoi, exigés par certains services (Web3Forms réclame par exemple une clé access_key).",
   "formulaireChampsCaches": {},
-
   "_newsletter": "Adresse d'inscription fournie par Brevo, Mailchimp ou équivalent. Laissée vide, l'inscription part par e-mail via la messagerie du visiteur.",
   "newsletterEndpoint": "",
-
   "_reseaux": "Laisser vide pour masquer le lien.",
   "facebook": "",
   "instagram": ""

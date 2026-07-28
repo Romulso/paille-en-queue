@@ -300,14 +300,7 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   text-decoration: none;
   margin-right: auto;
 }
-/* Logo blanc posé sur un écusson vert, comme la version fournie. */
-.marque img {
-  width: 62px;
-  height: auto;
-  padding: 6px 8px;
-  border-radius: 14px;
-  background: var(--vetiver-fonce);
-}
+.marque img { width: 52px; height: auto; }
 .marque-texte { display: flex; flex-direction: column; line-height: 1.05; }
 .marque-nom {
   font-family: var(--titre);
@@ -390,7 +383,7 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   .burger { display: none; }
   .tel-entete,
   .entete-actions .pastille-pleine { display: inline-flex; }
-  .marque img { width: 72px; }
+  .marque img { width: 60px; }
   .marque-nom { font-size: 19px; }
 }
 
@@ -1506,7 +1499,7 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   min-height: 1.2em;
 }
 
-.pied-marque img { width: 108px; margin-bottom: 16px; }
+.pied-marque img { width: 132px; margin-bottom: 16px; }
 .pied-marque p { max-width: 30ch; font-size: 14.5px; }
 .pied-contact b { color: #fff; font-weight: 600; }
 .pied-bas {

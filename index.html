@@ -7,7 +7,7 @@
 <meta name="description" content="Traiteur réunionnais en Dordogne depuis 2009. Repas créoles livrés à domicile à partir de 10 parts, buffets, événements d'entreprise, associations sportives et communes. Devis gratuit sous 48 h.">
 <link rel="canonical" href="https://romulso.github.io/paille-en-queue/">
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=6">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -50,7 +50,7 @@
 <header class="entete">
   <div class="entete-interieur">
     <a class="marque" href="index.html">
-      <img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+      <img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
       <span class="marque-texte">
         <span class="marque-nom">Le Paille en Queue</span>
         <span class="marque-sous">Spécialités créoles</span>
@@ -122,6 +122,19 @@
       </aside>
     </div>
   </section>
+
+  <!-- ---------- Panorama ---------- -->
+  <div class="panorama">
+    <img class="panorama-photo" src="images/panorama-reunion.jpg" width="1800" height="712"
+         loading="lazy" decoding="async"
+         alt="Vue aérienne du lagon turquoise de la côte ouest de La Réunion, avec le récif, la plage et les hauteurs de l'île">
+    <img class="panorama-oiseau" src="images/oiseau.svg" alt="" aria-hidden="true">
+    <p class="panorama-credit">
+      Le lagon de la côte ouest de La Réunion — photo
+      <a href="https://commons.wikimedia.org/wiki/File:Lagon_c%C3%B4te_ouest_La_R%C3%A9union.jpg" rel="noopener">Sébastien Laude</a>,
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license noopener">CC BY-SA 4.0</a>
+    </p>
+  </div>
 
   <!-- ---------- Bandeau défilant ---------- -->
   <div class="bandeau" aria-hidden="true">
@@ -287,7 +300,7 @@
   </section>
 
   <!-- ---------- Avis (masqué tant qu'il n'y en a pas) ---------- -->
-  <section class="section section-creme" id="section-avis" hidden>
+  <section class="section section-creme" id="section-avis">
     <div class="enveloppe">
       <div class="tete-section apparait">
         <span class="sur-titre">Ils nous ont fait confiance</span>
@@ -391,6 +404,15 @@
         </ul>
       </div>
       <div>
+        <h3>Newsletter</h3>
+        <p style="font-size:14.5px">Les dates de marchés et les menus de saison, une fois par mois. Pas plus.</p>
+        <form class="infolettre" id="form-infolettre">
+          <input type="email" name="E-mail" placeholder="Votre e-mail" aria-label="Votre adresse e-mail" required>
+          <button class="pastille pastille-or" type="submit">S'inscrire</button>
+          <small class="infolettre-etat" id="infolettre-etat" role="status"></small>
+        </form>
+      </div>
+      <div>
         <h3>Bon à savoir</h3>
         <ul>
           <li>Commande à partir de 10 parts</li>
@@ -412,7 +434,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
 </div>
 
-<script src="site.js?v=3"></script>
+<script src="site.js?v=6"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

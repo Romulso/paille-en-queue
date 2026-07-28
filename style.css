@@ -300,7 +300,14 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   text-decoration: none;
   margin-right: auto;
 }
-.marque img { width: 52px; height: auto; }
+/* Logo blanc posé sur un écusson vert, comme la version fournie. */
+.marque img {
+  width: 62px;
+  height: auto;
+  padding: 6px 8px;
+  border-radius: 14px;
+  background: var(--vetiver-fonce);
+}
 .marque-texte { display: flex; flex-direction: column; line-height: 1.05; }
 .marque-nom {
   font-family: var(--titre);
@@ -383,7 +390,7 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   .burger { display: none; }
   .tel-entete,
   .entete-actions .pastille-pleine { display: inline-flex; }
-  .marque img { width: 60px; }
+  .marque img { width: 72px; }
   .marque-nom { font-size: 19px; }
 }
 
@@ -568,6 +575,51 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   .heros-grille { grid-template-columns: 1.35fr .95fr; gap: 56px; }
 }
 
+/* ---------- Panorama ----------
+   Le lagon de La Réunion en photo, l'oiseau de la marque par-dessus. */
+.panorama {
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+  background: var(--mer-profonde);
+}
+.panorama-photo {
+  width: 100%;
+  height: clamp(260px, 34vw, 500px);
+  object-fit: cover;
+  object-position: center 62%;
+  display: block;
+}
+/* Voile discret en haut : l'oiseau blanc doit rester lisible sur l'écume. */
+.panorama::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 40% 0;
+  background: linear-gradient(to bottom, rgba(6, 40, 54, .34), transparent);
+  pointer-events: none;
+}
+.panorama-oiseau {
+  position: absolute;
+  top: 12%;
+  left: 6%;
+  z-index: 2;
+  width: clamp(160px, 26vw, 380px);
+  filter: brightness(0) invert(1) drop-shadow(0 6px 18px rgba(4, 28, 38, .55));
+  pointer-events: none;
+}
+.panorama-credit {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .7);
+}
+.panorama-credit a { color: inherit; }
+
 /* ---------- Bandeau défilant ---------- */
 .bandeau {
   background: var(--piment);
@@ -703,6 +755,9 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(258px, 1fr));
 }
+/* display:flex l'emporterait sur le [hidden] du navigateur : sans cette
+   règle, les filtres de catégorie ne masquent rien. */
+.plat[hidden] { display: none; }
 .plat {
   display: flex;
   flex-direction: column;
@@ -1424,6 +1479,33 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 .pied a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 .pied ul { list-style: none; }
 .pied li { padding: 4px 0; }
+/* ---------- Infolettre ---------- */
+.infolettre { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+.infolettre input {
+  flex: 1 1 160px;
+  min-width: 0;
+  padding: 12px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--ligne-sombre);
+  background: rgba(255, 255, 255, .07);
+  color: #fff;
+  font-size: 15px;
+}
+.infolettre input::placeholder { color: rgba(220, 195, 168, .55); }
+.infolettre input:focus {
+  outline: none;
+  border-color: var(--safran);
+  background: rgba(255, 255, 255, .12);
+}
+.infolettre .pastille { padding: 12px 22px; font-size: 14.5px; }
+.infolettre-etat {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--safran);
+  min-height: 1.2em;
+}
+
 .pied-marque img { width: 108px; margin-bottom: 16px; }
 .pied-marque p { max-width: 30ch; font-size: 14.5px; }
 .pied-contact b { color: #fff; font-weight: 600; }

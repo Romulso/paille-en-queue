@@ -114,6 +114,18 @@ intermédiaire. **Formspree** est le plus simple et gratuit jusqu'à
 Le tout premier envoi peut arriver dans les indésirables : marquez-le comme
 « non indésirable » une fois pour toutes.
 
+### La newsletter
+
+Même principe, champ `newsletterEndpoint` dans `data/config.json`. **Brevo**
+(ex-Sendinblue, français, gratuit jusqu'à 300 envois par jour) convient bien.
+Tant que le champ est vide, l'inscription part par la messagerie du visiteur :
+Karine reçoit l'adresse par e-mail et l'ajoute à sa liste à la main.
+
+Trois obligations avant d'envoyer une vraie newsletter : le consentement
+explicite de l'inscrit, un lien de désinscription dans chaque envoi, et une
+fréquence tenue. Une lettre annoncée « une fois par mois » puis abandonnée fait
+plus de mal que pas de lettre du tout.
+
 **Web3Forms** (<https://web3forms.com>, gratuit jusqu'à 250 demandes/mois) est
 une alternative sans création de compte. Il faut alors renseigner deux lignes :
 

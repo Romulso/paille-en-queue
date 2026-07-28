@@ -1,12 +1,10 @@
 {
   "_lisezmoi": "La carte complète. Modifiable depuis admin.html (onglet Carte). Les prix sont en euros, par part. Le champ « image » pointe vers images/<nom-du-fichier> : tant que le fichier n'existe pas, le site affiche un joli aplat coloré à la place.",
-
   "mentionPart": "Tous les plats sont servis avec le riz et la sauce piquante.",
   "mentionMinimum": "Commande à partir de 10 parts.",
   "mentionNonCompris": "Le service, la vaisselle et le pain ne sont jamais compris dans nos prix. Pain 1 € et vaisselle 0,40 € par personne, service sur devis.",
   "mentionLivraison": "Nous nous déplaçons jusqu'à 50 km autour de Montpeyroux : livraison 5 € jusqu'à 10 km, 10 € au-delà. Plus loin, sur devis.",
   "mentionDelai": "Commande à passer 4 à 5 jours à l'avance.",
-
   "plats": [
     {
       "nom": "Rougail saucisses",
@@ -93,7 +91,7 @@
       "slug": "lentilles-boucane",
       "prix": 10,
       "categorie": "porc",
-      "vedette": true,
+      "vedette": false,
       "description": "Lentilles fondantes et poitrine de porc fumée au bois : le boucané. Le plat réunionnais le plus réconfortant qui soit."
     },
     {
@@ -101,7 +99,7 @@
       "slug": "boeuf-massale",
       "prix": 10,
       "categorie": "boeuf-agneau",
-      "vedette": false,
+      "vedette": true,
       "description": "Bœuf longuement mijoté au massalé, jusqu'à ce que la viande se défasse à la cuillère."
     },
     {
@@ -129,7 +127,6 @@
       "description": "Crevettes nacrées dans un lait de coco parfumé au combava et au gingembre. Le plat le plus demandé sur les buffets."
     }
   ],
-
   "entrees": [
     {
       "nom": "Samoussas",
@@ -156,7 +153,6 @@
       "description": "Les petites bouchées vapeur réunionnaises, héritage chinois de l'île. Servies avec leur sauce."
     }
   ],
-
   "buffet": {
     "titre": "En buffet",
     "texte": "Pour un cocktail, un vin d'honneur ou une inauguration, nous composons un buffet créole à partager.",
@@ -169,7 +165,6 @@
       "Brochettes de crevettes à la plancha"
     ]
   },
-
   "_supplements": "Prestations jamais comprises dans les prix, facturées en plus si le client les demande. Un prix à null s'affiche « sur devis ».",
   "supplements": [
     {
@@ -194,7 +189,6 @@
       "description": "Une ou plusieurs personnes pour dresser, servir et débarrasser. Chiffré selon la durée et le nombre de convives."
     }
   ],
-
   "boissons": [
     {
       "nom": "Punch planteur",
@@ -204,7 +198,6 @@
       "description": "Notre planteur maison, préparé la veille pour que les fruits aient le temps de parfumer le rhum."
     }
   ],
-
   "menus": [
     {
       "nom": "Menu Créole",

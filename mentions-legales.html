@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://romulso.github.io/paille-en-queue/mentions-legales.html">
 <meta name="robots" content="noindex, follow">
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=6">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -18,7 +18,7 @@
 <header class="entete">
   <div class="entete-interieur">
     <a class="marque" href="index.html">
-      <img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+      <img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
       <span class="marque-texte">
         <span class="marque-nom">Le Paille en Queue</span>
         <span class="marque-sous">Spécialités créoles</span>
@@ -149,6 +149,14 @@
       <p>
         Logo : Le Paille en Queue. Conception et réalisation du site : 2026.
       </p>
+      <p>
+        Photographie du lagon de la côte ouest de La Réunion :
+        <a href="https://commons.wikimedia.org/wiki/File:Lagon_c%C3%B4te_ouest_La_R%C3%A9union.jpg" rel="noopener">Sébastien Laude</a>,
+        publiée sur Wikimedia Commons sous licence
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license noopener">Creative Commons Attribution – Partage dans les mêmes conditions 4.0</a>.
+        L'image affichée sur ce site en est un recadrage, mis à disposition sous
+        cette même licence.
+      </p>
 
     </div>
   </section>
@@ -181,6 +189,15 @@
         </ul>
       </div>
       <div>
+        <h3>Newsletter</h3>
+        <p style="font-size:14.5px">Les dates de marchés et les menus de saison, une fois par mois. Pas plus.</p>
+        <form class="infolettre" id="form-infolettre">
+          <input type="email" name="E-mail" placeholder="Votre e-mail" aria-label="Votre adresse e-mail" required>
+          <button class="pastille pastille-or" type="submit">S'inscrire</button>
+          <small class="infolettre-etat" id="infolettre-etat" role="status"></small>
+        </form>
+      </div>
+      <div>
         <h3>Bon à savoir</h3>
         <ul>
           <li>Commande à partir de 10 parts</li>
@@ -202,7 +219,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
 </div>
 
-<script src="site.js?v=3"></script>
+<script src="site.js?v=6"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

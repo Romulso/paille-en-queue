@@ -33,6 +33,9 @@
   "_champsCaches": "Champs ajoutés à l'envoi, exigés par certains services (Web3Forms réclame par exemple une clé access_key).",
   "formulaireChampsCaches": {},
 
+  "_newsletter": "Adresse d'inscription fournie par Brevo, Mailchimp ou équivalent. Laissée vide, l'inscription part par e-mail via la messagerie du visiteur.",
+  "newsletterEndpoint": "",
+
   "_reseaux": "Laisser vide pour masquer le lien.",
   "facebook": "",
   "instagram": ""

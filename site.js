@@ -312,7 +312,29 @@
     if (!section) return;
     const d = await charger("avis");
     const liste = d && Array.isArray(d.avis) ? d.avis : [];
-    if (!liste.length) { section.hidden = true; return; }
+    section.hidden = false;
+
+    // Pas encore de témoignage : plutôt que de masquer la section ou d'en
+    // inventer, on invite les clients à en laisser un.
+    if (!liste.length) {
+      $("#zone-avis").className = "";
+      $("#zone-avis").innerHTML = `
+        <div class="etat-vide">
+          <h3>Les premiers avis arrivent</h3>
+          <p>
+            Vous avez fait appel à nous pour un repas ou un événement&nbsp;?
+            Votre retour aide énormément les personnes qui hésitent encore.
+          </p>
+          <p style="margin-top:18px">
+            <a class="pastille pastille-pleine"
+               href="mailto:Lepailleenqueue33@gmail.com?subject=${encodeURIComponent("Mon avis sur Le Paille en Queue")}"
+               data-cfg-href="email|mailto:">Laisser un avis</a>
+          </p>
+        </div>`;
+      apparitions();
+      return;
+    }
+    $("#zone-avis").className = "grille-avis";
 
     $("#zone-avis").innerHTML = liste.map((a) => {
       const initiale = (a.auteur || "?").trim().charAt(0).toUpperCase();
@@ -329,8 +351,47 @@
         </footer>
       </article>`;
     }).join("");
-    section.hidden = false;
     apparitions();
+  }
+
+  /* ---------- Infolettre ---------- */
+  function infolettre(cfg) {
+    const form = $("#form-infolettre");
+    if (!form) return;
+    const etat = $("#infolettre-etat");
+    const champ = $("input", form);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const adresse = champ.value.trim();
+      const endpoint = (cfg && cfg.newsletterEndpoint) || "";
+
+      if (!endpoint) {
+        // Pas de service d'envoi branché : l'inscription part par e-mail.
+        const objet = "Inscription à la newsletter";
+        const corps = `Bonjour,\n\nJe souhaite recevoir vos actualités à cette adresse : ${adresse}\n`;
+        location.href = `mailto:${(cfg && cfg.email) || "Lepailleenqueue33@gmail.com"}`
+          + `?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
+        etat.textContent = "Votre messagerie s'ouvre : il ne reste qu'à envoyer.";
+        return;
+      }
+
+      etat.textContent = "Inscription en cours…";
+      try {
+        const r = await fetch(endpoint, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (!r.ok) throw new Error(r.status);
+        form.reset();
+        etat.textContent = "C'est noté, merci !";
+      } catch (err) {
+        console.error(err);
+        etat.textContent = "L'inscription n'a pas abouti. Réessayez plus tard.";
+      }
+    });
   }
 
   /* ---------- Formulaire de devis ---------- */
@@ -483,5 +544,6 @@
     marches();
     avis();
     devis(cfg);
+    infolettre(cfg);
   });
 })();

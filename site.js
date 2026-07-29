@@ -96,17 +96,19 @@
       img.addEventListener("error", () => img.remove());
       if (img.complete && img.naturalWidth === 0) img.remove();
     });
+    // Chaque cadre reçoit sa teinte tout de suite : l'aplat est prêt bien
+    // avant que l'image ne se charge, ou n'échoue à se charger.
+    $$(".photo", racine).forEach((cadre) => {
+      if (/(^| )t[1-8]( |$)/.test(cadre.className)) return;
+      const nom = cadre.dataset.nom || "";
+      let somme = 0;
+      for (const c of nom) somme += c.charCodeAt(0);
+      cadre.classList.add(`t${(somme % 8) + 1}`);
+    });
+    // Une image absente est retirée pour ne pas laisser l'icône « cassée ».
     $$(".photo img", racine).forEach((img) => {
-      const cadre = img.closest(".photo");
-      const secours = () => {
-        if (cadre.classList.contains("photo-vide")) return;
-        const nom = cadre.dataset.nom || img.alt || "";
-        let somme = 0;
-        for (const c of nom) somme += c.charCodeAt(0);
-        cadre.classList.add("photo-vide", `t${(somme % 8) + 1}`);
-      };
-      img.addEventListener("error", secours);
-      if (img.complete && img.naturalWidth === 0) secours();
+      img.addEventListener("error", () => img.remove());
+      if (img.complete && img.naturalWidth === 0) img.remove();
     });
   }
 

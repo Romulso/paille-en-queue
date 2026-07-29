@@ -796,19 +796,20 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   border-radius: 100px;
 }
 
-/* Photo : tant que le fichier n'existe pas, on affiche un aplat coloré
-   plutôt qu'une image cassée. La classe .photo-vide est posée par site.js. */
+/* Photo ----------
+   L'aplat coloré et le nom du plat sont TOUJOURS dessous ; la photo se pose
+   par-dessus quand elle existe. Aucun clignotement, et le repli fonctionne
+   même sans JavaScript ou avec le chargement différé. */
 .photo {
   position: relative;
   aspect-ratio: 4 / 3;
   background: var(--vanille-3);
   overflow: hidden;
+  display: grid;
+  place-items: center;
+  text-align: center;
 }
-.photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
-.plat:hover .photo img { transform: scale(1.05); }
-.photo-vide { display: grid; place-items: center; text-align: center; }
-.photo-vide img { display: none; }
-.photo-vide::after {
+.photo::after {
   content: attr(data-nom);
   font-family: var(--titre);
   font-size: 19px;
@@ -817,15 +818,26 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   padding: 0 18px;
   text-shadow: 0 2px 14px rgba(0, 0, 0, .35);
   text-wrap: balance;
+  grid-area: 1 / 1;
 }
-.photo-vide.t1 { background: linear-gradient(148deg, #c4291f, #7d1a12); }
-.photo-vide.t2 { background: linear-gradient(148deg, #e6a12a, #b4600f); }
-.photo-vide.t3 { background: linear-gradient(148deg, #10503f, #062a20); }
-.photo-vide.t4 { background: linear-gradient(148deg, #0d7d8c, #084651); }
-.photo-vide.t5 { background: linear-gradient(148deg, #e0503f, #a8321f); }
-.photo-vide.t6 { background: linear-gradient(148deg, #f5c85b, #d18b1c); }
-.photo-vide.t7 { background: linear-gradient(148deg, #0b6a86, #063c50); }
-.photo-vide.t8 { background: linear-gradient(148deg, #d9b98a, #a67c48); }
+.photo img {
+  grid-area: 1 / 1;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+}
+.plat:hover .photo img { transform: scale(1.05); }
+
+.photo.t1 { background: linear-gradient(148deg, #c4291f, #7d1a12); }
+.photo.t2 { background: linear-gradient(148deg, #e6a12a, #b4600f); }
+.photo.t3 { background: linear-gradient(148deg, #10503f, #062a20); }
+.photo.t4 { background: linear-gradient(148deg, #0d7d8c, #084651); }
+.photo.t5 { background: linear-gradient(148deg, #e0503f, #a8321f); }
+.photo.t6 { background: linear-gradient(148deg, #f5c85b, #d18b1c); }
+.photo.t7 { background: linear-gradient(148deg, #0b6a86, #063c50); }
+.photo.t8 { background: linear-gradient(148deg, #d9b98a, #a67c48); }
 
 /* ---------- Suppléments ---------- */
 .grille-supplements {

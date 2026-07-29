@@ -59,8 +59,23 @@ Une à deux minutes plus tard, le site en ligne est à jour.
 
 ### Plus tard : le nom de domaine
 
-Comptez ~10 €/an chez OVH, Gandi ou Ionos. `lepailleenqueue.fr` est le choix
-évident. Dans la zone DNS du domaine :
+**Vérification faite le 29 juillet 2026 :**
+
+| Domaine | État |
+|---|---|
+| `lepailleenqueue.fr` | **Déjà déposé chez OVH** depuis le 2 octobre 2019, renouvelé le 30 novembre 2025, expire le 2 octobre 2026. Affiche la page « Site en construction » d'OVH. |
+| `lepaille-en-queue.fr` | **Libre**. C'est pourtant celui imprimé sur les bâches du stand. |
+
+Le premier est très probablement celui de Karine, oublié depuis 2019 et payé
+sans servir. **Avant d'acheter quoi que ce soit, vérifier le compte OVH** :
+s'il est bien à elle, il n'y a rien à acheter, juste une zone DNS à modifier.
+Attention à l'échéance du 2 octobre 2026.
+
+Le second, avec tirets, correspond à ce qui est déjà imprimé sur le matériel :
+le déposer aussi (~10 €/an) et le faire pointer vers le même site évite que
+quelqu'un d'autre s'en empare, et rend les bâches exactes.
+
+Dans la zone DNS du domaine retenu :
 
 | Type | Nom | Valeur |
 |---|---|---|

@@ -1,3 +1,6 @@
 .DS_Store
 Thumbs.db
 *.swp
+
+# Photos originales : lourdes, conservées en local, hors du dépôt public
+images/originaux/

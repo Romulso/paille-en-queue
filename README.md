@@ -5,7 +5,7 @@ depuis 2009. Repas livrés à partir de 10 parts, buffets et prestations
 événementielles pour les entreprises, les communes, les associations et les
 particuliers.
 
-🌐 **<https://romulso.github.io/paille-en-queue/>**
+🌐 **<https://lepaille-en-queue.fr/>**
 
 ## Comment c'est fait
 

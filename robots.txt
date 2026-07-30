@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin.html
 Disallow: /apercu.html
 
-Sitemap: https://romulso.github.io/paille-en-queue/sitemap.xml
+Sitemap: https://lepaille-en-queue.fr/sitemap.xml

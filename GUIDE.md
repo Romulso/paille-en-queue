@@ -45,7 +45,7 @@ Puis ouvrez <http://localhost:8777>. Pour arrêter : `Ctrl + C`.
 Le site est publié sur **GitHub Pages**, comme `studio-saint-lary`.
 
 - Dépôt : <https://github.com/Romulso/paille-en-queue>
-- Adresse publique : <https://romulso.github.io/paille-en-queue/>
+- Adresse publique : <https://lepaille-en-queue.fr/>
 
 Pour publier une modification :
 
@@ -57,47 +57,37 @@ git push
 
 Une à deux minutes plus tard, le site en ligne est à jour.
 
-### Plus tard : le nom de domaine
+### Le nom de domaine
 
-**Vérification faite le 29 juillet 2026 :**
+`lepaille-en-queue.fr` est déposé chez OVH et branché sur GitHub Pages depuis
+le 30 juillet 2026. C'est celui imprimé sur les bâches du stand.
 
-| Domaine | État |
-|---|---|
-| `lepailleenqueue.fr` | **Déjà déposé chez OVH** depuis le 2 octobre 2019, renouvelé le 30 novembre 2025, expire le 2 octobre 2026. Affiche la page « Site en construction » d'OVH. |
-| `lepaille-en-queue.fr` | **Libre**. C'est pourtant celui imprimé sur les bâches du stand. |
+Le fichier `CNAME` à la racine du dépôt porte ce nom : **ne pas le supprimer**,
+c'est lui qui dit à GitHub quel domaine servir.
 
-Le premier est très probablement celui de Karine, oublié depuis 2019 et payé
-sans servir. **Avant d'acheter quoi que ce soit, vérifier le compte OVH** :
-s'il est bien à elle, il n'y a rien à acheter, juste une zone DNS à modifier.
-Attention à l'échéance du 2 octobre 2026.
-
-Le second, avec tirets, correspond à ce qui est déjà imprimé sur le matériel :
-le déposer aussi (~10 €/an) et le faire pointer vers le même site évite que
-quelqu'un d'autre s'en empare, et rend les bâches exactes.
-
-Dans la zone DNS du domaine retenu :
+Zone DNS actuelle chez OVH :
 
 | Type | Nom | Valeur |
 |---|---|---|
 | A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
-| CNAME | www | `romulso.github.io.` |
+| A | www | 185.199.109.153 |
 
-Puis **Settings → Pages → Custom domain**, saisir le domaine, et cocher
-« Enforce HTTPS » dès que la case devient active.
+GitHub recommande de déclarer **les quatre** adresses pour l'apex, afin que le
+site reste servi si l'une d'elles tombe. Les trois manquantes :
 
-> **Important :** le jour où le domaine est branché, il faut remplacer
-> `https://romulso.github.io/paille-en-queue/` par la nouvelle adresse partout où
-> elle apparaît — balises `canonical` et `og:url` des sept pages, `robots.txt`
-> et `sitemap.xml`. Une seule commande suffit :
->
-> ```bash
-> grep -rl "romulso.github.io/paille-en-queue/" . | xargs sed -i '' 's|https://romulso.github.io/paille-en-queue/|https://lepailleenqueue.fr/|g'
-> ```
->
-> Tant que ce n'est pas fait, Google continue d'indexer l'ancienne adresse.
+```
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+Pour `www`, un `CNAME` vers `romulso.github.io.` vaut mieux qu'un `A` : il suit
+automatiquement les changements d'adresse de GitHub.
+
+> Un second domaine, `lepailleenqueue.fr` (sans tirets), est déposé chez OVH
+> depuis 2019 et expire le 2 octobre 2026. Il ne sert à rien aujourd'hui. Soit
+> on le laisse expirer, soit on le fait rediriger vers `lepaille-en-queue.fr`
+> depuis l'interface OVH — utile, car c'est l'orthographe de l'adresse e-mail.
 
 ---
 

@@ -242,8 +242,65 @@
       if (texte) $$(`[${attr}]`).forEach((el) => { el.textContent = texte; });
     });
 
+    if (zoneMenus) schemaCarte(d);
+
     replisPhoto();
     apparitions();
+  }
+
+  /* Données structurées de la carte, construites à partir du même JSON que
+     l'affichage : les prix annoncés à Google ne peuvent pas diverger. */
+  function schemaCarte(d) {
+    if ($("#schema-carte")) return;
+    const article = (p) => ({
+      "@type": "MenuItem",
+      name: p.nom,
+      description: p.description,
+      offers: {
+        "@type": "Offer",
+        price: p.prix,
+        priceCurrency: "EUR",
+        description: p.unite || "la part",
+      },
+    });
+    const section = (nom, liste) => ({
+      "@type": "MenuSection", name: nom, hasMenuItem: liste.map(article),
+    });
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Menu",
+      name: "La carte du Paille en Queue",
+      inLanguage: "fr-FR",
+      url: "https://lepaille-en-queue.fr/carte.html",
+      hasMenuSection: [
+        section("Plats créoles", d.plats),
+        section("Entrées et apéritif", d.entrees),
+        section("Boissons", d.boissons),
+        {
+          "@type": "MenuSection",
+          name: "Menus complets",
+          hasMenuItem: d.menus.map((m) => ({
+            "@type": "MenuItem",
+            name: m.nom,
+            description: m.resume,
+            offers: {
+              "@type": "Offer",
+              price: m.prix,
+              priceCurrency: "EUR",
+              description: m.prixMax
+                ? `Par personne, jusqu'à ${m.prixMax} € ${m.supplementMotif || ""}`.trim()
+                : "Par personne",
+            },
+          })),
+        },
+      ],
+    };
+    const balise = document.createElement("script");
+    balise.type = "application/ld+json";
+    balise.id = "schema-carte";
+    balise.textContent = JSON.stringify(schema);
+    document.head.append(balise);
   }
 
   function filtres(zone) {

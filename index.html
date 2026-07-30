@@ -3,33 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Le Paille en Queue — Traiteur créole et réunionnais en Dordogne</title>
-<meta name="description" content="Traiteur réunionnais en Dordogne depuis 2009. Repas créoles livrés à domicile à partir de 10 parts, buffets, événements d'entreprise, associations sportives et communes. Devis gratuit sous 48 h.">
+<title>Traiteur réunionnais en Dordogne — Le Paille en Queue</title>
+<meta name="description" content="Traiteur créole et réunionnais en Dordogne depuis 2009 : repas livrés dès 10 parts, buffets, mariages et repas d'entreprise. Devis gratuit sous 48 h.">
 <link rel="canonical" href="https://lepaille-en-queue.fr/">
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=12">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="Le Paille en Queue">
-<meta property="og:title" content="Le Paille en Queue — Traiteur créole et réunionnais en Dordogne">
-<meta property="og:description" content="Cuisine réunionnaise en Dordogne depuis 2009. Repas livrés, buffets et événements. Devis gratuit sous 48 h.">
+<meta property="og:title" content="Traiteur réunionnais en Dordogne — Le Paille en Queue">
+<meta property="og:description" content="Traiteur créole et réunionnais en Dordogne depuis 2009 : repas livrés dès 10 parts, buffets, mariages et repas d'entreprise. Devis gratuit sous 48 h.">
 <meta property="og:url" content="https://lepaille-en-queue.fr/">
 <meta property="og:image" content="https://lepaille-en-queue.fr/images/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FoodEstablishment",
+  "@type": ["FoodEstablishment", "CateringBusiness"],
+  "@id": "https://lepaille-en-queue.fr/#entreprise",
   "name": "Le Paille en Queue",
-  "description": "Traiteur ambulant spécialisé en cuisine réunionnaise et créole, en Dordogne depuis 2009.",
+  "alternateName": "Le Paille en Queue — Spécialités créoles",
+  "description": "Traiteur ambulant spécialisé en cuisine réunionnaise et créole, en Dordogne depuis 2009. Repas livrés à partir de 10 parts, buffets et prestations événementielles.",
   "url": "https://lepaille-en-queue.fr/",
+  "logo": "https://lepaille-en-queue.fr/images/logo@2x.png",
+  "image": "https://lepaille-en-queue.fr/images/partage.jpg",
   "telephone": "+33627352328",
   "email": "Lepailleenqueue33@gmail.com",
   "foundingDate": "2009",
   "servesCuisine": ["Réunionnaise", "Créole"],
-  "priceRange": "€€",
+  "priceRange": "10 € - 30 €",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Espèces, Chèque, Virement bancaire",
+  "hasMenu": "https://lepaille-en-queue.fr/carte.html",
+  "sameAs": ["https://www.facebook.com/share/1FLfRCbbv9/"],
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Montpeyroux",
@@ -39,11 +51,39 @@
   },
   "areaServed": [
     { "@type": "AdministrativeArea", "name": "Dordogne" },
-    { "@type": "AdministrativeArea", "name": "Gironde" }
+    { "@type": "AdministrativeArea", "name": "Gironde" },
+    { "@type": "City", "name": "Montpeyroux" },
+    { "@type": "City", "name": "Montpon-Ménestérol" },
+    { "@type": "City", "name": "Le Pizou" },
+    { "@type": "City", "name": "Saint-Laurent-des-Hommes" },
+    { "@type": "City", "name": "Saint-Seurin-sur-l'Isle" }
   ],
-  "founder": { "@type": "Person", "name": "Karine Danna" }
+  "founder": { "@type": "Person", "name": "Karine Danna" },
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Repas créole livré",
+      "description": "Plats réunionnais livrés prêts à servir, à partir de 10 parts. Riz et sauce piquante compris.",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "minPrice": 10, "maxPrice": 12, "priceCurrency": "EUR",
+        "valueAddedTaxIncluded": true
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Menu complet pour événement",
+      "description": "Entrée, plat au choix et dessert, pour mariages, repas d'entreprise, fêtes communales et repas d'association.",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "minPrice": 18, "maxPrice": 30, "priceCurrency": "EUR",
+        "valueAddedTaxIncluded": true
+      }
+    }
+  ]
 }
 </script>
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -433,7 +473,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
 </div>
 
-<script src="site.js?v=11"></script>
+<script src="site.js?v=12"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

@@ -9,7 +9,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=12">
+<link rel="stylesheet" href="style.css?v=13">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -215,6 +215,84 @@
     </div>
   </section>
 
+  <!-- ---------- Garanties ---------- -->
+  <section class="section">
+    <div class="enveloppe">
+      <div class="tete-section apparait">
+        <span class="sur-titre">Ce que vérifient les acheteurs</span>
+        <h2>Une entreprise en règle</h2>
+        <p class="chapo">
+          Une mairie ou un comité d'entreprise a des cases à cocher avant de
+          signer. Les voici, sans avoir à les demander.
+        </p>
+      </div>
+
+      <div class="grille-garanties">
+        <article class="garantie apparait">
+          <div class="garantie-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Hygiène alimentaire</h3>
+            <p>Karine est titulaire de la formation obligatoire à l'hygiène alimentaire (HACCP).</p>
+          </div>
+        </article>
+
+        <article class="garantie apparait">
+          <div class="garantie-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l7 4v5c0 4-3 7.5-7 9-4-1.5-7-5-7-9V7z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Assurance professionnelle</h3>
+            <p>L'entreprise est couverte par une assurance responsabilité civile professionnelle.</p>
+          </div>
+        </article>
+
+        <article class="garantie apparait">
+          <div class="garantie-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h4"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Devis et facture</h3>
+            <p>Devis détaillé puis facture en bonne et due forme, adaptés à la comptabilité publique.</p>
+          </div>
+        </article>
+
+        <article class="garantie apparait">
+          <div class="garantie-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/>
+            </svg>
+          </div>
+          <div>
+            <h3>La carte en PDF</h3>
+            <p>À télécharger et à faire circuler en interne, avec tous les tarifs.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="groupe-boutons">
+        <a class="pastille pastille-pleine" href="documents/carte-le-paille-en-queue.pdf" download>
+          Télécharger la carte (PDF)
+        </a>
+        <a class="pastille" href="devis.html">Demander un devis</a>
+      </div>
+
+      <p class="note-carte">
+        <span>SIRET <b data-cfg="siret">51134341000037</b></span>
+        <span data-cfg="rcs">RCS Bordeaux</span>
+        <span>Code APE <span data-cfg="ape">4789Z</span></span>
+        <span>Entreprise créée en <b>2009</b></span>
+      </p>
+    </div>
+  </section>
+
   <!-- ---------- Ce dont on a besoin ---------- -->
   <section class="section sombre">
     <div class="enveloppe">
@@ -282,6 +360,7 @@
         <ul>
           <li><a href="tel:+33627352328" data-cfg-href="telephoneLien|tel:"><b data-cfg="telephone">06 27 35 23 28</b></a></li>
           <li><a href="mailto:Lepailleenqueue33@gmail.com" data-cfg-href="email|mailto:"><span data-cfg="email">Lepailleenqueue33@gmail.com</span></a></li>
+          <li><a href="https://wa.me/33627352328?text=Bonjour,%20je%20souhaite%20des%20informations%20pour%20un%20repas%20cr%C3%A9ole." rel="noopener">WhatsApp</a></li>
           <li><span data-cfg="villeAffichee">Montpeyroux (24)</span></li>
         </ul>
         <ul>
@@ -297,6 +376,7 @@
           <li><a href="marches.html">Nos marchés</a></li>
           <li><a href="faq.html">Questions fréquentes</a></li>
           <li><a href="devis.html">Demander un devis</a></li>
+          <li><a href="documents/carte-le-paille-en-queue.pdf" download>La carte en PDF</a></li>
         </ul>
       </div>
       <div>
@@ -327,10 +407,11 @@
 
 <div class="barre-mobile">
   <a class="pastille" href="tel:+33627352328" data-cfg-href="telephoneLien|tel:">Appeler</a>
-  <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
+  <a class="pastille pastille-whatsapp" href="https://wa.me/33627352328?text=Bonjour,%20je%20souhaite%20des%20informations%20pour%20un%20repas%20cr%C3%A9ole." rel="noopener">WhatsApp</a>
+  <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=12"></script>
+<script src="site.js?v=13"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

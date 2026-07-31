@@ -35,5 +35,10 @@
   "newsletterEndpoint": "",
   "_reseaux": "Laisser vide pour masquer le lien.",
   "facebook": "https://www.facebook.com/share/1FLfRCbbv9/?mibextid=wwXIfr",
-  "instagram": ""
+  "instagram": "",
+  "_whatsapp": "Numéro au format international sans espaces ni +, utilisé pour les liens wa.me.",
+  "whatsapp": "33627352328",
+  "_garanties": "Mentions de sérieux affichées aux professionnels.",
+  "haccp": true,
+  "assuranceRcPro": true
 }

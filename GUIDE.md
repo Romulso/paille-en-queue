@@ -172,7 +172,36 @@ Ce n'est pas une erreur, et rien ne casse.
 
 ---
 
-## 7 · Les règles commerciales affichées sur le site
+## 7 · La carte en PDF
+
+`documents/carte-le-paille-en-queue.pdf` est le document que les mairies et les
+comités d'entreprise font circuler en interne. Il est **construit à partir de
+`data/carte.json`**, donc impossible qu'il affiche d'autres prix que le site.
+
+**À régénérer après toute modification des plats, des menus ou des tarifs :**
+
+```bash
+cd /Users/admin/Projets/paille-en-queue && python3 outils/generer-menu-pdf.py
+```
+
+Si Python répond `No module named 'fpdf'`, installez la bibliothèque une fois
+pour toutes :
+
+```bash
+python3 -m pip install --user fpdf2
+```
+
+Le PDF reprend la carte, les menus, les suppléments, les conditions de vente et
+les garanties professionnelles. Les polices de `outils/polices/` ne servent qu'à
+lui : ce sont les mêmes que le site, converties en TTF.
+
+> Oublier de régénérer le PDF est la seule façon de faire diverger les tarifs.
+> Prenez l'habitude de lancer la commande juste après avoir remplacé
+> `data/carte.json`.
+
+---
+
+## 8 · Les règles commerciales affichées sur le site
 
 Ces informations sont écrites en clair dans le HTML (pour le référencement) et
 répétées dans `data/carte.json`, qui les rafraîchit si elles changent. Pour en
@@ -199,7 +228,7 @@ vaisselle et le service. Point tranché, les menus sont à jour.
 
 ---
 
-## 8 · Ce qui reste à compléter
+## 9 · Ce qui reste à compléter
 
 - [ ] **Les photos** — c'est ce qui manque le plus au site aujourd'hui.
 - [ ] **Le logo en haute définition** — celui du PDF fait 213 × 161 pixels.

@@ -260,6 +260,13 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   box-shadow: 0 10px 24px -12px rgba(230, 161, 42, .8);
 }
 .pastille-or:hover { background: var(--safran); border-color: var(--safran); }
+/* WhatsApp garde sa couleur reconnaissable : on l'identifie sans lire. */
+.pastille-whatsapp {
+  background: #25d366;
+  border-color: #25d366;
+  color: #08331a;
+}
+.pastille-whatsapp:hover { background: #1eb857; border-color: #1eb857; color: #08331a; }
 .sombre .pastille { border-color: var(--ligne-sombre); color: var(--clair); }
 .sombre .pastille:hover { border-color: var(--clair); }
 .sombre .pastille-or { color: var(--encre); }
@@ -841,6 +848,38 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 .photo.t6 { background: linear-gradient(148deg, #f5c85b, #d18b1c); }
 .photo.t7 { background: linear-gradient(148deg, #0b6a86, #063c50); }
 .photo.t8 { background: linear-gradient(148deg, #d9b98a, #a67c48); }
+
+/* ---------- Garanties professionnelles ---------- */
+.grille-garanties {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.garantie {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  padding: 22px 22px 24px;
+  border-radius: var(--rayon-s);
+  background: var(--vanille);
+  border: 1px solid var(--ligne);
+}
+.section-creme .garantie { background: #fff; }
+.sombre .garantie { background: rgba(255, 255, 255, .06); border-color: var(--ligne-sombre); }
+.garantie-ico {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--vetiver);
+  color: var(--safran);
+}
+.garantie-ico svg { width: 20px; height: 20px; }
+.garantie h3 { font-size: 17px; margin-bottom: 5px; }
+.garantie p { font-size: 14.5px; color: var(--encre-douce); }
+.sombre .garantie p { color: var(--doux); }
 
 /* ---------- Suppléments ---------- */
 .grille-supplements {

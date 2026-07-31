@@ -402,7 +402,7 @@
           </p>
           <p style="margin-top:18px">
             <a class="pastille pastille-pleine"
-               href="mailto:Lepailleenqueue33@gmail.com?subject=${encodeURIComponent("Mon avis sur Le Paille en Queue")}"
+               href="mailto:contact@lepaille-en-queue.fr?subject=${encodeURIComponent("Mon avis sur Le Paille en Queue")}"
                data-cfg-href="email|mailto:">Laisser un avis</a>
           </p>
         </div>`;
@@ -446,22 +446,32 @@
         // Pas de service d'envoi branché : l'inscription part par e-mail.
         const objet = "Inscription à la newsletter";
         const corps = `Bonjour,\n\nJe souhaite recevoir vos actualités à cette adresse : ${adresse}\n`;
-        location.href = `mailto:${(cfg && cfg.email) || "Lepailleenqueue33@gmail.com"}`
+        location.href = `mailto:${(cfg && cfg.email) || "contact@lepaille-en-queue.fr"}`
           + `?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
         etat.textContent = "Votre messagerie s'ouvre : il ne reste qu'à envoyer.";
         return;
       }
 
       etat.textContent = "Inscription en cours…";
+      // Chaque service impose son nom de champ : Brevo attend EMAIL, Formspree
+      // accepte n'importe quoi. Le nom et les champs cachés viennent des réglages.
+      const envoi = new FormData();
+      envoi.append((cfg && cfg.newsletterChampEmail) || "E-mail", adresse);
+      Object.entries((cfg && cfg.newsletterChampsCaches) || {})
+        .forEach(([cle, val]) => envoi.append(cle, val));
+
       try {
         const r = await fetch(endpoint, {
           method: "POST",
-          body: new FormData(form),
+          body: envoi,
           headers: { Accept: "application/json" },
+          mode: endpoint.includes("sibforms.com") ? "no-cors" : "cors",
         });
-        if (!r.ok) throw new Error(r.status);
+        // En mode no-cors la réponse est opaque : pas de statut lisible, mais
+        // l'envoi a bien eu lieu. On ne considère un échec que si on peut le lire.
+        if (r.type !== "opaque" && !r.ok) throw new Error(r.status);
         form.reset();
-        etat.textContent = "C'est noté, merci !";
+        etat.textContent = "C'est noté, merci ! Confirmez l'inscription depuis l'e-mail que vous allez recevoir.";
       } catch (err) {
         console.error(err);
         etat.textContent = "L'inscription n'a pas abouti. Réessayez plus tard.";
@@ -606,7 +616,7 @@
       .map(([cle, vals]) => `${cle} : ${vals.join(", ")}`)
       .join("\n");
     const objet = `Demande de devis — ${donnees.get("Type d'événement") || "repas"} du ${donnees.get("Date de l'événement") || "?"}`;
-    return `mailto:Lepailleenqueue33@gmail.com?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
+    return `mailto:contact@lepaille-en-queue.fr?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
   }
 
   /* ---------- Démarrage ---------- */

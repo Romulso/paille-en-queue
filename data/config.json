@@ -6,7 +6,7 @@
   "creation": 2009,
   "telephone": "06 27 35 23 28",
   "telephoneLien": "+33627352328",
-  "email": "Lepailleenqueue33@gmail.com",
+  "email": "contact@lepaille-en-queue.fr",
   "villeAffichee": "Montpeyroux (24)",
   "departement": "Dordogne",
   "adresseLegale": "26 Passage de la Forge, 24610 Montpeyroux",
@@ -40,5 +40,8 @@
   "whatsapp": "33627352328",
   "_garanties": "Mentions de sérieux affichées aux professionnels.",
   "haccp": true,
-  "assuranceRcPro": true
+  "assuranceRcPro": true,
+  "_newsletterChamps": "Brevo attend un champ nommé EMAIL et quelques champs cachés. Adapter ici selon le service choisi.",
+  "newsletterChampEmail": "E-mail",
+  "newsletterChampsCaches": {}
 }

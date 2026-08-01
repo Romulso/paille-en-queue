@@ -4,6 +4,21 @@ Déposez simplement les fichiers dans ce dossier, avec le bon nom.
 Tant qu'un fichier n'existe pas, le site affiche un aplat coloré portant le nom
 du plat — rien ne casse, rien n'apparaît en erreur.
 
+> **Après avoir ajouté ou remplacé une photo, lancez :**
+>
+> ```bash
+> python3 outils/optimiser-images.py
+> ```
+>
+> Le script fabrique à côté de chaque `.jpg` une version `.avif` et une version
+> `.webp`, deux à trois fois plus légères, que les navigateurs récents utilisent
+> à la place. Les fichiers `-900`, `-1400` et `-1800` sont les versions réduites
+> des grandes images d'ambiance, pour les téléphones. Tout cela se produit tout
+> seul : vous ne déposez que le `.jpg`.
+>
+> Ne modifiez pas les `.avif` et `.webp` à la main, ils sont réécrits à chaque
+> passage du script.
+
 ## Format
 
 - **JPEG** (`.jpg`), pas de PNG pour les photos : cinq fois plus lourd.

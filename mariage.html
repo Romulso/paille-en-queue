@@ -9,12 +9,13 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Le Paille en Queue">
 <meta property="og:title" content="Traiteur mariage en Dordogne — Le Paille en Queue">
 <meta property="og:description" content="Traiteur créole pour votre mariage en Dordogne : vin d'honneur, repas assis ou buffet, de 18 à 30 € par personne. Cuisiné sur place dès 50 convives.">
 <meta property="og:image" content="https://lepaille-en-queue.fr/images/partage.jpg">
@@ -33,13 +34,178 @@
   ]
 }
 </script>
+<!--auto:schema-entreprise-->
+<script type="application/ld+json" id="schema-entreprise">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FoodEstablishment",
+      "@id": "https://lepaille-en-queue.fr/#entreprise",
+      "name": "Le Paille en Queue",
+      "alternateName": "Le Paille en Queue — Spécialités créoles",
+      "description": "Traiteur ambulant spécialisé en cuisine réunionnaise et créole, en Dordogne depuis 2009. Repas livrés à partir de 10 parts, buffets et prestations événementielles.",
+      "url": "https://lepaille-en-queue.fr/",
+      "logo": "https://lepaille-en-queue.fr/images/logo@2x.png",
+      "image": "https://lepaille-en-queue.fr/images/partage.jpg",
+      "telephone": "+33627352328",
+      "email": "contact@lepaille-en-queue.fr",
+      "foundingDate": "2009",
+      "servesCuisine": [
+        "Réunionnaise",
+        "Créole"
+      ],
+      "priceRange": "10 € - 30 €",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Espèces, Chèque, Virement bancaire",
+      "hasMenu": "https://lepaille-en-queue.fr/carte.html",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "SIRET",
+        "value": "51134341000037"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Karine Danna"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "26 Passage de la Forge",
+        "postalCode": "24610",
+        "addressLocality": "Montpeyroux",
+        "addressRegion": "Dordogne",
+        "addressCountry": "FR"
+      },
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Dordogne"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Gironde"
+        },
+        {
+          "@type": "City",
+          "name": "Montpeyroux"
+        },
+        {
+          "@type": "City",
+          "name": "Montpon-Ménestérol"
+        },
+        {
+          "@type": "City",
+          "name": "Le Pizou"
+        },
+        {
+          "@type": "City",
+          "name": "Saint-Laurent-des-Hommes"
+        },
+        {
+          "@type": "City",
+          "name": "Saint-Seurin-sur-l'Isle"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "name": "Repas créole livré",
+          "description": "Plats réunionnais livrés prêts à servir, à partir de 10 parts. Riz et sauce piquante compris.",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": 10,
+            "maxPrice": 12,
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": true
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Menu complet pour événement",
+          "description": "Entrée, plat au choix et dessert, pour mariages, repas d'entreprise, fêtes communales et repas d'association.",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": 18,
+            "maxPrice": 30,
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": true
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/share/1FLfRCbbv9/?mibextid=wwXIfr"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://lepaille-en-queue.fr/#site",
+      "url": "https://lepaille-en-queue.fr/",
+      "name": "Le Paille en Queue",
+      "inLanguage": "fr-FR",
+      "publisher": {
+        "@id": "https://lepaille-en-queue.fr/#entreprise"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://lepaille-en-queue.fr/mariage.html#page",
+      "url": "https://lepaille-en-queue.fr/mariage.html",
+      "name": "Traiteur mariage en Dordogne — Le Paille en Queue",
+      "inLanguage": "fr-FR",
+      "isPartOf": {
+        "@id": "https://lepaille-en-queue.fr/#site"
+      },
+      "about": {
+        "@id": "https://lepaille-en-queue.fr/#entreprise"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://lepaille-en-queue.fr/images/partage.jpg"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://lepaille-en-queue.fr/mariage.html#service",
+      "name": "Traiteur mariage",
+      "serviceType": "Traiteur mariage",
+      "description": "Vin d'honneur, repas assis ou buffet créole pour votre mariage en Dordogne, cuisiné sur place dès 50 convives.",
+      "provider": {
+        "@id": "https://lepaille-en-queue.fr/#entreprise"
+      },
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Dordogne"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Gironde"
+        }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "minPrice": 18,
+          "maxPrice": 30,
+          "priceCurrency": "EUR",
+          "valueAddedTaxIncluded": true,
+          "description": "Par personne, menu complet"
+        },
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  ]
+}
+</script>
+<!--/auto:schema-entreprise-->
 </head>
 <body>
 
 <header class="entete">
   <div class="entete-interieur">
     <a class="marque" href="index.html">
-      <img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+      <picture><source type="image/avif" srcset="images/logo.avif 1x, images/logo@2x.avif 2x"><source type="image/webp" srcset="images/logo.webp 1x, images/logo@2x.webp 2x"><img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151"></picture>
       <span class="marque-texte">
         <span class="marque-nom">Le Paille en Queue</span>
         <span class="marque-sous">Spécialités créoles</span>
@@ -77,8 +243,8 @@
   <section class="page-tete">
     <div class="enveloppe">
       <p class="fil"><a href="index.html">Accueil</a> · <a href="evenements.html">Événements</a> · Mariage</p>
-      <span class="sur-titre">Traiteur mariage</span>
-      <h1>Un mariage qu'on<br>n'oubliera pas</h1>
+      <span class="sur-titre">Vin d'honneur et repas de noces</span>
+      <h1>Traiteur mariage<br>créole en Dordogne</h1>
       <p class="chapo">Le buffet de mariage, tout le monde l'a déjà mangé. Un vin d'honneur aux samoussas et un cari d'agneau servi à cent personnes, non — et c'est précisément ce dont vos invités parleront encore l'année suivante.</p>
       <div class="groupe-boutons">
         <a class="pastille pastille-pleine" href="devis.html">Demander un devis</a>
@@ -174,7 +340,7 @@
   <div class="enveloppe">
     <div class="pied-grille">
       <div class="pied-marque">
-        <img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+        <picture><source type="image/avif" srcset="images/logo-blanc.avif 1x, images/logo-blanc@2x.avif 2x"><source type="image/webp" srcset="images/logo-blanc.webp 1x, images/logo-blanc@2x.webp 2x"><img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151" loading="lazy" decoding="async"></picture>
         <p>Traiteur créole et réunionnais en Dordogne depuis 2009.</p>
       </div>
       <div class="pied-contact">
@@ -236,7 +402,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=16"></script>
+<script src="site.js?v=17"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

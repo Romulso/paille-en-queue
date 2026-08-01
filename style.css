@@ -94,6 +94,11 @@ body {
 /* height:auto par défaut : les attributs width/height du HTML servent à
    réserver la place au chargement, ils ne doivent pas figer la hauteur. */
 img { max-width: 100%; height: auto; display: block; }
+/* Les images sont enveloppées dans <picture> pour proposer l'AVIF et le WebP.
+   display:contents efface cette enveloppe de la mise en page : l'image reste
+   l'enfant direct de la grille ou du flex qui la contient, et toutes les
+   règles écrites pour « img » continuent de s'appliquer. */
+picture { display: contents; }
 button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
 a { color: inherit; }
 
@@ -443,9 +448,14 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 .heros .heros-encart .pastille-pleine { color: #fff; }
 
 .heros h1 { text-wrap: balance; }
+/* Le titre porte d'abord ce que l'on vend, la formule vient en second et en
+   plus petit : sans cette réduction, la bannière fait quatre lignes pleines. */
 .heros h1 em {
   display: block;
   font-style: normal;
+  font-size: .58em;
+  line-height: 1.15;
+  margin-top: .12em;
   color: var(--safran);
 }
 .heros .chapo {
@@ -1403,6 +1413,14 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
 
 /* ---------- FAQ ---------- */
 .faq { display: grid; gap: 10px; }
+/* Les questions sont regroupées par thème : sans ces intertitres, la page est
+   un mur de quatorze lignes identiques, impossible à parcourir des yeux. */
+.faq-groupe {
+  font-size: clamp(19px, 3.4vw, 25px);
+  margin-top: 30px;
+  color: var(--piment);
+}
+.faq-groupe:first-child { margin-top: 0; }
 .faq details {
   border: 1px solid var(--ligne);
   border-radius: var(--rayon-s);

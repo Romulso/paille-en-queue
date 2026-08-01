@@ -155,9 +155,9 @@ l'étape 2). Quatre onglets :
 - **Menus** — les trois formules.
 
 Une fois les modifications faites, cliquer sur **Télécharger** en bas du
-panneau, remplacer le fichier correspondant dans `data/`, et remettre le site
-en ligne. Rien n'est publié avant cette étape : on peut donc essayer sans
-crainte.
+panneau, remplacer le fichier correspondant dans `data/`, **lancer les deux
+commandes de l'étape 7**, puis remettre le site en ligne. Rien n'est publié
+avant cette étape : on peut donc essayer sans crainte.
 
 ---
 
@@ -172,7 +172,58 @@ Ce n'est pas une erreur, et rien ne casse.
 
 ---
 
-## 7 · La carte en PDF
+## 7 · Régénérer le site après une modification du contenu
+
+Deux commandes à lancer **à chaque fois** qu'un fichier de `data/` a changé.
+L'ordre n'a pas d'importance.
+
+```bash
+python3 outils/generer-html.py
+python3 outils/generer-menu-pdf.py
+```
+
+Et une troisième, uniquement quand vous **ajoutez ou remplacez une photo** dans
+`images/` :
+
+```bash
+python3 outils/optimiser-images.py
+```
+
+### Le contenu visible par Google
+
+`outils/generer-html.py` recopie les plats, les menus, les marchés et les avis
+depuis `data/*.json` **dans les pages HTML elles-mêmes**, entre des repères
+`<!--auto:zone-xxx-->`.
+
+Pourquoi : `site.js` sait déjà afficher ce contenu dans le navigateur, mais un
+moteur de recherche qui n'exécute pas JavaScript — Bing, et surtout les robots
+des IA comme GPTBot ou PerplexityBot — ne voit alors qu'une page vide. Sans
+cette étape, la carte, les 15 plats et tous les prix sont invisibles pour eux.
+
+Le script écrit aussi les données structurées de la carte (`Menu`) et des
+marchés (`Event`), à partir des mêmes JSON : les prix annoncés à Google ne
+peuvent pas diverger de ceux du site.
+
+Il ne touche à rien d'autre dans les pages, et le relancer deux fois de suite
+ne change rien. `site.js` continue d'écraser ce contenu à l'affichage : le
+visiteur voit toujours la version la plus fraîche.
+
+> Oublier cette commande ne casse pas le site : il reste juste affiché avec le
+> contenu de la génération précédente pour les robots.
+
+### Les photos en AVIF et WebP
+
+`outils/optimiser-images.py` fabrique, à côté de chaque `.jpg` ou `.png`, une
+version `.avif` et une version `.webp`. Le navigateur choisit tout seul le
+format qu'il sait lire ; le JPEG d'origine reste le filet de sécurité.
+
+Le gain est le plus visible sur téléphone, là où se fait l'essentiel des
+visites : la bannière d'accueil passe de 305 Ko à 110 Ko.
+
+Les fichiers produits sont à mettre en ligne avec les autres. Le script ne
+refait que ce qui a changé ; `--tout` force la reprise complète.
+
+### La carte en PDF
 
 `documents/carte-le-paille-en-queue.pdf` est le document que les mairies et les
 comités d'entreprise font circuler en interne. Il est **construit à partir de
@@ -181,7 +232,7 @@ comités d'entreprise font circuler en interne. Il est **construit à partir de
 **À régénérer après toute modification des plats, des menus ou des tarifs :**
 
 ```bash
-cd /Users/admin/Projets/paille-en-queue && python3 outils/generer-menu-pdf.py
+python3 outils/generer-menu-pdf.py
 ```
 
 Si Python répond `No module named 'fpdf'`, installez la bibliothèque une fois
@@ -196,7 +247,7 @@ les garanties professionnelles. Les polices de `outils/polices/` ne servent qu'�
 lui : ce sont les mêmes que le site, converties en TTF.
 
 > Oublier de régénérer le PDF est la seule façon de faire diverger les tarifs.
-> Prenez l'habitude de lancer la commande juste après avoir remplacé
+> Prenez l'habitude de lancer les **deux** commandes juste après avoir remplacé
 > `data/carte.json`.
 
 ---
@@ -246,4 +297,10 @@ vaisselle et le service. Point tranché, les menus sont à jour.
       dont le suffixe « 33 » évoque en plus la Gironde et non la Dordogne.
 - [ ] **Trois vrais avis clients** — à demander à des clients récents.
 - [ ] **La fiche Google Business Profile** — gratuite, et de loin le meilleur
-      levier pour être trouvé sur « traiteur réunionnais Dordogne ».
+      levier pour être trouvé sur « traiteur réunionnais Dordogne ». Une fois
+      créée, coller son lien dans `admin.html` → **Réglages** → « Lien de la
+      fiche Google » : il est repris dans les données structurées du site.
+- [ ] **Les coordonnées GPS** — `admin.html` → **Réglages** → latitude et
+      longitude. Elles disent à Google où l'entreprise se trouve réellement.
+      Tant qu'elles sont vides, le site n'annonce aucune position plutôt qu'une
+      position approximative, qui ferait plus de mal que de bien.

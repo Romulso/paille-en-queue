@@ -35,7 +35,22 @@ site.js                 Comportements
 data/                   Contenu éditable (carte, marchés, avis, réglages)
 images/                 Logo et photos — voir images/LISEZ-MOI.md
 fonts/                  Fraunces et Outfit — voir fonts/LISEZ-MOI.md
+outils/                 Scripts de génération (voir ci-dessous)
 ```
+
+## Régénérer après une modification
+
+Le contenu de `data/*.json` est recopié dans les pages HTML : sans cette étape,
+les moteurs de recherche qui n'exécutent pas JavaScript ne voient qu'une page
+vide. À lancer après chaque modification du contenu :
+
+```bash
+python3 outils/generer-html.py
+```
+
+Puis `outils/generer-menu-pdf.py` pour la carte en PDF, et
+`outils/optimiser-images.py` après l'ajout d'une photo. Détails dans
+[GUIDE.md](GUIDE.md), section 7.
 
 ## Voir le site en local
 

@@ -107,9 +107,27 @@
     });
     // Une image absente est retirée pour ne pas laisser l'icône « cassée ».
     $$(".photo img", racine).forEach((img) => {
-      img.addEventListener("error", () => img.remove());
-      if (img.complete && img.naturalWidth === 0) img.remove();
+      img.addEventListener("error", () => echecPhoto(img));
+      if (img.complete && img.naturalWidth === 0) echecPhoto(img);
     });
+  }
+
+  /* Une photo qui ne se charge pas mérite une seconde chance avant d'être
+     retirée : dans un <picture>, le navigateur s'engage sur la première source
+     dont le type lui convient et n'essaie pas les suivantes. Si le .avif n'a
+     pas été généré alors que le .jpg existe — un oubli de
+     outils/optimiser-images.py — la photo disparaîtrait pour rien. On enlève
+     donc les sources et on laisse le JPEG tenter sa chance. */
+  function echecPhoto(img) {
+    const pere = img.parentElement;
+    if (pere && pere.tagName === "PICTURE" && pere.querySelector("source")) {
+      $$("source", pere).forEach((s) => s.remove());
+      const adresse = img.getAttribute("src");
+      img.removeAttribute("src");
+      img.setAttribute("src", adresse);
+      return;
+    }
+    img.remove();
   }
 
   /* ---------- Apparition au défilement ---------- */
@@ -143,7 +161,11 @@
       <article class="plat apparait" data-categorie="${echapper(p.categorie || "")}">
         <div class="photo" data-nom="${echapper(p.nom)}">
           ${p.vedette ? '<span class="etiquette-vedette">Signature</span>' : ""}
-          <img src="images/${echapper(p.slug)}.jpg" alt="${echapper(p.nom)}" loading="lazy" width="600" height="450">
+          <picture>
+            <source type="image/avif" srcset="images/${echapper(p.slug)}.avif">
+            <source type="image/webp" srcset="images/${echapper(p.slug)}.webp">
+            <img src="images/${echapper(p.slug)}.jpg" alt="${echapper(p.nom)}, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+          </picture>
         </div>
         <div class="plat-corps">
           <div class="plat-tete">

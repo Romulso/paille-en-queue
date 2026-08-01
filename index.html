@@ -9,7 +9,11 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=16">
+<!-- Pas de <link rel="preload"> pour la bannière : l'attribut href impose une
+     taille fixe, que le navigateur téléchargeait en plus de celle réellement
+     choisie par le srcset. L'image est le troisième élément du <body> et porte
+     fetchpriority="high" : elle part déjà en tête de file. -->
+<link rel="stylesheet" href="style.css?v=17">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -22,75 +26,147 @@
 <meta property="og:image" content="https://lepaille-en-queue.fr/images/partage.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<script type="application/ld+json">
+<meta name="twitter:card" content="summary_large_image">
+<!--auto:schema-entreprise-->
+<script type="application/ld+json" id="schema-entreprise">
 {
   "@context": "https://schema.org",
-  "@type": ["FoodEstablishment", "CateringBusiness"],
-  "@id": "https://lepaille-en-queue.fr/#entreprise",
-  "name": "Le Paille en Queue",
-  "alternateName": "Le Paille en Queue — Spécialités créoles",
-  "description": "Traiteur ambulant spécialisé en cuisine réunionnaise et créole, en Dordogne depuis 2009. Repas livrés à partir de 10 parts, buffets et prestations événementielles.",
-  "url": "https://lepaille-en-queue.fr/",
-  "logo": "https://lepaille-en-queue.fr/images/logo@2x.png",
-  "image": "https://lepaille-en-queue.fr/images/partage.jpg",
-  "telephone": "+33627352328",
-  "email": "contact@lepaille-en-queue.fr",
-  "foundingDate": "2009",
-  "servesCuisine": ["Réunionnaise", "Créole"],
-  "priceRange": "10 € - 30 €",
-  "currenciesAccepted": "EUR",
-  "paymentAccepted": "Espèces, Chèque, Virement bancaire",
-  "hasMenu": "https://lepaille-en-queue.fr/carte.html",
-  "sameAs": ["https://www.facebook.com/share/1FLfRCbbv9/"],
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Montpeyroux",
-    "postalCode": "24610",
-    "addressRegion": "Dordogne",
-    "addressCountry": "FR"
-  },
-  "areaServed": [
-    { "@type": "AdministrativeArea", "name": "Dordogne" },
-    { "@type": "AdministrativeArea", "name": "Gironde" },
-    { "@type": "City", "name": "Montpeyroux" },
-    { "@type": "City", "name": "Montpon-Ménestérol" },
-    { "@type": "City", "name": "Le Pizou" },
-    { "@type": "City", "name": "Saint-Laurent-des-Hommes" },
-    { "@type": "City", "name": "Saint-Seurin-sur-l'Isle" }
-  ],
-  "founder": { "@type": "Person", "name": "Karine Danna" },
-  "makesOffer": [
+  "@graph": [
     {
-      "@type": "Offer",
-      "name": "Repas créole livré",
-      "description": "Plats réunionnais livrés prêts à servir, à partir de 10 parts. Riz et sauce piquante compris.",
-      "priceSpecification": {
-        "@type": "PriceSpecification",
-        "minPrice": 10, "maxPrice": 12, "priceCurrency": "EUR",
-        "valueAddedTaxIncluded": true
+      "@type": "FoodEstablishment",
+      "@id": "https://lepaille-en-queue.fr/#entreprise",
+      "name": "Le Paille en Queue",
+      "alternateName": "Le Paille en Queue — Spécialités créoles",
+      "description": "Traiteur ambulant spécialisé en cuisine réunionnaise et créole, en Dordogne depuis 2009. Repas livrés à partir de 10 parts, buffets et prestations événementielles.",
+      "url": "https://lepaille-en-queue.fr/",
+      "logo": "https://lepaille-en-queue.fr/images/logo@2x.png",
+      "image": "https://lepaille-en-queue.fr/images/partage.jpg",
+      "telephone": "+33627352328",
+      "email": "contact@lepaille-en-queue.fr",
+      "foundingDate": "2009",
+      "servesCuisine": [
+        "Réunionnaise",
+        "Créole"
+      ],
+      "priceRange": "10 € - 30 €",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Espèces, Chèque, Virement bancaire",
+      "hasMenu": "https://lepaille-en-queue.fr/carte.html",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "SIRET",
+        "value": "51134341000037"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Karine Danna"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "26 Passage de la Forge",
+        "postalCode": "24610",
+        "addressLocality": "Montpeyroux",
+        "addressRegion": "Dordogne",
+        "addressCountry": "FR"
+      },
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Dordogne"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Gironde"
+        },
+        {
+          "@type": "City",
+          "name": "Montpeyroux"
+        },
+        {
+          "@type": "City",
+          "name": "Montpon-Ménestérol"
+        },
+        {
+          "@type": "City",
+          "name": "Le Pizou"
+        },
+        {
+          "@type": "City",
+          "name": "Saint-Laurent-des-Hommes"
+        },
+        {
+          "@type": "City",
+          "name": "Saint-Seurin-sur-l'Isle"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "name": "Repas créole livré",
+          "description": "Plats réunionnais livrés prêts à servir, à partir de 10 parts. Riz et sauce piquante compris.",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": 10,
+            "maxPrice": 12,
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": true
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Menu complet pour événement",
+          "description": "Entrée, plat au choix et dessert, pour mariages, repas d'entreprise, fêtes communales et repas d'association.",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": 18,
+            "maxPrice": 30,
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": true
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/share/1FLfRCbbv9/?mibextid=wwXIfr"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://lepaille-en-queue.fr/#site",
+      "url": "https://lepaille-en-queue.fr/",
+      "name": "Le Paille en Queue",
+      "inLanguage": "fr-FR",
+      "publisher": {
+        "@id": "https://lepaille-en-queue.fr/#entreprise"
       }
     },
     {
-      "@type": "Offer",
-      "name": "Menu complet pour événement",
-      "description": "Entrée, plat au choix et dessert, pour mariages, repas d'entreprise, fêtes communales et repas d'association.",
-      "priceSpecification": {
-        "@type": "PriceSpecification",
-        "minPrice": 18, "maxPrice": 30, "priceCurrency": "EUR",
-        "valueAddedTaxIncluded": true
+      "@type": "WebPage",
+      "@id": "https://lepaille-en-queue.fr/#page",
+      "url": "https://lepaille-en-queue.fr/",
+      "name": "Traiteur réunionnais en Dordogne — Le Paille en Queue",
+      "inLanguage": "fr-FR",
+      "isPartOf": {
+        "@id": "https://lepaille-en-queue.fr/#site"
+      },
+      "about": {
+        "@id": "https://lepaille-en-queue.fr/#entreprise"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://lepaille-en-queue.fr/images/partage.jpg"
       }
     }
   ]
 }
 </script>
-<meta name="twitter:card" content="summary_large_image">
+<!--/auto:schema-entreprise-->
 </head>
 <body>
 
 <header class="entete">
   <div class="entete-interieur">
     <a class="marque" href="index.html">
-      <img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+      <picture><source type="image/avif" srcset="images/logo.avif 1x, images/logo@2x.avif 2x"><source type="image/webp" srcset="images/logo.webp 1x, images/logo@2x.webp 2x"><img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="Le Paille en Queue" width="192" height="151"></picture>
       <span class="marque-texte">
         <span class="marque-nom">Le Paille en Queue</span>
         <span class="marque-sous">Spécialités créoles</span>
@@ -127,13 +203,24 @@
 
   <!-- ---------- Bannière ---------- -->
   <section class="heros">
-    <img class="heros-photo" src="images/accueil.jpg" alt="" aria-hidden="true">
+    <!-- Choix par « media » plutôt que par srcset/sizes : l'image est étirée en
+         object-fit:cover sur une bannière très haute, donc la largeur réellement
+         nécessaire n'a rien à voir avec 100vw. Avec sizes, le navigateur hésitait
+         et téléchargeait deux tailles. Ici, une requête, décidée d'avance. -->
+    <picture>
+      <source type="image/avif" media="(max-width: 700px)" srcset="images/accueil-1400.avif">
+      <source type="image/webp" media="(max-width: 700px)" srcset="images/accueil-1400.webp">
+      <source type="image/avif" srcset="images/accueil-2000.avif">
+      <source type="image/webp" srcset="images/accueil-2000.webp">
+      <img class="heros-photo" src="images/accueil.jpg" alt="" aria-hidden="true"
+           width="2000" height="1101" fetchpriority="high" decoding="async">
+    </picture>
     <img class="heros-soleil" src="images/soleil.svg" alt="" aria-hidden="true">
     <img class="heros-oiseau" src="images/oiseau.svg" alt="" aria-hidden="true">
     <div class="enveloppe heros-grille">
       <div>
         <span class="heros-etiquette"><b>Depuis 2009</b> Traiteur créole en Dordogne</span>
-        <h1>La Réunion s'invite<em>à votre table.</em></h1>
+        <h1>Traiteur réunionnais en Dordogne<em>La Réunion s'invite à votre table.</em></h1>
         <p class="chapo">
           Caris mijotés, rougail saucisses, samoussas pliés à la main : Karine cuisine
           la Réunion de son enfance et vous la livre en Dordogne, à partir de 10 parts.
@@ -168,9 +255,15 @@
 
   <!-- ---------- Panorama ---------- -->
   <div class="panorama">
-    <img class="panorama-photo" src="images/panorama-reunion.jpg" width="1800" height="712"
+    <picture>
+      <source type="image/avif" media="(max-width: 700px)" srcset="images/panorama-reunion-1100.avif">
+      <source type="image/webp" media="(max-width: 700px)" srcset="images/panorama-reunion-1100.webp">
+      <source type="image/avif" srcset="images/panorama-reunion-1800.avif">
+      <source type="image/webp" srcset="images/panorama-reunion-1800.webp">
+      <img class="panorama-photo" src="images/panorama-reunion.jpg" width="1800" height="712"
          loading="lazy" decoding="async"
          alt="Vue aérienne du lagon turquoise de la côte ouest de La Réunion, avec le récif, la plage et les hauteurs de l'île">
+    </picture>
     <p class="panorama-credit">
       Le lagon de la côte ouest de La Réunion — photo
       <a href="https://commons.wikimedia.org/wiki/File:Lagon_c%C3%B4te_ouest_La_R%C3%A9union.jpg" rel="noopener">Sébastien Laude</a>,
@@ -265,7 +358,107 @@
         <p class="chapo" data-mention-part>Tous les plats sont servis avec le riz et la sauce piquante.</p>
       </div>
 
-      <div class="grille-plats" id="zone-vedettes"></div>
+      <div class="grille-plats" id="zone-vedettes"><!--auto:zone-vedettes-->
+      <article class="plat apparait" data-categorie="porc">
+        <div class="photo" data-nom="Rougail saucisses">
+          <span class="etiquette-vedette">Signature</span>
+          <picture>
+            <source type="image/avif" srcset="images/rougail-saucisses.avif">
+            <source type="image/webp" srcset="images/rougail-saucisses.webp">
+            <img src="images/rougail-saucisses.jpg" alt="Rougail saucisses, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+          </picture>
+        </div>
+        <div class="plat-corps">
+          <div class="plat-tete">
+            <h3>Rougail saucisses</h3>
+            <span class="prix">10 €<small>la part</small></span>
+          </div>
+          <p>Le plat du dimanche à La Réunion. Saucisses fumées mijotées longuement dans une sauce tomate parfumée au gingembre, au curcuma, à l'oignon et au thym.</p>
+        </div>
+      </article>
+      <article class="plat apparait" data-categorie="volaille">
+        <div class="photo" data-nom="Poulet massalé">
+          <span class="etiquette-vedette">Signature</span>
+          <picture>
+            <source type="image/avif" srcset="images/poulet-massale.avif">
+            <source type="image/webp" srcset="images/poulet-massale.webp">
+            <img src="images/poulet-massale.jpg" alt="Poulet massalé, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+          </picture>
+        </div>
+        <div class="plat-corps">
+          <div class="plat-tete">
+            <h3>Poulet massalé</h3>
+            <span class="prix">10 €<small>la part</small></span>
+          </div>
+          <p>Poulet au massalé, le mélange d'épices grillées de l'océan Indien : coriandre, cumin, girofle, cannelle. Chaleureux et très parfumé.</p>
+        </div>
+      </article>
+      <article class="plat apparait" data-categorie="boeuf-agneau">
+        <div class="photo" data-nom="Bœuf massalé">
+          <span class="etiquette-vedette">Signature</span>
+          <picture>
+            <img src="images/boeuf-massale.jpg" alt="Bœuf massalé, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+          </picture>
+        </div>
+        <div class="plat-corps">
+          <div class="plat-tete">
+            <h3>Bœuf massalé</h3>
+            <span class="prix">10 €<small>la part</small></span>
+          </div>
+          <p>Bœuf longuement mijoté au massalé, jusqu'à ce que la viande se défasse à la cuillère.</p>
+        </div>
+      </article>
+      <article class="plat apparait" data-categorie="mer">
+        <div class="photo" data-nom="Cari poisson ou crevettes">
+          <span class="etiquette-vedette">Signature</span>
+          <picture>
+            <source type="image/avif" srcset="images/cari-poisson-crevettes.avif">
+            <source type="image/webp" srcset="images/cari-poisson-crevettes.webp">
+            <img src="images/cari-poisson-crevettes.jpg" alt="Cari poisson ou crevettes, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+          </picture>
+        </div>
+        <div class="plat-corps">
+          <div class="plat-tete">
+            <h3>Cari poisson ou crevettes</h3>
+            <span class="prix">12 €<small>la part</small></span>
+          </div>
+          <p>Cari de poisson (espadon selon arrivage) ou de crevettes, monté sur un massalé léger pour ne pas couvrir le produit.</p>
+        </div>
+      </article>
+      <article class="plat apparait" data-categorie="mer">
+        <div class="photo" data-nom="Crevettes coco">
+          <span class="etiquette-vedette">Signature</span>
+          <picture>
+            <img src="images/crevettes-coco.jpg" alt="Crevettes coco, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+          </picture>
+        </div>
+        <div class="plat-corps">
+          <div class="plat-tete">
+            <h3>Crevettes coco</h3>
+            <span class="prix">12 €<small>la part</small></span>
+          </div>
+          <p>Crevettes nacrées dans un lait de coco parfumé au combava et au gingembre. Le plat le plus demandé sur les buffets.</p>
+        </div>
+      </article>
+      <article class="plat apparait" data-categorie="">
+        <div class="photo" data-nom="Samoussas">
+          <span class="etiquette-vedette">Signature</span>
+          <picture>
+            <source type="image/avif" srcset="images/samoussas.avif">
+            <source type="image/webp" srcset="images/samoussas.webp">
+            <img src="images/samoussas.jpg" alt="Samoussas, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+          </picture>
+        </div>
+        <div class="plat-corps">
+          <div class="plat-tete">
+            <h3>Samoussas</h3>
+            <span class="prix">1 €<small>la pièce</small></span>
+          </div>
+          <p>Pliés et frits à la commande. Six garnitures : thon, porc, poulet, poisson, fromage et végan.</p>
+        </div>
+      </article>
+      <!--/auto:zone-vedettes-->
+      </div>
 
       <div class="groupe-boutons">
         <a class="pastille pastille-pleine" href="carte.html">Voir les 15 plats et les 3 menus</a>
@@ -309,7 +502,11 @@
     <div class="enveloppe duo">
       <div class="duo-media apparait">
         <div class="photo" data-nom="Karine sur le marché">
+          <picture>
+          <source type="image/avif" srcset="images/karine.avif">
+          <source type="image/webp" srcset="images/karine.webp">
           <img src="images/karine.jpg" alt="Karine Danna sur son stand de marché" loading="lazy" width="800" height="640">
+        </picture>
         </div>
       </div>
       <div class="apparait">
@@ -348,7 +545,21 @@
         <span class="sur-titre">Ils nous ont fait confiance</span>
         <h2>Les retours de nos clients</h2>
       </div>
-      <div class="grille-avis" id="zone-avis"></div>
+      <div class="grille-avis" id="zone-avis"><!--auto:zone-avis-->
+        <div class="etat-vide">
+          <h3>Les premiers avis arrivent</h3>
+          <p>
+            Vous avez fait appel à nous pour un repas ou un événement&nbsp;?
+            Votre retour aide énormément les personnes qui hésitent encore.
+          </p>
+          <p style="margin-top:18px">
+            <a class="pastille pastille-pleine"
+               href="mailto:contact@lepaille-en-queue.fr?subject=Mon%20avis%20sur%20Le%20Paille%20en%20Queue"
+               data-cfg-href="email|mailto:">Laisser un avis</a>
+          </p>
+        </div>
+      <!--/auto:zone-avis-->
+      </div>
     </div>
   </section>
 
@@ -420,7 +631,7 @@
   <div class="enveloppe">
     <div class="pied-grille">
       <div class="pied-marque">
-        <img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151">
+        <picture><source type="image/avif" srcset="images/logo-blanc.avif 1x, images/logo-blanc@2x.avif 2x"><source type="image/webp" srcset="images/logo-blanc.webp 1x, images/logo-blanc@2x.webp 2x"><img src="images/logo-blanc.png" srcset="images/logo-blanc.png 1x, images/logo-blanc@2x.png 2x" alt="Le Paille en Queue" width="192" height="151" loading="lazy" decoding="async"></picture>
         <p>Traiteur créole et réunionnais en Dordogne depuis 2009.</p>
       </div>
       <div class="pied-contact">
@@ -482,7 +693,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=16"></script>
+<script src="site.js?v=17"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

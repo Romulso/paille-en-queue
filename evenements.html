@@ -9,7 +9,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=16">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -61,6 +61,9 @@
   <nav class="menu-mobile" id="menu-mobile" aria-label="Navigation mobile">
     <a href="carte.html">La carte et les menus</a>
     <a href="evenements.html">Événements et collectivités</a>
+    <a href="mariage.html">Traiteur mariage</a>
+    <a href="entreprise.html">Traiteur d'entreprise</a>
+    <a href="collectivites.html">Communes et associations</a>
     <a href="marches.html">Nos marchés</a>
     <a href="faq.html">Questions fréquentes</a>
     <a href="index.html#histoire">Notre histoire</a>
@@ -113,6 +116,7 @@
             <li>Buffet debout ou repas assis</li>
             <li>Livraison sur votre site ou en salle louée</li>
           </ul>
+          <a class="lien-fleche" href="entreprise.html">Nos prestations d'entreprise</a>
         </article>
 
         <article class="offre apparait">
@@ -128,6 +132,7 @@
             <li>Prix par personne annoncé à l'avance</li>
             <li>Facturation adaptée aux mairies</li>
           </ul>
+          <a class="lien-fleche" href="collectivites.html">Communes et collectivités</a>
         </article>
 
         <article class="offre apparait">
@@ -143,6 +148,7 @@
             <li>Grands volumes sans perte de qualité</li>
             <li>Buffet qui se sert tout seul</li>
           </ul>
+          <a class="lien-fleche" href="collectivites.html">Associations et clubs</a>
         </article>
 
         <article class="offre apparait">
@@ -158,6 +164,7 @@
             <li>Punch planteur maison</li>
             <li>À partir de 10 parts</li>
           </ul>
+          <a class="lien-fleche" href="mariage.html">Notre offre mariage</a>
         </article>
       </div>
     </div>
@@ -368,18 +375,20 @@
           <li><a href="#" data-reseau="instagram" hidden>Instagram</a></li>
         </ul>
       </div>
-      <div>
+      <div class="pied-liens">
         <h3>Le site</h3>
         <ul>
           <li><a href="carte.html">La carte et les menus</a></li>
           <li><a href="evenements.html">Événements et collectivités</a></li>
+          <li><a href="mariage.html">Traiteur mariage</a></li>
+          <li><a href="entreprise.html">Traiteur d'entreprise</a></li>
           <li><a href="marches.html">Nos marchés</a></li>
           <li><a href="faq.html">Questions fréquentes</a></li>
           <li><a href="devis.html">Demander un devis</a></li>
           <li><a href="documents/carte-le-paille-en-queue.pdf" download>La carte en PDF</a></li>
         </ul>
       </div>
-      <div>
+      <div class="pied-lettre">
         <h3>Newsletter</h3>
         <p style="font-size:14.5px">Les dates de marchés et les menus de saison, une fois par mois. Pas plus.</p>
         <form class="infolettre" id="form-infolettre">
@@ -388,7 +397,7 @@
           <small class="infolettre-etat" id="infolettre-etat" role="status"></small>
         </form>
       </div>
-      <div>
+      <div class="pied-atouts">
         <h3>Bon à savoir</h3>
         <ul>
           <li>Commande à partir de 10 parts</li>
@@ -401,6 +410,7 @@
     <div class="pied-bas">
       <span>© 2009–<span id="annee">2026</span> Le Paille en Queue — Karine Danna</span>
       <span>SIRET <span data-cfg="siret">51134341000037</span></span>
+      <a href="mentions-legales.html">Mentions légales</a>
     </div>
   </div>
 </footer>
@@ -411,7 +421,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=14"></script>
+<script src="site.js?v=16"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

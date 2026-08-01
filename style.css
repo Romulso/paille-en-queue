@@ -91,7 +91,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-img { max-width: 100%; display: block; }
+/* height:auto par défaut : les attributs width/height du HTML servent à
+   réserver la place au chargement, ils ne doivent pas figer la hauteur. */
+img { max-width: 100%; height: auto; display: block; }
 button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
 a { color: inherit; }
 
@@ -1544,7 +1546,9 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   min-height: 1.2em;
 }
 
-.pied-marque img { width: 132px; margin-bottom: 16px; }
+/* height:auto est indispensable : sans lui, l'attribut height="151" du HTML
+   fait office de hauteur CSS et le logo est étiré. */
+.pied-marque img { width: 132px; height: auto; margin-bottom: 16px; }
 .pied-marque p { max-width: 30ch; font-size: 14.5px; }
 .pied-contact b { color: #fff; font-weight: 600; }
 .pied-bas {
@@ -1558,6 +1562,31 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   justify-content: space-between;
   font-size: 13px;
   color: var(--tenu);
+}
+
+/* ---------- Pied compact sur mobile ----------
+   Empilé, le pied faisait une page et demie à lui seul. On passe à deux
+   colonnes, on replie les rappels déjà présents dans le corps des pages,
+   et on garde l'essentiel : joindre, naviguer, s'inscrire. */
+@media (max-width: 720px) {
+  .pied { padding: 40px 0 22px; }
+  .pied-grille { grid-template-columns: 1fr 1fr; gap: 24px 18px; }
+  .pied-marque,
+  .pied-lettre { grid-column: 1 / -1; }
+  .pied-marque { display: flex; align-items: center; gap: 14px; }
+  .pied-marque img { width: 74px; margin-bottom: 0; flex: 0 0 auto; }
+  .pied-marque p { font-size: 13.5px; max-width: none; }
+  .pied h3 { margin-bottom: 10px; }
+  .pied li { padding: 3px 0; font-size: 14.5px; }
+  .pied-lettre p { font-size: 13.5px !important; }
+  /* Ces trois rappels figurent déjà dans chaque page : inutiles ici. */
+  .pied-atouts { display: none; }
+  .pied-bas {
+    margin-top: 26px;
+    padding-top: 16px;
+    gap: 6px 18px;
+    font-size: 12.5px;
+  }
 }
 
 /* Barre d'action collée en bas sur mobile : le réflexe « j'appelle ». */

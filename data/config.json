@@ -11,7 +11,7 @@
   "departement": "Dordogne",
   "adresseLegale": "26 Passage de la Forge, 24610 Montpeyroux",
   "siret": "51134341000037",
-  "rcs": "RCS Bordeaux",
+  "rcs": "RCS Périgueux",
   "ape": "4789Z",
   "minimumParts": 10,
   "acompte": 30,
@@ -47,5 +47,10 @@
   "assuranceRcPro": true,
   "_newsletterChamps": "Brevo attend un champ nommé EMAIL et quelques champs cachés. Adapter ici selon le service choisi.",
   "newsletterChampEmail": "E-mail",
-  "newsletterChampsCaches": {}
+  "newsletterChampsCaches": {},
+  "_apave": "Contrôle d'hygiène réalisé par un organisme tiers. Laisser vide pour ne rien afficher.",
+  "controleOrganisme": "APAVE",
+  "controleVille": "Bordeaux",
+  "controleAnnee": "2026",
+  "controleResultat": "très satisfaisant"
 }

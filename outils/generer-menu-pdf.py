@@ -207,11 +207,16 @@ def construire():
         "Règlement en espèces avec reçu, par chèque ou par virement.",
     ])
 
-    pdf.encadre("Notre sérieux", [
+    serieux = [
         "Karine Danna est titulaire de la formation obligatoire à l'hygiène alimentaire (HACCP).",
         "L'entreprise est couverte par une assurance responsabilité civile professionnelle.",
-        f"SIRET {cfg['siret']} · {cfg['rcs']} · Code APE {cfg['ape']}",
-    ], fond=(226, 240, 232))
+    ]
+    if cfg.get("controleOrganisme"):
+        serieux.append(
+            f"Contrôlés par l'{cfg['controleOrganisme']} de {cfg['controleVille']}, organisme indépendant : "
+            f"résultat qualité {cfg['controleAnnee']} « {cfg['controleResultat']} ».")
+    serieux.append(f"SIRET {cfg['siret']} · {cfg['rcs']} · Code APE {cfg['ape']}")
+    pdf.encadre("Notre sérieux", serieux, fond=(226, 240, 232))
 
     pdf.set_font("texte", size=9)
     pdf.set_text_color(*ENCRE_DOUCE)

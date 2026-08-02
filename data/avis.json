@@ -1,5 +1,14 @@
 {
-  "_lisezmoi": "Témoignages de clients. Modifiable depuis admin.html (onglet Avis). N'y mettre que de VRAIS avis, avec l'accord de la personne : un faux témoignage est interdit par la loi (pratique commerciale trompeuse) et se repère vite. Tant que la liste est vide, la section n'apparaît pas sur le site.",
+  "_lisezmoi": "Témoignages de clients. Modifiable depuis admin.html (onglet Avis). N'y mettre que de VRAIS avis, avec l'accord de la personne : un faux témoignage est interdit par la loi (pratique commerciale trompeuse) et se repère vite. Tant que la liste est vide, la section n'apparaît pas sur le site. N'indiquer que le prénom et l'initiale du nom : le témoignage reste crédible sans exposer l'identité complète du client.",
 
-  "avis": []
+  "_source": "Repris de la page Facebook, où l'avis est public. Prévenir la personne avant de publier le sien : c'est la moindre des politesses, et cela évite toute contestation.",
+
+  "avis": [
+    {
+      "auteur": "Angèle M.",
+      "note": 5,
+      "contexte": "Avis Facebook, avril 2026",
+      "texte": "Ayant des racines créoles, c'est de loin le seul endroit où on se croit à La Réunion quand on mange leurs plats. Je recommande à 200 %, et en plus la sympathie pour aller avec. Bref : au top."
+    }
+  ]
 }

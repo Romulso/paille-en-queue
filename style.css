@@ -900,6 +900,36 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
+/* ---------- Bandeau de preuves ----------
+   Les chiffres qui rassurent avant même de lire un témoignage. Les trois
+   premiers sont des liens : le visiteur doit pouvoir vérifier lui-même, sinon
+   ce ne sont que des chiffres affirmés par le vendeur. */
+.preuves {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  margin-bottom: 40px;
+}
+.preuve {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 22px;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon-s);
+  background: #fff;
+  text-decoration: none;
+  transition: border-color .2s, transform .2s;
+}
+a.preuve:hover { border-color: var(--piment); transform: translateY(-2px); }
+.preuve b {
+  font-family: var(--titre);
+  font-size: clamp(24px, 4vw, 31px);
+  line-height: 1;
+  color: var(--piment);
+}
+.preuve > span { font-size: 14px; color: var(--encre-douce); line-height: 1.35; }
+
 /* ---------- Zone de livraison ----------
    Une liste de 156 communes doit rester parcourable : on la découpe par
    tranche de distance, et chaque tranche s'étale en colonnes pour que l'œil

@@ -1,0 +1,1104 @@
+{
+ "_lisezmoi": "Communes de la zone de livraison, calculees depuis les coordonnees de data/config.json avec les donnees officielles de geo.api.gouv.fr (centre de chaque commune, vol d'oiseau). Regenere par outils/calculer-zone.py. Ne pas modifier a la main.",
+ "origine": {
+  "latitude": 45.0567094,
+  "longitude": 0.0936312
+ },
+ "rayonKm": 50,
+ "totalCommunes": 433,
+ "populationCouverte": 506737,
+ "communes": [
+  {
+   "nom": "Le Pizou",
+   "cp": "24700",
+   "km": 2,
+   "pop": 1428,
+   "dep": "24"
+  },
+  {
+   "nom": "Eygurande-et-Gardedeuil",
+   "cp": "24700",
+   "km": 3,
+   "pop": 402,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Antoine-sur-l'Isle",
+   "cp": "33660",
+   "km": 4,
+   "pop": 579,
+   "dep": "33"
+  },
+  {
+   "nom": "Montpon-Ménestérol",
+   "cp": "24700",
+   "km": 6,
+   "pop": 5866,
+   "dep": "24"
+  },
+  {
+   "nom": "Ménesplet",
+   "cp": "24700",
+   "km": 6,
+   "pop": 1928,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Christophe-de-Double",
+   "cp": "33230",
+   "km": 6,
+   "pop": 595,
+   "dep": "33"
+  },
+  {
+   "nom": "Moulin-Neuf",
+   "cp": "24700",
+   "km": 7,
+   "pop": 986,
+   "dep": "24"
+  },
+  {
+   "nom": "Gours",
+   "cp": "33660",
+   "km": 8,
+   "pop": 526,
+   "dep": "33"
+  },
+  {
+   "nom": "Porchères",
+   "cp": "33660",
+   "km": 8,
+   "pop": 887,
+   "dep": "33"
+  },
+  {
+   "nom": "La Roche-Chalais",
+   "cp": "24490",
+   "km": 9,
+   "pop": 3060,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Barthélemy-de-Bellegarde",
+   "cp": "24700",
+   "km": 9,
+   "pop": 507,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Seurin-sur-l'Isle",
+   "cp": "33660",
+   "km": 9,
+   "pop": 3167,
+   "dep": "33"
+  },
+  {
+   "nom": "Le Fieu",
+   "cp": "33230",
+   "km": 10,
+   "pop": 505,
+   "dep": "33"
+  },
+  {
+   "nom": "Servanches",
+   "cp": "24410",
+   "km": 10,
+   "pop": 76,
+   "dep": "24"
+  },
+  {
+   "nom": "Camps-sur-l'Isle",
+   "cp": "33660",
+   "km": 11,
+   "pop": 621,
+   "dep": "33"
+  },
+  {
+   "nom": "Les Églisottes-et-Chalaures",
+   "cp": "33230",
+   "km": 11,
+   "pop": 2205,
+   "dep": "33"
+  },
+  {
+   "nom": "Puynormand",
+   "cp": "33660",
+   "km": 11,
+   "pop": 305,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Martin-de-Gurson",
+   "cp": "24610",
+   "km": 11,
+   "pop": 653,
+   "dep": "24"
+  },
+  {
+   "nom": "Villefranche-de-Lonchat",
+   "cp": "24610",
+   "km": 11,
+   "pop": 998,
+   "dep": "24"
+  },
+  {
+   "nom": "Minzac",
+   "cp": "24610",
+   "km": 12,
+   "pop": 495,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Laurent-des-Hommes",
+   "cp": "24400",
+   "km": 12,
+   "pop": 1012,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Martial-d'Artenset",
+   "cp": "24700",
+   "km": 12,
+   "pop": 943,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Sauveur-de-Puynormand",
+   "cp": "33660",
+   "km": 12,
+   "pop": 369,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint Aulaye-Puymangou",
+   "cp": "24410",
+   "km": 14,
+   "pop": 1450,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Médard-de-Guizières",
+   "cp": "33230",
+   "km": 14,
+   "pop": 2438,
+   "dep": "33"
+  },
+  {
+   "nom": "Coutras",
+   "cp": "33230",
+   "km": 15,
+   "pop": 8678,
+   "dep": "33"
+  },
+  {
+   "nom": "Les Peintures",
+   "cp": "33230",
+   "km": 15,
+   "pop": 1620,
+   "dep": "33"
+  },
+  {
+   "nom": "Lussac",
+   "cp": "33570",
+   "km": 17,
+   "pop": 1151,
+   "dep": "33"
+  },
+  {
+   "nom": "Abzac",
+   "cp": "33230",
+   "km": 18,
+   "pop": 2048,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Médard-de-Mussidan",
+   "cp": "24400",
+   "km": 19,
+   "pop": 1618,
+   "dep": "24"
+  },
+  {
+   "nom": "Lagorce",
+   "cp": "33230",
+   "km": 20,
+   "pop": 1575,
+   "dep": "33"
+  },
+  {
+   "nom": "Les Artigues-de-Lussac",
+   "cp": "33570",
+   "km": 21,
+   "pop": 1119,
+   "dep": "33"
+  },
+  {
+   "nom": "Montcaret",
+   "cp": "24230",
+   "km": 21,
+   "pop": 1390,
+   "dep": "24"
+  },
+  {
+   "nom": "Mussidan",
+   "cp": "24400",
+   "km": 21,
+   "pop": 2771,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint Privat en Périgord",
+   "cp": "24410",
+   "km": 21,
+   "pop": 1139,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Front-de-Pradoux",
+   "cp": "24400",
+   "km": 21,
+   "pop": 1148,
+   "dep": "24"
+  },
+  {
+   "nom": "Guîtres",
+   "cp": "33230",
+   "km": 22,
+   "pop": 1631,
+   "dep": "33"
+  },
+  {
+   "nom": "Montagne",
+   "cp": "33570",
+   "km": 22,
+   "pop": 1510,
+   "dep": "33"
+  },
+  {
+   "nom": "Sablons",
+   "cp": "33910",
+   "km": 22,
+   "pop": 1314,
+   "dep": "33"
+  },
+  {
+   "nom": "Vélines",
+   "cp": "24230",
+   "km": 22,
+   "pop": 1104,
+   "dep": "24"
+  },
+  {
+   "nom": "Port-Sainte-Foy-et-Ponchapt",
+   "cp": "33220",
+   "km": 23,
+   "pop": 2520,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Denis-de-Pile",
+   "cp": "33910",
+   "km": 23,
+   "pop": 5955,
+   "dep": "33"
+  },
+  {
+   "nom": "Castillon-la-Bataille",
+   "cp": "33350",
+   "km": 24,
+   "pop": 3344,
+   "dep": "33"
+  },
+  {
+   "nom": "Lamothe-Montravel",
+   "cp": "24230",
+   "km": 24,
+   "pop": 1443,
+   "dep": "24"
+  },
+  {
+   "nom": "Le Fleix",
+   "cp": "24130",
+   "km": 24,
+   "pop": 1488,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Antoine-de-Breuilh",
+   "cp": "24230",
+   "km": 24,
+   "pop": 1784,
+   "dep": "24"
+  },
+  {
+   "nom": "Sourzac",
+   "cp": "24400",
+   "km": 25,
+   "pop": 1135,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Magne-de-Castillon",
+   "cp": "33350",
+   "km": 26,
+   "pop": 2165,
+   "dep": "33"
+  },
+  {
+   "nom": "Sainte-Foy-la-Grande",
+   "cp": "33220",
+   "km": 26,
+   "pop": 2507,
+   "dep": "33"
+  },
+  {
+   "nom": "Mouliets-et-Villemartin",
+   "cp": "33350",
+   "km": 27,
+   "pop": 1041,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Avit-Saint-Nazaire",
+   "cp": "33220",
+   "km": 27,
+   "pop": 1503,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Pierre-d'Eyraud",
+   "cp": "24130",
+   "km": 27,
+   "pop": 1795,
+   "dep": "24"
+  },
+  {
+   "nom": "Les Billaux",
+   "cp": "33500",
+   "km": 28,
+   "pop": 1174,
+   "dep": "33"
+  },
+  {
+   "nom": "Maransin",
+   "cp": "33230",
+   "km": 28,
+   "pop": 1063,
+   "dep": "33"
+  },
+  {
+   "nom": "Pineuilh",
+   "cp": "33220",
+   "km": 28,
+   "pop": 4490,
+   "dep": "33"
+  },
+  {
+   "nom": "Ribérac",
+   "cp": "24600",
+   "km": 28,
+   "pop": 3734,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Germain-du-Salembre",
+   "cp": "24190",
+   "km": 28,
+   "pop": 901,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Émilion",
+   "cp": "33330",
+   "km": 28,
+   "pop": 1608,
+   "dep": "33"
+  },
+  {
+   "nom": "La Force",
+   "cp": "24130",
+   "km": 29,
+   "pop": 2702,
+   "dep": "24"
+  },
+  {
+   "nom": "Galgon",
+   "cp": "33133",
+   "km": 30,
+   "pop": 3144,
+   "dep": "33"
+  },
+  {
+   "nom": "Libourne",
+   "cp": "33500",
+   "km": 30,
+   "pop": 25036,
+   "dep": "33"
+  },
+  {
+   "nom": "Neuvic",
+   "cp": "24190",
+   "km": 30,
+   "pop": 3687,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Ciers-d'Abzac",
+   "cp": "33910",
+   "km": 30,
+   "pop": 1614,
+   "dep": "33"
+  },
+  {
+   "nom": "Sainte-Terre",
+   "cp": "33350",
+   "km": 30,
+   "pop": 1883,
+   "dep": "33"
+  },
+  {
+   "nom": "Gardonne",
+   "cp": "24680",
+   "km": 31,
+   "pop": 1608,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Sulpice-de-Faleyrens",
+   "cp": "33330",
+   "km": 31,
+   "pop": 1344,
+   "dep": "33"
+  },
+  {
+   "nom": "Prigonrieux",
+   "cp": "24130",
+   "km": 32,
+   "pop": 4374,
+   "dep": "24"
+  },
+  {
+   "nom": "Périssac",
+   "cp": "33240",
+   "km": 32,
+   "pop": 1184,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Léon-sur-l'Isle",
+   "cp": "24110",
+   "km": 32,
+   "pop": 2080,
+   "dep": "24"
+  },
+  {
+   "nom": "Branne",
+   "cp": "33420",
+   "km": 33,
+   "pop": 1296,
+   "dep": "33"
+  },
+  {
+   "nom": "Eyraud-Crempse-Maurens",
+   "cp": "24130",
+   "km": 33,
+   "pop": 1703,
+   "dep": "24"
+  },
+  {
+   "nom": "Fronsac",
+   "cp": "33126",
+   "km": 33,
+   "pop": 1130,
+   "dep": "33"
+  },
+  {
+   "nom": "Moulon",
+   "cp": "33420",
+   "km": 33,
+   "pop": 1068,
+   "dep": "33"
+  },
+  {
+   "nom": "Villegouge",
+   "cp": "33141",
+   "km": 33,
+   "pop": 1325,
+   "dep": "33"
+  },
+  {
+   "nom": "Lamonzie-Saint-Martin",
+   "cp": "24680",
+   "km": 34,
+   "pop": 2742,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Astier",
+   "cp": "24110",
+   "km": 34,
+   "pop": 5376,
+   "dep": "24"
+  },
+  {
+   "nom": "Arveyres",
+   "cp": "33500",
+   "km": 35,
+   "pop": 2056,
+   "dep": "33"
+  },
+  {
+   "nom": "Génissac",
+   "cp": "33420",
+   "km": 35,
+   "pop": 2041,
+   "dep": "33"
+  },
+  {
+   "nom": "Laruscade",
+   "cp": "33620",
+   "km": 35,
+   "pop": 2811,
+   "dep": "33"
+  },
+  {
+   "nom": "Pellegrue",
+   "cp": "33790",
+   "km": 35,
+   "pop": 923,
+   "dep": "33"
+  },
+  {
+   "nom": "Rauzan",
+   "cp": "33420",
+   "km": 35,
+   "pop": 1247,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Genès-de-Fronsac",
+   "cp": "33240",
+   "km": 35,
+   "pop": 994,
+   "dep": "33"
+  },
+  {
+   "nom": "Blasimon",
+   "cp": "33540",
+   "km": 37,
+   "pop": 959,
+   "dep": "33"
+  },
+  {
+   "nom": "Cavignac",
+   "cp": "33620",
+   "km": 37,
+   "pop": 2372,
+   "dep": "33"
+  },
+  {
+   "nom": "Lugon-et-l'Île-du-Carnay",
+   "cp": "33240",
+   "km": 37,
+   "pop": 1395,
+   "dep": "33"
+  },
+  {
+   "nom": "Marsas",
+   "cp": "33620",
+   "km": 37,
+   "pop": 1247,
+   "dep": "33"
+  },
+  {
+   "nom": "Cadillac-en-Fronsadais",
+   "cp": "33240",
+   "km": 38,
+   "pop": 1336,
+   "dep": "33"
+  },
+  {
+   "nom": "Gauriaguet",
+   "cp": "33240",
+   "km": 38,
+   "pop": 1599,
+   "dep": "33"
+  },
+  {
+   "nom": "La Lande-de-Fronsac",
+   "cp": "33240",
+   "km": 38,
+   "pop": 2729,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Laurent-des-Vignes",
+   "cp": "24100",
+   "km": 38,
+   "pop": 1038,
+   "dep": "24"
+  },
+  {
+   "nom": "Tocane-Saint-Apre",
+   "cp": "24350",
+   "km": 38,
+   "pop": 1742,
+   "dep": "24"
+  },
+  {
+   "nom": "Val de Virvée",
+   "cp": "33240",
+   "km": 38,
+   "pop": 3793,
+   "dep": "33"
+  },
+  {
+   "nom": "Vayres",
+   "cp": "33870",
+   "km": 38,
+   "pop": 4615,
+   "dep": "33"
+  },
+  {
+   "nom": "Bergerac",
+   "cp": "24100",
+   "km": 39,
+   "pop": 27110,
+   "dep": "24"
+  },
+  {
+   "nom": "Izon",
+   "cp": "33450",
+   "km": 39,
+   "pop": 6374,
+   "dep": "33"
+  },
+  {
+   "nom": "Lembras",
+   "cp": "24100",
+   "km": 39,
+   "pop": 1259,
+   "dep": "24"
+  },
+  {
+   "nom": "Léguillac-de-l'Auche",
+   "cp": "24110",
+   "km": 39,
+   "pop": 968,
+   "dep": "24"
+  },
+  {
+   "nom": "Montrem",
+   "cp": "24110",
+   "km": 39,
+   "pop": 1208,
+   "dep": "24"
+  },
+  {
+   "nom": "Cubnezais",
+   "cp": "33620",
+   "km": 40,
+   "pop": 1915,
+   "dep": "33"
+  },
+  {
+   "nom": "Cézac",
+   "cp": "33620",
+   "km": 40,
+   "pop": 2727,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Mariens",
+   "cp": "33620",
+   "km": 40,
+   "pop": 1639,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Quentin-de-Baron",
+   "cp": "33750",
+   "km": 40,
+   "pop": 2713,
+   "dep": "33"
+  },
+  {
+   "nom": "Mensignac",
+   "cp": "24350",
+   "km": 41,
+   "pop": 1521,
+   "dep": "24"
+  },
+  {
+   "nom": "Peujard",
+   "cp": "33240",
+   "km": 41,
+   "pop": 2195,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Germain-du-Puch",
+   "cp": "33750",
+   "km": 41,
+   "pop": 2304,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Sulpice-et-Cameyrac",
+   "cp": "33450",
+   "km": 41,
+   "pop": 4881,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Yzan-de-Soudiac",
+   "cp": "33920",
+   "km": 41,
+   "pop": 2586,
+   "dep": "33"
+  },
+  {
+   "nom": "Annesse-et-Beaulieu",
+   "cp": "24430",
+   "km": 42,
+   "pop": 1511,
+   "dep": "24"
+  },
+  {
+   "nom": "Baron",
+   "cp": "33750",
+   "km": 42,
+   "pop": 1218,
+   "dep": "33"
+  },
+  {
+   "nom": "Beychac-et-Caillau",
+   "cp": "33750",
+   "km": 42,
+   "pop": 2625,
+   "dep": "33"
+  },
+  {
+   "nom": "Creysse",
+   "cp": "24100",
+   "km": 42,
+   "pop": 1743,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-André-de-Cubzac",
+   "cp": "33240",
+   "km": 42,
+   "pop": 12626,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Romain-la-Virvée",
+   "cp": "33240",
+   "km": 42,
+   "pop": 956,
+   "dep": "33"
+  },
+  {
+   "nom": "Sauveterre-de-Guyenne",
+   "cp": "33540",
+   "km": 42,
+   "pop": 1885,
+   "dep": "33"
+  },
+  {
+   "nom": "Sigoulès-et-Flaugeac",
+   "cp": "24240",
+   "km": 42,
+   "pop": 1280,
+   "dep": "24"
+  },
+  {
+   "nom": "Virsac",
+   "cp": "33240",
+   "km": 42,
+   "pop": 1304,
+   "dep": "33"
+  },
+  {
+   "nom": "Cubzac-les-Ponts",
+   "cp": "33240",
+   "km": 43,
+   "pop": 2693,
+   "dep": "33"
+  },
+  {
+   "nom": "Lisle",
+   "cp": "24350",
+   "km": 43,
+   "pop": 924,
+   "dep": "24"
+  },
+  {
+   "nom": "Razac-sur-l'Isle",
+   "cp": "24430",
+   "km": 43,
+   "pop": 2376,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Loubès",
+   "cp": "33450",
+   "km": 43,
+   "pop": 10027,
+   "dep": "33"
+  },
+  {
+   "nom": "Cours-de-Pile",
+   "cp": "24520",
+   "km": 44,
+   "pop": 1585,
+   "dep": "24"
+  },
+  {
+   "nom": "Coursac",
+   "cp": "24430",
+   "km": 44,
+   "pop": 2380,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Gervais",
+   "cp": "33240",
+   "km": 44,
+   "pop": 1983,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Laurent-d'Arce",
+   "cp": "33240",
+   "km": 44,
+   "pop": 1580,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Savin",
+   "cp": "33920",
+   "km": 44,
+   "pop": 3582,
+   "dep": "33"
+  },
+  {
+   "nom": "Camarsac",
+   "cp": "33750",
+   "km": 45,
+   "pop": 1048,
+   "dep": "33"
+  },
+  {
+   "nom": "La Chapelle-Gonaguet",
+   "cp": "24350",
+   "km": 45,
+   "pop": 1049,
+   "dep": "24"
+  },
+  {
+   "nom": "Montussan",
+   "cp": "33450",
+   "km": 45,
+   "pop": 3628,
+   "dep": "33"
+  },
+  {
+   "nom": "Sallebœuf",
+   "cp": "33370",
+   "km": 45,
+   "pop": 2767,
+   "dep": "33"
+  },
+  {
+   "nom": "La Sauve",
+   "cp": "33670",
+   "km": 46,
+   "pop": 1589,
+   "dep": "33"
+  },
+  {
+   "nom": "Marsac-sur-l'Isle",
+   "cp": "24430",
+   "km": 46,
+   "pop": 3187,
+   "dep": "24"
+  },
+  {
+   "nom": "Monségur",
+   "cp": "33580",
+   "km": 46,
+   "pop": 1579,
+   "dep": "33"
+  },
+  {
+   "nom": "Mouleydier",
+   "cp": "24520",
+   "km": 46,
+   "pop": 1152,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Nexans",
+   "cp": "24520",
+   "km": 46,
+   "pop": 1030,
+   "dep": "24"
+  },
+  {
+   "nom": "Saint-Vincent-de-Paul",
+   "cp": "33440",
+   "km": 46,
+   "pop": 1067,
+   "dep": "33"
+  },
+  {
+   "nom": "Targon",
+   "cp": "33760",
+   "km": 46,
+   "pop": 2079,
+   "dep": "33"
+  },
+  {
+   "nom": "Bonnetan",
+   "cp": "33370",
+   "km": 47,
+   "pop": 1065,
+   "dep": "33"
+  },
+  {
+   "nom": "Chancelade",
+   "cp": "24650",
+   "km": 47,
+   "pop": 4468,
+   "dep": "24"
+  },
+  {
+   "nom": "Créon",
+   "cp": "33670",
+   "km": 47,
+   "pop": 4950,
+   "dep": "33"
+  },
+  {
+   "nom": "Donnezac",
+   "cp": "33860",
+   "km": 47,
+   "pop": 926,
+   "dep": "33"
+  },
+  {
+   "nom": "Loupes",
+   "cp": "33370",
+   "km": 47,
+   "pop": 957,
+   "dep": "33"
+  },
+  {
+   "nom": "Pompignac",
+   "cp": "33370",
+   "km": 47,
+   "pop": 3577,
+   "dep": "33"
+  },
+  {
+   "nom": "Prignac-et-Marcamps",
+   "cp": "33710",
+   "km": 47,
+   "pop": 1494,
+   "dep": "33"
+  },
+  {
+   "nom": "Pugnac",
+   "cp": "33710",
+   "km": 47,
+   "pop": 2453,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Christoly-de-Blaye",
+   "cp": "33920",
+   "km": 47,
+   "pop": 1879,
+   "dep": "33"
+  },
+  {
+   "nom": "Saint-Germain-et-Mons",
+   "cp": "24520",
+   "km": 47,
+   "pop": 908,
+   "dep": "24"
+  },
+  {
+   "nom": "Tauriac",
+   "cp": "33710",
+   "km": 47,
+   "pop": 1342,
+   "dep": "33"
+  },
+  {
+   "nom": "Ambarès-et-Lagrave",
+   "cp": "33440",
+   "km": 48,
+   "pop": 17644,
+   "dep": "33"
+  },
+  {
+   "nom": "Coulounieix-Chamiers",
+   "cp": "24660",
+   "km": 48,
+   "pop": 7832,
+   "dep": "24"
+  },
+  {
+   "nom": "Sainte-Eulalie",
+   "cp": "33560",
+   "km": 48,
+   "pop": 4915,
+   "dep": "33"
+  },
+  {
+   "nom": "Yvrac",
+   "cp": "33370",
+   "km": 48,
+   "pop": 2899,
+   "dep": "33"
+  },
+  {
+   "nom": "Eymet",
+   "cp": "24500",
+   "km": 49,
+   "pop": 2569,
+   "dep": "24"
+  },
+  {
+   "nom": "Sadirac",
+   "cp": "33670",
+   "km": 49,
+   "pop": 4769,
+   "dep": "33"
+  },
+  {
+   "nom": "Vergt",
+   "cp": "24380",
+   "km": 49,
+   "pop": 1773,
+   "dep": "24"
+  },
+  {
+   "nom": "Carbon-Blanc",
+   "cp": "33560",
+   "km": 50,
+   "pop": 8331,
+   "dep": "33"
+  },
+  {
+   "nom": "Fargues-Saint-Hilaire",
+   "cp": "33370",
+   "km": 50,
+   "pop": 3543,
+   "dep": "33"
+  }
+ ]
+}

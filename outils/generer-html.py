@@ -55,6 +55,12 @@ PAGES = [
     {"fichier": "index.html", "nom": "Traiteur réunionnais en Dordogne — Le Paille en Queue"},
     {"fichier": "carte.html", "nom": "La carte et les menus créoles — Le Paille en Queue"},
     {"fichier": "marches.html", "nom": "Nos marchés nocturnes en Dordogne — Le Paille en Queue"},
+    {"fichier": "zone-livraison.html",
+     "nom": "Zone de livraison : traiteur créole en Dordogne et Gironde — Le Paille en Queue",
+     "service": "Livraison de repas créoles",
+     "service_desc": "Livraison de plats et menus créoles dans un rayon de 50 km "
+                     "autour de Montpeyroux, sur l'ouest de la Dordogne et l'est "
+                     "de la Gironde."},
     {"fichier": "devis.html", "nom": "Demander un devis traiteur — Le Paille en Queue"},
     {"fichier": "faq.html", "nom": "Questions fréquentes — Le Paille en Queue"},
     {"fichier": "evenements.html",
@@ -229,6 +235,37 @@ def gabarit_marche(m: dict) -> str:
         </article>"""
 
 
+def gabarit_zone(zone: dict, cfg: dict) -> str:
+    """Les communes desservies, groupées par tranche de distance.
+
+    Groupées plutôt qu'en liste plate : le visiteur cherche « est-ce qu'ils
+    viennent chez moi », et la tranche lui donne du même coup le prix de la
+    livraison.
+    """
+    tranches = [
+        (0, 10, f"À moins de 10 km — livraison {cfg['fraisLivraisonProche']} €"),
+        (11, 20, f"De 10 à 20 km — livraison {cfg['fraisLivraisonLoin']} €"),
+        (21, 35, f"De 20 à 35 km — livraison {cfg['fraisLivraisonLoin']} €"),
+        (36, 50, f"De 35 à 50 km — livraison {cfg['fraisLivraisonLoin']} €"),
+    ]
+    blocs = []
+    for mini, maxi, titre in tranches:
+        dedans = [c for c in zone["communes"] if mini <= c["km"] <= maxi]
+        if not dedans:
+            continue
+        items = "".join(
+            f'\n            <li><b>{echapper(c["nom"])}</b> '
+            f'<span>{echapper(c["cp"])} · {c["km"]} km</span></li>'
+            for c in dedans)
+        blocs.append(f"""
+        <div class="zone-tranche apparait">
+          <h3>{echapper(titre)}</h3>
+          <ul class="zone-communes">{items}
+          </ul>
+        </div>""")
+    return "".join(blocs)
+
+
 def gabarit_avis(a: dict) -> str:
     initiale = (a.get("auteur") or "?").strip()[:1].upper()
     note = a.get("note")
@@ -249,7 +286,21 @@ def gabarit_avis(a: dict) -> str:
       </article>"""
 
 
-AVIS_VIDE = """
+def avis_vide(cfg: dict) -> str:
+    """L'invitation affichée tant qu'aucun témoignage n'a été saisi.
+
+    On envoie vers Google plutôt que vers la boîte mail : un avis Google est
+    visible par le client suivant, et il compte pour le référencement local.
+    Un avis reçu par e-mail ne fait ni l'un ni l'autre.
+    """
+    fiche = cfg.get("googleBusinessProfile")
+    bouton = (f'<a class="pastille pastille-pleine" rel="noopener"\n'
+              f'               href="{echapper(fiche)}">Laisser un avis sur Google</a>'
+              if fiche else
+              '<a class="pastille pastille-pleine"\n'
+              '               href="mailto:contact@lepaille-en-queue.fr?subject=Mon%20avis%20sur%20Le%20Paille%20en%20Queue"\n'
+              '               data-cfg-href="email|mailto:">Laisser un avis</a>')
+    return f"""
         <div class="etat-vide">
           <h3>Les premiers avis arrivent</h3>
           <p>
@@ -257,9 +308,7 @@ AVIS_VIDE = """
             Votre retour aide énormément les personnes qui hésitent encore.
           </p>
           <p style="margin-top:18px">
-            <a class="pastille pastille-pleine"
-               href="mailto:contact@lepaille-en-queue.fr?subject=Mon%20avis%20sur%20Le%20Paille%20en%20Queue"
-               data-cfg-href="email|mailto:">Laisser un avis</a>
+            {bouton}
           </p>
         </div>"""
 
@@ -586,7 +635,8 @@ def ecrire_sitemap() -> None:
     """
     priorites = {"index.html": "1.0", "carte.html": "0.9", "evenements.html": "0.9",
                  "devis.html": "0.8", "mariage.html": "0.8", "entreprise.html": "0.8",
-                 "collectivites.html": "0.8", "marches.html": "0.7", "faq.html": "0.6"}
+                 "collectivites.html": "0.8", "zone-livraison.html": "0.8",
+                 "marches.html": "0.7", "faq.html": "0.6"}
     frequences = {"marches.html": "weekly"}
 
     lignes = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -674,8 +724,14 @@ def main() -> int:
     liste_avis = avis_data.get("avis") or []
     html = injecter(html, "zone-avis",
                     "".join(gabarit_avis(a) for a in liste_avis)
-                    if liste_avis else AVIS_VIDE)
+                    if liste_avis else avis_vide(cfg))
     ecrire("index.html", html)
+
+    # ---- zone-livraison.html ---------------------------------------------
+    zone = lire("zone")
+    html = (RACINE / "zone-livraison.html").read_text(encoding="utf-8")
+    html = injecter(html, "zone-communes", gabarit_zone(zone, cfg))
+    ecrire("zone-livraison.html", html)
 
     # ---- marches.html ----------------------------------------------------
     aujourdhui = date.today().isoformat()

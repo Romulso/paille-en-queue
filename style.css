@@ -899,6 +899,36 @@ h3 { font-size: clamp(19px, 3.4vw, 24px); letter-spacing: -.01em; }
   gap: 18px;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
+
+/* ---------- Zone de livraison ----------
+   Une liste de 156 communes doit rester parcourable : on la découpe par
+   tranche de distance, et chaque tranche s'étale en colonnes pour que l'œil
+   balaie verticalement plutôt que de dérouler sur trois écrans. */
+.zone-tranche { margin-top: 38px; }
+.zone-tranche:first-child { margin-top: 0; }
+.zone-tranche h3 {
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--ligne);
+  color: var(--piment);
+}
+.zone-communes {
+  list-style: none;
+  columns: 4 210px;
+  column-gap: 26px;
+}
+.zone-communes li {
+  break-inside: avoid;
+  padding: 5px 0;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.zone-communes li b { font-weight: 600; }
+.zone-communes li span {
+  display: block;
+  font-size: 12.5px;
+  color: var(--encre-tenue);
+}
 .supplement {
   position: relative;
   padding: 26px 24px;

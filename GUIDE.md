@@ -189,6 +189,15 @@ Et une troisième, uniquement quand vous **ajoutez ou remplacez une photo** dans
 python3 outils/optimiser-images.py
 ```
 
+Une quatrième, seulement si le **rayon de livraison ou l'adresse changent** :
+
+```bash
+python3 outils/calculer-zone.py
+```
+
+Elle recalcule `data/zone.json`, la liste des communes affichée sur la page
+« Zone de livraison », à partir des données officielles des communes de France.
+
 ### Le contenu visible par Google
 
 `outils/generer-html.py` recopie les plats, les menus, les marchés et les avis

@@ -404,7 +404,7 @@
   }
 
   /* ---------- Avis ---------- */
-  async function avis() {
+  async function avis(cfg) {
     const section = $("#section-avis");
     if (!section) return;
     const d = await charger("avis");
@@ -415,6 +415,8 @@
     // inventer, on invite les clients à en laisser un.
     if (!liste.length) {
       $("#zone-avis").className = "";
+      // Un avis Google vaut bien plus qu'un avis déposé ici : il compte pour le
+      // référencement local, et il est vérifiable par le visiteur suivant.
       $("#zone-avis").innerHTML = `
         <div class="etat-vide">
           <h3>Les premiers avis arrivent</h3>
@@ -423,9 +425,12 @@
             Votre retour aide énormément les personnes qui hésitent encore.
           </p>
           <p style="margin-top:18px">
-            <a class="pastille pastille-pleine"
-               href="mailto:contact@lepaille-en-queue.fr?subject=${encodeURIComponent("Mon avis sur Le Paille en Queue")}"
-               data-cfg-href="email|mailto:">Laisser un avis</a>
+            ${cfg && cfg.googleBusinessProfile
+              ? `<a class="pastille pastille-pleine" rel="noopener"
+                    href="${echapper(cfg.googleBusinessProfile)}">Laisser un avis sur Google</a>`
+              : `<a class="pastille pastille-pleine"
+                    href="mailto:contact@lepaille-en-queue.fr?subject=${encodeURIComponent("Mon avis sur Le Paille en Queue")}"
+                    data-cfg-href="email|mailto:">Laisser un avis</a>`}
           </p>
         </div>`;
       apparitions();
@@ -649,7 +654,7 @@
     const cfg = await appliquerConfig();
     carte();
     marches();
-    avis();
+    avis(cfg);
     devis(cfg);
     infolettre(cfg);
   });

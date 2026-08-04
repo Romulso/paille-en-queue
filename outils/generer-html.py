@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from datetime import date, datetime
 from pathlib import Path
@@ -627,6 +628,27 @@ def injecter_schema(html: str, cle: str, donnees: dict | None) -> str:
     return html.replace("</head>", f"{bloc}\n</head>", 1)
 
 
+def derniere_modification(chemin: Path) -> str:
+    """Date de dernière modification réelle d'un fichier, au format AAAA-MM-JJ.
+
+    On interroge git plutôt que la date du fichier : un « git clone » ou un
+    « git pull » réécrit les fichiers et remet leur date du jour, ce qui
+    daterait d'aujourd'hui des pages inchangées depuis des mois. La date du
+    dernier commit, elle, survit à ces manipulations.
+    """
+    try:
+        r = subprocess.run(
+            ["git", "log", "-1", "--format=%cs", "--", chemin.name],
+            cwd=RACINE, capture_output=True, text=True, timeout=5)
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        pass
+    # Pas de git (archive téléchargée, fichier jamais commité) : la date du
+    # fichier reste la meilleure approximation disponible.
+    return date.fromtimestamp(chemin.stat().st_mtime).isoformat()
+
+
 def ecrire_sitemap() -> None:
     """Le plan du site, daté d'après la dernière modification réelle des pages.
 
@@ -644,7 +666,7 @@ def ecrire_sitemap() -> None:
     for page in sorted(PAGES, key=lambda p: -float(priorites[p["fichier"]])):
         fichier = page["fichier"]
         chemin = RACINE / fichier
-        modifie = date.fromtimestamp(chemin.stat().st_mtime).isoformat()
+        modifie = derniere_modification(chemin)
         url = f"{SITE}/" if fichier == "index.html" else f"{SITE}/{fichier}"
         lignes += [
             "  <url>",

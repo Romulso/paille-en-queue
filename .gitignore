@@ -4,3 +4,6 @@ Thumbs.db
 
 # Photos originales : lourdes, conservées en local, hors du dépôt public
 images/originaux/
+
+# Cache Python, créé dès qu'un script en importe un autre (outils/modele.py)
+__pycache__/

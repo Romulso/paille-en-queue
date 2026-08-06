@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Backoffice — Le Paille en Queue</title>
+<link rel="stylesheet" href="style.css?v=18">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<style>
+  body { background: var(--vanille-2); }
+  .bo { max-width: 980px; margin: 0 auto; padding: 26px 18px 70px; }
+  .bo h1 { font-size: clamp(25px, 5.5vw, 36px); }
+  .bo h1 em { display: block; font-style: normal; font-size: .46em; color: var(--piment); }
+
+  /* --- barre de session ---------------------------------------------- */
+  .session {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid var(--ligne); border-radius: var(--rayon-s);
+    padding: 11px 15px; margin: 20px 0 4px; font-size: 14px;
+  }
+  .session .qui { margin-right: auto; color: var(--encre-douce); }
+  .session .qui b { color: var(--encre); }
+
+  /* --- connexion ------------------------------------------------------ */
+  .connexion {
+    background: #fff; border: 1px solid var(--ligne); border-radius: var(--rayon);
+    padding: 26px; max-width: 420px; margin: 30px auto;
+  }
+  .connexion h2 { font-size: 22px; margin-bottom: 6px; }
+  .connexion p { font-size: 14.5px; color: var(--encre-douce); margin-bottom: 20px; }
+  .connexion label {
+    display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--encre-tenue); margin: 0 0 5px;
+  }
+  .connexion input {
+    width: 100%; padding: 11px 13px; border: 1.5px solid var(--ligne);
+    border-radius: 10px; background: var(--vanille); font-size: 16px; margin-bottom: 15px;
+  }
+  .connexion input:focus {
+    outline: none; border-color: var(--lagon); box-shadow: 0 0 0 3px rgba(13,125,140,.15);
+  }
+  .connexion button { width: 100%; }
+
+  /* --- onglets -------------------------------------------------------- */
+  .onglets { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 20px; }
+  .onglets button {
+    padding: 9px 17px; border-radius: 100px; border: 1.5px solid var(--ligne);
+    background: transparent; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: .2s;
+  }
+  .onglets button[aria-selected="true"] { background: var(--encre); border-color: var(--encre); color: var(--vanille); }
+  .panneau[hidden] { display: none; }
+  .panneau h2 { font-size: 19px; margin: 26px 0 10px; }
+  .panneau h2:first-child { margin-top: 0; }
+
+  /* --- tableaux de lecture -------------------------------------------- */
+  .cadre { overflow-x: auto; border: 1px solid var(--ligne); border-radius: var(--rayon-s); background: #fff; }
+  table.donnees { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+  table.donnees th, table.donnees td { padding: 9px 13px; text-align: left; vertical-align: top; }
+  table.donnees thead th {
+    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--encre-tenue); border-bottom: 1.5px solid var(--ligne); white-space: nowrap;
+  }
+  table.donnees tbody tr + tr td { border-top: 1px solid var(--ligne); }
+  table.donnees td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.donnees td.long { min-width: 260px; color: var(--encre-douce); }
+  .puce {
+    display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 11.5px;
+    font-weight: 700; background: var(--sable); color: var(--encre);
+  }
+  .puce.oui { background: rgba(16,80,63,.12); color: var(--vetiver); }
+  .puce.non { background: rgba(196,41,31,.10); color: var(--piment); }
+
+  .avertissement {
+    border-left: 3px solid var(--curcuma); background: rgba(230,161,42,.10);
+    padding: 13px 17px; border-radius: 0 var(--rayon-s) var(--rayon-s) 0;
+    font-size: 14.5px; color: var(--encre-douce); margin-bottom: 20px;
+  }
+  .avertissement b { color: var(--encre); }
+  .erreur {
+    border-left: 3px solid var(--piment); background: rgba(196,41,31,.07);
+    padding: 13px 17px; border-radius: 0 var(--rayon-s) var(--rayon-s) 0;
+    font-size: 14.5px; color: var(--encre-douce); margin: 14px 0;
+  }
+  .erreur code, .avertissement code { font-size: 13px; background: rgba(0,0,0,.05); padding: 1px 5px; border-radius: 4px; }
+  .etat { font-size: 13.5px; color: var(--vetiver); font-weight: 600; min-height: 1.4em; }
+
+  details.brut { margin-top: 12px; }
+  details.brut summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--encre-douce); }
+  details.brut pre {
+    margin-top: 10px; padding: 14px; background: #fff; border: 1px solid var(--ligne);
+    border-radius: var(--rayon-s); overflow-x: auto; font-size: 12.5px; line-height: 1.5;
+  }
+
+  .mini {
+    border: 1.5px solid var(--ligne); background: #fff; color: var(--encre-douce); cursor: pointer;
+    font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 100px; transition: .2s;
+  }
+  .mini:hover { border-color: var(--encre); color: var(--encre); }
+</style>
+</head>
+<body>
+
+<div class="bo">
+
+  <h1>Le Paille en Queue<em>backoffice</em></h1>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Écran affiché tant que les clés Supabase ne sont pas renseignées    -->
+  <!-- ------------------------------------------------------------------ -->
+  <section id="ecran-reglage" hidden>
+    <div class="erreur">
+      <b>Le backoffice n'est pas encore raccordé à Supabase.</b>
+    </div>
+    <p class="chapo">Deux valeurs à coller dans le code de cette page, tout en bas,
+      dans le bloc <code>RÉGLAGES</code> :</p>
+    <ol style="font-size:15px;line-height:1.9;margin:14px 0 0 20px;color:var(--encre-douce)">
+      <li>Ouvrir le projet sur <code>supabase.com</code>, menu <b>Project Settings → API</b>.</li>
+      <li>Copier <b>Project URL</b> dans <code>SUPABASE_URL</code>.</li>
+      <li>Copier la clé <b>anon / public</b> dans <code>SUPABASE_ANON</code>.</li>
+    </ol>
+    <div class="avertissement" style="margin-top:20px">
+      Ces deux valeurs sont publiques et peuvent figurer dans le dépôt : sans
+      compte, elles ne donnent accès à rien, car chaque table est fermée par
+      RLS. La clé <b>service_role</b>, elle, ne doit <b>jamais</b> apparaître
+      ici — elle contourne RLS et ouvrirait la base à tout le monde.
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Connexion                                                           -->
+  <!-- ------------------------------------------------------------------ -->
+  <section id="ecran-connexion" hidden>
+    <form class="connexion" id="form-connexion">
+      <h2>Connexion</h2>
+      <p>Cette page est réservée à Karine et Romu.</p>
+
+      <label for="courriel">Adresse e-mail</label>
+      <input type="email" id="courriel" autocomplete="username" required>
+
+      <label for="motdepasse">Mot de passe</label>
+      <input type="password" id="motdepasse" autocomplete="current-password" required>
+
+      <button class="pastille pastille-pleine" type="submit">Se connecter</button>
+      <p class="etat" id="etat-connexion" role="status" style="margin-top:14px"></p>
+    </form>
+  </section>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Application                                                         -->
+  <!-- ------------------------------------------------------------------ -->
+  <section id="ecran-appli" hidden>
+
+    <div class="session">
+      <span class="qui">Connecté en tant que <b id="qui"></b></span>
+      <span class="etat" id="etat-appli" role="status"></span>
+      <button class="mini" type="button" id="recharger">Recharger</button>
+      <button class="mini" type="button" id="deconnexion">Se déconnecter</button>
+    </div>
+
+    <div class="avertissement">
+      <b>Phase 1 : lecture seule.</b> Cette page affiche ce que contient la base,
+      pour vérifier que l'import est fidèle. Les modifications arrivent en
+      phase 2. En attendant, le contenu du site se modifie toujours depuis
+      <code>admin.html</code>.
+    </div>
+
+    <div class="onglets" role="tablist">
+      <button role="tab" id="o-marches"  aria-controls="p-marches"  aria-selected="true">Marchés</button>
+      <button role="tab" id="o-carte"    aria-controls="p-carte"    aria-selected="false">Carte</button>
+      <button role="tab" id="o-menus"    aria-controls="p-menus"    aria-selected="false">Menus</button>
+      <button role="tab" id="o-avis"     aria-controls="p-avis"     aria-selected="false">Avis</button>
+      <button role="tab" id="o-reglages" aria-controls="p-reglages" aria-selected="false">Réglages</button>
+    </div>
+
+    <section class="panneau" id="p-marches"  role="tabpanel" aria-labelledby="o-marches"></section>
+    <section class="panneau" id="p-carte"    role="tabpanel" aria-labelledby="o-carte"    hidden></section>
+    <section class="panneau" id="p-menus"    role="tabpanel" aria-labelledby="o-menus"    hidden></section>
+    <section class="panneau" id="p-avis"     role="tabpanel" aria-labelledby="o-avis"     hidden></section>
+    <section class="panneau" id="p-reglages" role="tabpanel" aria-labelledby="o-reglages" hidden></section>
+
+  </section>
+
+</div>
+
+<script type="module">
+// ===========================================================================
+// RÉGLAGES — à remplir après la création du projet Supabase
+// ===========================================================================
+// Project Settings → API. La clé « anon / public » uniquement : elle ne donne
+// accès à rien sans connexion, parce que RLS est actif sur les six tables.
+// La clé « service_role » ne doit jamais figurer ici.
+
+const SUPABASE_URL  = "";
+const SUPABASE_ANON = "";
+
+// ===========================================================================
+
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const ecran = (nom) => ["reglage", "connexion", "appli"].forEach(
+  (e) => { $(`#ecran-${e}`).hidden = e !== nom; });
+
+function demarrer() {
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  /* ---------- session ---------- */
+
+  // onAuthStateChange se déclenche aussi au chargement, session restaurée
+  // comprise : inutile d'appeler getSession() en plus, ce serait deux
+  // chemins de code pour le même événement.
+  sb.auth.onAuthStateChange((_evenement, session) => {
+    if (session) {
+      ecran("appli");
+      $("#qui").textContent = session.user.email;
+      charger(sb);
+    } else {
+      ecran("connexion");
+    }
+  });
+
+  $("#form-connexion").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const etat = $("#etat-connexion");
+    etat.textContent = "Connexion en cours…";
+    const { error } = await sb.auth.signInWithPassword({
+      email: $("#courriel").value.trim(),
+      password: $("#motdepasse").value,
+    });
+    // Message volontairement vague : préciser lequel des deux est faux
+    // indiquerait à un inconnu quelles adresses existent.
+    etat.textContent = error ? "Adresse ou mot de passe incorrect." : "";
+    $("#motdepasse").value = error ? "" : $("#motdepasse").value;
+  });
+
+  $("#deconnexion").addEventListener("click", () => sb.auth.signOut());
+  $("#recharger").addEventListener("click", () => charger(sb));
+
+  /* ---------- onglets ---------- */
+  $$(".onglets button").forEach((onglet) => {
+    onglet.addEventListener("click", () => {
+      $$(".onglets button").forEach((o) => {
+        const actif = o === onglet;
+        o.setAttribute("aria-selected", actif);
+        $("#" + o.getAttribute("aria-controls")).hidden = !actif;
+      });
+    });
+  });
+}
+
+/* ---------- affichage ---------- */
+
+const echapper = (v) => String(v ?? "").replace(/[&<>"]/g, (c) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const euros = (v) => v === null || v === undefined
+  ? '<span class="puce">sur devis</span>'
+  : `${Number(v) % 1 === 0 ? Number(v) : Number(v).toFixed(2).replace(".", ",")} €`;
+
+const ouinon = (v) => v
+  ? '<span class="puce oui">oui</span>'
+  : '<span class="puce non">non</span>';
+
+function tableau(colonnes, lignes) {
+  if (!lignes.length) return '<p class="etat">Aucune ligne.</p>';
+  const tete = colonnes.map((c) => `<th>${echapper(c.titre)}</th>`).join("");
+  const corps = lignes.map((l) =>
+    "<tr>" + colonnes.map((c) => {
+      const v = c.rendu ? c.rendu(l) : echapper(l[c.cle]);
+      return `<td class="${c.classe || ""}">${v}</td>`;
+    }).join("") + "</tr>").join("");
+  return `<div class="cadre"><table class="donnees">
+    <thead><tr>${tete}</tr></thead><tbody>${corps}</tbody></table></div>`;
+}
+
+async function charger(sb) {
+  const etat = $("#etat-appli");
+  etat.textContent = "Lecture…";
+
+  // Une seule salve : les six requêtes sont indépendantes, les enchaîner
+  // ferait attendre six allers-retours au lieu d'un.
+  const [produits, menus, lignes, marches, avis, reglages] = await Promise.all([
+    sb.from("produits").select("*").order("famille").order("ordre"),
+    sb.from("menus").select("*").order("ordre"),
+    sb.from("menu_lignes").select("*").order("ordre"),
+    sb.from("marches").select("*").order("ordre"),
+    sb.from("avis").select("*").order("ordre"),
+    sb.from("reglages").select("*").limit(1).maybeSingle(),
+  ]);
+
+  const souci = [produits, menus, lignes, marches, avis, reglages]
+    .find((r) => r.error);
+  if (souci) {
+    etat.textContent = "";
+    $("#p-marches").innerHTML = `<div class="erreur">
+      <b>La base n'a rien renvoyé.</b> ${echapper(souci.error.message)}
+      <br><br>Si le message ne dit rien de précis et que les tables sont bien
+      remplies, la cause la plus fréquente est une table sur laquelle RLS est
+      actif <b>sans politique</b> : elle ne renvoie alors aucune ligne, sans
+      erreur. Vérifier avec la requête en fin de <code>supabase/schema.sql</code>.
+    </div>`;
+    return;
+  }
+
+  const famille = (f) => produits.data.filter((p) => p.famille === f);
+
+  /* --- Marchés --- */
+  $("#p-marches").innerHTML = `<h2>Marchés (${marches.data.length})</h2>` + tableau([
+    { titre: "Lieu", cle: "lieu" },
+    { titre: "Jour", cle: "jour" },
+    { titre: "Type", rendu: (m) => `<span class="puce">${echapper(m.type)}</span>` },
+    { titre: "Horaire", cle: "horaire" },
+    { titre: "Précision", cle: "details", classe: "long" },
+    { titre: "Jusqu'au", rendu: (m) => m.jusquau ? echapper(m.jusquau) : "—" },
+    { titre: "Actif", rendu: (m) => ouinon(m.actif) },
+  ], marches.data);
+
+  /* --- Carte --- */
+  const bloc = (titre, f, avecCategorie) => `<h2>${titre} (${famille(f).length})</h2>` + tableau([
+    { titre: "Nom", cle: "nom" },
+    { titre: "Prix", rendu: (p) => euros(p.prix), classe: "num" },
+    { titre: "Unité", rendu: (p) => p.unite ? echapper(p.unite) : "la part" },
+    ...(avecCategorie ? [{ titre: "Catégorie", cle: "categorie" }] : []),
+    { titre: "Signature", rendu: (p) => ouinon(p.vedette) },
+    { titre: "Description", cle: "description", classe: "long" },
+  ], famille(f));
+
+  $("#p-carte").innerHTML =
+    bloc("Plats", "plat", true) +
+    bloc("Entrées et apéritif", "entree", false) +
+    bloc("Boissons", "boisson", false) +
+    bloc("Suppléments", "supplement", false);
+
+  /* --- Menus --- */
+  const BLOCS = { entree: "Entrée", plat: "Plat au choix", dessert: "Dessert", inclus: "Compris" };
+  $("#p-menus").innerHTML = `<h2>Menus (${menus.data.length})</h2>` +
+    menus.data.map((m) => {
+      const prix = m.prix_max ? `${euros(m.prix)} à ${euros(m.prix_max)}` : euros(m.prix);
+      const contenu = Object.entries(BLOCS).map(([cle, titre]) => {
+        const items = lignes.data.filter((l) => l.menu_id === m.id && l.bloc === cle);
+        if (!items.length) return "";
+        return `<tr><td><b>${titre}</b></td><td class="long">${
+          items.map((i) => echapper(i.libelle)).join(" · ")}</td></tr>`;
+      }).join("");
+      return `<h2 style="margin-bottom:4px">${echapper(m.nom)} — ${prix}</h2>
+        <p class="etat" style="margin-bottom:10px">${echapper(m.resume)}${
+          m.supplement_motif ? ` · prix haut ${echapper(m.supplement_motif)}` : ""}</p>
+        <div class="cadre"><table class="donnees"><tbody>${contenu}</tbody></table></div>`;
+    }).join("");
+
+  /* --- Avis --- */
+  $("#p-avis").innerHTML = `<h2>Avis (${avis.data.length})</h2>` + tableau([
+    { titre: "Auteur", cle: "auteur" },
+    { titre: "Note", rendu: (a) => "★".repeat(a.note), classe: "num" },
+    { titre: "Contexte", cle: "contexte" },
+    { titre: "Texte", cle: "texte", classe: "long" },
+    { titre: "Publié", rendu: (a) => ouinon(a.publie) },
+  ], avis.data);
+
+  /* --- Réglages --- */
+  const r = reglages.data || {};
+  const editables = Object.entries(r)
+    .filter(([c]) => !["id", "gabarits", "modifie_le"].includes(c))
+    .map(([c, v]) => ({ champ: c, valeur: v }));
+
+  $("#p-reglages").innerHTML = `<h2>Réglages</h2>` + tableau([
+    { titre: "Champ", cle: "champ" },
+    { titre: "Valeur", cle: "valeur", classe: "long" },
+  ], editables) + `
+    <details class="brut">
+      <summary>Gabarits — la forme des fichiers JSON (lecture seule)</summary>
+      <p class="etat" style="margin:10px 0">Ce bloc conserve l'ordre des clés et
+        les commentaires des fichiers <code>data/*.json</code>. Les repères
+        <code>@produits:plat</code>, <code>@menus</code>, <code>@reglage:…</code>
+        sont remplacés par les données de la base au moment de la publication.</p>
+      <pre>${echapper(JSON.stringify(r.gabarits ?? {}, null, 2))}</pre>
+    </details>`;
+
+  const total = produits.data.length + menus.data.length + marches.data.length + avis.data.length;
+  etat.textContent = `${total} enregistrements lus`;
+}
+
+/* ---------- démarrage ---------- */
+// En dernier, volontairement : demarrer() finit par appeler charger(), qui se
+// sert des fonctions d'affichage déclarées ci-dessus en « const ». Lancer le
+// démarrage plus haut dans le fichier fonctionnerait tant que Supabase rappelle
+// de façon asynchrone, et casserait le jour où ce ne serait plus le cas.
+
+if (!SUPABASE_URL || !SUPABASE_ANON) {
+  ecran("reglage");
+} else {
+  demarrer();
+}
+</script>
+</body>
+</html>

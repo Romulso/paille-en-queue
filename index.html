@@ -13,7 +13,7 @@
      taille fixe, que le navigateur téléchargeait en plus de celle réellement
      choisie par le srcset. L'image est le troisième élément du <body> et porte
      fetchpriority="high" : elle part déjà en tête de file. -->
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -533,7 +533,11 @@
       </div>
       <div class="apparait">
         <span class="sur-titre">Depuis 2009</span>
-        <h2>Quinze ans de marchés, et l'envie de faire la fête</h2>
+        <!-- Le nombre d'années est recalculé par site.js à partir de l'année de
+             création : écrit en dur, il vieillit sans que personne ne s'en
+             aperçoive. Ce qui suit est la valeur de repli, pour les robots et
+             les navigateurs sans JavaScript. -->
+        <h2><span data-anciennete>Dix-sept</span> ans de marchés, et l'envie de faire la fête</h2>
         <p>
           Le Paille en Queue est né en Dordogne en 2009. Depuis, Karine Danna a
           installé son stand sur les marchés du matin et les marchés nocturnes de
@@ -741,7 +745,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=20"></script>
+<script src="site.js?v=21"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

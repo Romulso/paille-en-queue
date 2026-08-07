@@ -46,6 +46,19 @@
       const [cle, prefixe = ""] = el.dataset.cfgHref.split("|");
       if (cfg[cle]) el.href = prefixe + cfg[cle];
     });
+    // L'ancienneté se calcule, elle ne s'écrit pas : « quinze ans » figé dans
+    // le HTML devient faux au bout d'un an, et personne ne le relit jamais.
+    if (cfg.creation) {
+      const ans = new Date().getFullYear() - cfg.creation;
+      const LETTRES = ["zéro", "un", "deux", "trois", "quatre", "cinq", "six",
+        "sept", "huit", "neuf", "dix", "onze", "douze", "treize", "quatorze",
+        "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf", "vingt",
+        "vingt et un", "vingt-deux", "vingt-trois", "vingt-quatre", "vingt-cinq"];
+      const enLettres = LETTRES[ans] || String(ans);
+      const majuscule = enLettres.charAt(0).toUpperCase() + enLettres.slice(1);
+      $$("[data-anciennete]").forEach((el) => { el.textContent = majuscule; });
+    }
+
     // Réseaux sociaux : on masque le lien tant qu'aucune adresse n'est renseignée.
     $$("[data-reseau]").forEach((el) => {
       const url = cfg[el.dataset.reseau];

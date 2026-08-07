@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Backoffice — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); }
@@ -122,6 +122,16 @@
   .etat { font-size: 13.5px; font-weight: 600; min-height: 1.4em; color: var(--vetiver); }
   .etat.rouge { color: var(--piment); }
 
+  /* Tableau du détail d'une demande, replié par défaut. */
+  .cadre { overflow-x: auto; border: 1px solid var(--ligne); border-radius: var(--rayon-s); background: var(--vanille); }
+  table.donnees { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.donnees td { padding: 8px 12px; text-align: left; vertical-align: top; }
+  table.donnees tbody tr + tr td { border-top: 1px solid var(--ligne); }
+  .puce {
+    display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 11.5px;
+    font-weight: 700; background: var(--sable); color: var(--encre);
+  }
+
   details.brut { margin-top: 14px; }
   details.brut summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--encre-douce); }
   details.brut pre {
@@ -176,14 +186,16 @@
     </div>
 
     <div class="onglets" role="tablist">
-      <button role="tab" id="o-marches"  aria-controls="p-marches"  aria-selected="true">Marchés</button>
+      <button role="tab" id="o-demandes" aria-controls="p-demandes" aria-selected="true">Commandes</button>
+      <button role="tab" id="o-marches"  aria-controls="p-marches"  aria-selected="false">Marchés</button>
       <button role="tab" id="o-carte"    aria-controls="p-carte"    aria-selected="false">Carte</button>
       <button role="tab" id="o-menus"    aria-controls="p-menus"    aria-selected="false">Menus</button>
       <button role="tab" id="o-avis"     aria-controls="p-avis"     aria-selected="false">Avis</button>
       <button role="tab" id="o-reglages" aria-controls="p-reglages" aria-selected="false">Réglages</button>
     </div>
 
-    <section class="panneau" id="p-marches"  role="tabpanel" aria-labelledby="o-marches"></section>
+    <section class="panneau" id="p-demandes" role="tabpanel" aria-labelledby="o-demandes"></section>
+    <section class="panneau" id="p-marches"  role="tabpanel" aria-labelledby="o-marches"  hidden></section>
     <section class="panneau" id="p-carte"    role="tabpanel" aria-labelledby="o-carte"    hidden></section>
     <section class="panneau" id="p-menus"    role="tabpanel" aria-labelledby="o-menus"    hidden></section>
     <section class="panneau" id="p-avis"     role="tabpanel" aria-labelledby="o-avis"     hidden></section>
@@ -226,7 +238,8 @@ const BLOCS = [["entree", "Entrée"], ["plat", "Plat au choix"],
                ["dessert", "Dessert"], ["inclus", "Compris"]];
 
 let sb = null;
-const donnees = {};   // produits, menus, menu_lignes, marches, avis, reglages
+const donnees = {};   // produits, menus, menu_lignes, marches, avis, reglages, demandes
+const photos = {};    // slug -> la photo existe-t-elle dans images/ ?
 
 
 /* =========================================================================
@@ -404,6 +417,148 @@ const versPrix = (v) => v === "" ? null : Number(String(v).replace(",", "."));
 
 
 /* =========================================================================
+   Onglet Commandes
+   ========================================================================= */
+
+const ETATS = [
+  ["nouveau", "Nouveau"], ["devis_envoye", "Devis envoyé"], ["signe", "Signé"],
+  ["realise", "Réalisé"], ["sans_suite", "Sans suite"],
+];
+const COULEUR_ETAT = {
+  nouveau: "var(--piment)", devis_envoye: "var(--curcuma)",
+  signe: "var(--vetiver)", realise: "var(--encre-tenue)", sans_suite: "var(--encre-tenue)",
+};
+
+const dateFr = (iso) => {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+};
+
+/* Les demandes ne se créent ni ne se réordonnent depuis le backoffice :
+   elles arrivent du site. On ne fait que les suivre. */
+function dessinerDemandes() {
+  const zone = $("#p-demandes");
+  zone.textContent = "";
+  const liste = donnees.demandes || [];
+
+  const aTraiter = liste.filter((d) => d.etat === "nouveau").length;
+  const titre = document.createElement("h2");
+  titre.innerHTML = `Demandes de devis <small>${liste.length}`
+    + (aTraiter ? ` · <b style="color:var(--piment)">${aTraiter} à traiter</b>` : "")
+    + `</small>`;
+  zone.appendChild(titre);
+
+  if (!liste.length) {
+    const vide = document.createElement("p");
+    vide.className = "etat";
+    vide.style.fontWeight = "400";
+    vide.textContent = "Aucune demande pour le moment. Celles qui arriveront par le "
+      + "formulaire du site s'afficheront ici, la plus récente en premier.";
+    zone.appendChild(vide);
+    return;
+  }
+
+  const garde = document.createElement("div");
+  garde.className = "avertissement";
+  garde.innerHTML = "<b>Données personnelles de clients.</b> Elles restent dans la base, "
+    + "ne partent jamais sur le site, et sont effacées trois ans après le dernier "
+    + "échange. Supprimez une demande dès qu'elle n'a plus d'utilité.";
+  zone.appendChild(garde);
+
+  liste.forEach((d) => {
+    const maj = (patch) => { Object.assign(d, patch); enregistrer("demandes", d.id, patch); };
+
+    const f = document.createElement("div");
+    f.className = "fiche" + (d.etat === "nouveau" ? "" : " inactive");
+
+    const tete = document.createElement("div");
+    tete.className = "fiche-tete";
+    tete.innerHTML = `<strong>${echapper(d.nom)}`
+      + (d.structure ? ` <span style="font-weight:400;color:var(--encre-tenue)">· ${echapper(d.structure)}</span>` : "")
+      + `</strong>`;
+
+    const etiquette = document.createElement("span");
+    etiquette.className = "puce";
+    etiquette.style.cssText = `background:transparent;border:1.5px solid ${COULEUR_ETAT[d.etat]};color:${COULEUR_ETAT[d.etat]}`;
+    etiquette.textContent = (ETATS.find(([v]) => v === d.etat) || ["", d.etat])[1];
+    tete.appendChild(etiquette);
+
+    const sup = document.createElement("button");
+    sup.className = "mini mini-danger"; sup.type = "button"; sup.textContent = "Supprimer";
+    sup.addEventListener("click", async () => {
+      if (!confirm(`Effacer définitivement la demande de ${d.nom} ?`)) return;
+      if (await supprimer("demandes", d.id)) await charger();
+    });
+    tete.appendChild(sup);
+    f.appendChild(tete);
+
+    // Le résumé : ce qu'on veut voir sans cliquer.
+    const resume = document.createElement("p");
+    resume.style.cssText = "font-size:14.5px;color:var(--encre-douce);margin:0 0 13px";
+    const bouts = [
+      d.type_evenement, d.date_evenement ? `le ${dateFr(d.date_evenement)}` : null,
+      d.convives ? `${d.convives} convives` : null, d.commune,
+      d.budget, d.style_cuisine,
+    ].filter(Boolean);
+    resume.textContent = bouts.join(" · ");
+    f.appendChild(resume);
+
+    // Contacter en un geste : c'est ce que Karine fait en premier.
+    const actions = document.createElement("div");
+    actions.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px";
+    if (d.telephone) {
+      const t = d.telephone.replace(/[^0-9+]/g, "");
+      actions.insertAdjacentHTML("beforeend",
+        `<a class="mini" href="tel:${echapper(t)}">📞 ${echapper(d.telephone)}</a>`
+        + `<a class="mini" href="https://wa.me/${echapper(t.replace(/^0/, "33").replace(/^\+/, ""))}" target="_blank" rel="noopener">WhatsApp</a>`);
+    }
+    if (d.email) {
+      const objet = encodeURIComponent(`Votre demande de devis — Le Paille en Queue`);
+      actions.insertAdjacentHTML("beforeend",
+        `<a class="mini" href="mailto:${echapper(d.email)}?subject=${objet}">✉ ${echapper(d.email)}</a>`);
+    }
+    actions.insertAdjacentHTML("beforeend",
+      `<span class="mini" style="border-style:dashed;cursor:default">Reçue le ${dateFr(d.recu_le)}</span>`);
+    f.appendChild(actions);
+
+    f.appendChild(grille("c2",
+      champ("Où en est-on", d.etat, (v) => { maj({ etat: v }); dessinerDemandes(); },
+            { type: "liste", choix: ETATS }),
+      champ("Notes de suivi", d.suivi, (v) => maj({ suivi: v }),
+            { type: "zone", aide: "devis envoyé le…, rappeler le…" }),
+    ));
+
+    // Le détail complet, replié : il encombrerait la liste.
+    const detail = document.createElement("details");
+    detail.className = "brut";
+    const lignes = [
+      ["Téléphone", d.telephone], ["E-mail", d.email], ["Structure", d.structure],
+      ["Rappel accepté", d.rappel ? "oui" : "non"],
+      ["Type d'événement", d.type_evenement], ["Date", dateFr(d.date_evenement)],
+      ["Heure de service", d.heure_service], ["Convives", d.convives],
+      ["Commune", d.commune], ["Type de lieu", d.type_lieu],
+      ["Style de cuisine", d.style_cuisine], ["Formule", d.formule], ["Budget", d.budget],
+      ["Plats souhaités", (d.plats || []).join(" · ")],
+      ["Entrées et boissons", (d.entrees_boissons || []).join(" · ")],
+      ["Suppléments", (d.supplements || []).join(" · ")],
+      ["Précisions", d.precisions],
+    ].filter(([, v]) => v !== null && v !== undefined && v !== "" && v !== "—");
+
+    detail.innerHTML = `<summary>Voir toute la demande</summary>
+      <div class="cadre" style="margin-top:10px"><table class="donnees"><tbody>${
+        lignes.map(([k, v]) =>
+          `<tr><td style="white-space:nowrap;color:var(--encre-tenue)">${echapper(k)}</td>`
+          + `<td>${echapper(v)}</td></tr>`).join("")
+      }</tbody></table></div>`;
+    f.appendChild(detail);
+
+    zone.appendChild(f);
+  });
+}
+
+
+/* =========================================================================
    Onglet Marchés
    ========================================================================= */
 
@@ -468,9 +623,37 @@ function dessinerMarches() {
    Onglet Carte
    ========================================================================= */
 
+/* Karine peut ajouter un plat, mais pas sa photo : les images restent dans
+   le dépôt (c'est un choix du cahier des charges, § 3). Le moins qu'on
+   puisse faire est de lui dire lesquelles manquent, pour qu'elle sache quoi
+   demander — un plat affiché sans photo montre un aplat de couleur au
+   visiteur, à l'endroit précis où il faudrait lui donner faim. */
+async function verifierPhotos() {
+  const aVerifier = donnees.produits.filter((p) => p.actif && !(p.slug in photos));
+  await Promise.all(aVerifier.map(async (p) => {
+    try {
+      const r = await fetch(`images/${p.slug}.jpg`, { method: "HEAD" });
+      photos[p.slug] = r.ok;
+    } catch { photos[p.slug] = false; }
+  }));
+  if (aVerifier.length) dessinerCarte();
+}
+
 function dessinerCarte() {
   const zone = $("#p-carte");
   zone.textContent = "";
+
+  const sansPhoto = donnees.produits.filter((p) => p.actif && photos[p.slug] === false);
+  if (sansPhoto.length) {
+    const alerte = document.createElement("div");
+    alerte.className = "avertissement";
+    alerte.innerHTML = `<b>${sansPhoto.length} plat(s) affiché(s) sans photo.</b> `
+      + `Ils apparaissent sur le site en aplat de couleur, avec leur nom écrit dessus : `
+      + `${sansPhoto.map((p) => echapper(p.nom)).join(", ")}.`
+      + `<br>Une assiette, la lumière du jour, un téléphone — puis transmettez les `
+      + `images, elles seront ajoutées au site.`;
+    zone.appendChild(alerte);
+  }
 
   FAMILLES.forEach(([famille, libelle]) => {
     const liste = donnees.produits.filter((p) => p.famille === famille);
@@ -736,6 +919,7 @@ function dessinerReglages() {
    ========================================================================= */
 
 function dessiner() {
+  dessinerDemandes();
   dessinerMarches();
   dessinerCarte();
   dessinerMenus();
@@ -748,19 +932,22 @@ async function charger() {
 
   // Une seule salve : les six requêtes sont indépendantes, les enchaîner
   // ferait attendre six allers-retours au lieu d'un.
-  const [produits, menus, lignes, marches, avis, reglages] = await Promise.all([
+  const [produits, menus, lignes, marches, avis, reglages, demandes] = await Promise.all([
     sb.from("produits").select("*").order("ordre"),
     sb.from("menus").select("*").order("ordre"),
     sb.from("menu_lignes").select("*").order("ordre"),
     sb.from("marches").select("*").order("ordre"),
     sb.from("avis").select("*").order("ordre"),
     sb.from("reglages").select("*").limit(1).maybeSingle(),
+    // Le carnet de commandes : la plus récente d'abord, c'est celle qu'on
+    // veut voir en ouvrant la page.
+    sb.from("demandes").select("*").order("recu_le", { ascending: false }),
   ]);
 
-  const souci = [produits, menus, lignes, marches, avis, reglages].find((r) => r.error);
+  const souci = [produits, menus, lignes, marches, avis, reglages, demandes].find((r) => r.error);
   if (souci) {
     dire("", false);
-    $("#p-marches").innerHTML = `<div class="erreur">
+    $("#p-demandes").innerHTML = `<div class="erreur">
       <b>La base n'a rien renvoyé.</b> ${echapper(souci.error.message)}
       <br><br>Si le message ne dit rien de précis et que les tables sont bien
       remplies, la cause la plus fréquente est une table sur laquelle RLS est
@@ -773,11 +960,13 @@ async function charger() {
   Object.assign(donnees, {
     produits: produits.data, menus: menus.data, menu_lignes: lignes.data,
     marches: marches.data, avis: avis.data, reglages: reglages.data,
+    demandes: demandes.data,
   });
 
   dessiner();
-  const total = produits.data.length + menus.data.length + marches.data.length + avis.data.length;
-  dire(`${total} enregistrements`);
+  verifierPhotos();
+  const nouvelles = demandes.data.filter((d) => d.etat === "nouveau").length;
+  dire(nouvelles ? `${nouvelles} demande(s) à traiter` : "À jour");
 }
 
 

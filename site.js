@@ -620,6 +620,9 @@
           headers: { Accept: "application/json" },
         });
         if (!r.ok) throw new Error(r.status);
+        // La demande est partie : on la consigne au carnet, sans attendre et
+        // sans que le visiteur ait à s'en soucier.
+        consignerDemande(cfg, donnees);
         form.reset();
         messageOK.textContent = "Merci ! Votre demande est bien partie. Karine vous répond sous 48 h avec un devis détaillé.";
         messageOK.classList.add("est-visible");
@@ -632,6 +635,67 @@
         bouton.textContent = libelle;
       }
     });
+  }
+
+  /* Consigne la demande dans le carnet de commandes (Supabase).
+
+     Volontairement après l'envoi par e-mail, et sans jamais faire échouer
+     l'envoi : la boîte de Karine reste le canal qui compte. Si la base est
+     indisponible, le client n'en sait rien et sa demande est quand même
+     arrivée. On ne charge aucune bibliothèque — un fetch suffit, et le site
+     public reste sans dépendance.
+
+     La clé utilisée est la clé publique : elle n'autorise que l'insertion.
+     Personne ne peut relire les demandes avec, pas même celui qui vient de
+     l'envoyer. « return=minimal » évite d'avoir à accorder la lecture. */
+  async function consignerDemande(cfg, donnees) {
+    const base = (cfg && cfg.supabaseUrl) || "";
+    const cle = (cfg && cfg.supabaseClePublique) || "";
+    if (!base || !cle) return;
+
+    const texte = (nom) => (donnees.get(nom) || "").toString().trim() || null;
+    const nombre = (nom) => {
+      const v = parseInt(donnees.get(nom), 10);
+      return Number.isFinite(v) ? v : null;
+    };
+    const liste = (nom) => donnees.getAll(nom).map(String).filter(Boolean);
+
+    const demande = {
+      nom: texte("Nom") || "Sans nom",
+      email: texte("E-mail"),
+      telephone: texte("Téléphone"),
+      structure: texte("Structure"),
+      rappel: !!donnees.get("Accord de rappel"),
+      type_evenement: texte("Type d'événement"),
+      date_evenement: texte("Date de l'événement"),
+      heure_service: texte("Heure de service"),
+      convives: nombre("Nombre de convives"),
+      commune: texte("Commune"),
+      type_lieu: texte("Type de lieu"),
+      style_cuisine: texte("Style de cuisine"),
+      formule: texte("Formule envisagée"),
+      budget: texte("Budget par personne"),
+      plats: liste("Plats souhaités"),
+      entrees_boissons: liste("Entrées et boissons"),
+      supplements: liste("Prestations en supplément"),
+      precisions: texte("Précisions"),
+    };
+
+    try {
+      const r = await fetch(`${base}/rest/v1/demandes`, {
+        method: "POST",
+        headers: {
+          "apikey": cle,
+          "Authorization": `Bearer ${cle}`,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal",
+        },
+        body: JSON.stringify(demande),
+      });
+      if (!r.ok) console.warn("Carnet de commandes : écriture refusée", r.status);
+    } catch (e) {
+      console.warn("Carnet de commandes injoignable", e);
+    }
   }
 
   function lienMail(donnees) {

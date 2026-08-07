@@ -50,6 +50,15 @@ for flux in (sys.stdout, sys.stderr):
 
 TABLES = ("produits", "menus", "menu_lignes", "marches", "avis", "reglages")
 
+# Tables qui ne doivent jamais être exportées, quoi qu'il arrive. « demandes »
+# contient des noms, des adresses et des téléphones de clients ; ce script
+# écrit dans data/*.json, qui part dans un dépôt GitHub public. L'assertion
+# n'est pas décorative : elle fait échouer la publication plutôt que de publier
+# le carnet de commandes le jour où quelqu'un ajoutera la table par commodité.
+JAMAIS_EXPORTEES = ("demandes",)
+assert not set(TABLES) & set(JAMAIS_EXPORTEES), \
+    "Une table de données personnelles figure dans TABLES : publication annulée."
+
 # En dessous de ces seuils, on refuse d'écrire. Une base vidée par accident,
 # une clé qui ne voit rien à cause de RLS, une table oubliée : sans ce
 # garde-fou, la publication remplacerait le site par une coquille vide et

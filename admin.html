@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Gestion du contenu — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); padding-bottom: 40px; }
@@ -66,12 +66,28 @@
     font-size: 14.5px; color: var(--encre-douce); margin-bottom: 20px;
   }
 </style>
+<style>
+  /* Page conservée en lecture seule : voir le bandeau rouge. Neutraliser les
+     champs vaut mieux que retirer la page — un lien en favori qui tombe sur
+     une erreur 404 inquiète, un bandeau qui explique renseigne. */
+  .panneau input, .panneau textarea, .panneau select, .panneau button.mini,
+  .publier button { pointer-events: none; opacity: .6; }
+</style>
 </head>
 <body>
 
 <div class="admin">
 
-  <h1>Le Paille en Queue<em>gestion du contenu</em></h1>
+  <h1>Le Paille en Queue<em>ancienne gestion du contenu</em></h1>
+  <div class="avertissement" style="border-left-color:var(--piment);background:rgba(196,41,31,.07)">
+    <b>Cette page ne sert plus.</b> Le contenu du site vit désormais dans la base,
+    et se modifie depuis <a href="backoffice.html"><b>backoffice.html</b></a>.
+    <br><br>
+    Toute modification faite ici serait <b>écrasée à la publication suivante</b> :
+    la base fait foi. La page est conservée en lecture, le temps d'être sûr que
+    plus personne n'en a besoin.
+  </div>
+
   <p class="chapo" style="margin-top:12px">
     Page privée : aucun lien du site ne mène ici. Modifiez ce que vous voulez,
     puis téléchargez le fichier et remplacez-le dans le dossier <code>data/</code>

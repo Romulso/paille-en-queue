@@ -1,8 +1,6 @@
 {
   "_lisezmoi": "Témoignages de clients. Modifiable depuis admin.html (onglet Avis). N'y mettre que de VRAIS avis, avec l'accord de la personne : un faux témoignage est interdit par la loi (pratique commerciale trompeuse) et se repère vite. Tant que la liste est vide, la section n'apparaît pas sur le site. N'indiquer que le prénom et l'initiale du nom : le témoignage reste crédible sans exposer l'identité complète du client.",
-
   "_source": "Repris de la page Facebook, où l'avis est public. Prévenir la personne avant de publier le sien : c'est la moindre des politesses, et cela évite toute contestation.",
-
   "avis": [
     {
       "auteur": "Angèle M.",

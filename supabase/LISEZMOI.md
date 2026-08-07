@@ -113,3 +113,54 @@ Rien n'écrit dans la base depuis le backoffice, et rien ne publie. Le contenu
 du site continue de se modifier par `admin.html`, comme avant. Supabase et le
 site vivent côte à côte sans se parler — c'est voulu : tant que la phase 3
 n'existe pas, la base n'est qu'une copie.
+
+---
+
+# Phase 3 — la publication
+
+Karine modifie dans le backoffice, qui écrit dans Supabase. Un workflow GitHub
+va chercher la base toutes les quinze minutes, réécrit `data/*.json`, régénère
+le site et le PDF, puis pousse. GitHub Pages republie derrière.
+
+Le site public reste entièrement statique : il n'interroge jamais Supabase.
+Si la base tombe, le site ne s'en aperçoit pas.
+
+## Ce qu'il reste à faire, une fois
+
+Déposer la clé secrète dans les secrets du dépôt :
+
+1. **Supabase → Project Settings → API Keys**, copier la clé **secret**
+   (autrefois `service_role`).
+2. **GitHub → Settings → Secrets and variables → Actions → New repository
+   secret**, nom exact `SUPABASE_SERVICE_KEY`.
+
+> ⛔ Cette clé contourne RLS. Elle ne doit jamais être collée dans un fichier
+> du dépôt, ni dans une conversation. Les secrets GitHub ne sont pas lisibles
+> après enregistrement, même par vous : c'est normal.
+
+Tant que le secret est absent, le workflow s'arrête proprement avec un
+avertissement, sans envoyer de mail d'erreur.
+
+## Le premier essai
+
+**Actions → Publier le site → Run workflow**, en cochant
+**« Comparer sans rien écrire ni pousser »**.
+
+L'export doit annoncer « Aucune différence : l'export est fidèle ». C'est la
+vérification du § 9 du cahier des charges, exécutée sur les vraies données :
+elle prouve que le passage par la base ne modifie rien.
+
+Si des différences apparaissent, ne pas lancer la publication réelle : les
+regarder d'abord.
+
+## Le délai
+
+Le cron est traité « au mieux » par GitHub : comptez quinze à trente minutes,
+plus une à deux minutes de construction Pages. Pour publier tout de suite,
+relancer le workflow à la main sans cocher la case.
+
+## Ce qui protège
+
+`outils/exporter-supabase.py` refuse d'écrire si la base renvoie moins de
+5 produits, moins d'un menu ou des gabarits vides. Une base vidée par accident
+ne peut donc pas remplacer le site par une coquille vide.

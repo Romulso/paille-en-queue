@@ -53,13 +53,13 @@ JOURS_SCHEMA = {
 # Les pages indexables. « service » n'est rempli que pour les pages piliers :
 # ce sont les seules à décrire une prestation vendable.
 PAGES = [
-    {"fichier": "index.html", "nom": "Traiteur réunionnais en Dordogne — Le Paille en Queue"},
+    {"fichier": "index.html", "nom": "Traiteur en Dordogne — Le Paille en Queue"},
     {"fichier": "carte.html", "nom": "La carte et les menus créoles — Le Paille en Queue"},
     {"fichier": "marches.html", "nom": "Nos marchés nocturnes en Dordogne — Le Paille en Queue"},
     {"fichier": "zone-livraison.html",
      "nom": "Zone de livraison : traiteur créole en Dordogne et Gironde — Le Paille en Queue",
      "service": "Livraison de repas créoles",
-     "service_desc": "Livraison de plats et menus créoles dans un rayon de 50 km "
+     "service_desc": "Livraison de plats et menus, créoles ou classiques, dans un rayon de 50 km "
                      "autour de Montpeyroux, sur l'ouest de la Dordogne et l'est "
                      "de la Gironde."},
     {"fichier": "devis.html", "nom": "Demander un devis traiteur — Le Paille en Queue"},
@@ -67,13 +67,15 @@ PAGES = [
     {"fichier": "evenements.html",
      "nom": "Traiteur événementiel en Dordogne — Le Paille en Queue",
      "service": "Traiteur événementiel",
-     "service_desc": "Buffets et repas assis créoles pour séminaires, fêtes "
-                     "communales, repas de club et grandes occasions en Dordogne."},
+     "service_desc": "Buffets et repas assis pour séminaires, fêtes communales, "
+                     "repas de club et grandes occasions en Dordogne. Cuisine "
+                     "créole ou plus classique, selon vos invités."},
     {"fichier": "mariage.html",
      "nom": "Traiteur mariage en Dordogne — Le Paille en Queue",
      "service": "Traiteur mariage",
-     "service_desc": "Vin d'honneur, repas assis ou buffet créole pour votre "
-                     "mariage en Dordogne, cuisiné sur place dès 50 convives."},
+     "service_desc": "Vin d'honneur, repas assis ou buffet pour votre mariage en "
+                     "Dordogne, cuisiné sur place dès 50 convives. Créole, "
+                     "classique ou les deux."},
     {"fichier": "entreprise.html",
      "nom": "Traiteur entreprise en Dordogne — Le Paille en Queue",
      "service": "Traiteur d'entreprise",
@@ -146,7 +148,7 @@ def gabarit_plat(p: dict, unite: str = "la part") -> str:
         <div class="photo" data-nom="{echapper(p['nom'])}">
           {vedette}
           <picture>{sources_photo(p['slug'])}
-            <img src="images/{echapper(p['slug'])}.jpg" alt="{echapper(p['nom'])}, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+            <img src="images/{echapper(p['slug'])}.jpg" alt="{echapper(p['nom'])}, plat créole préparé par Le Paille en Queue, traiteur en Dordogne" loading="lazy" decoding="async" width="600" height="450">
           </picture>
         </div>
         <div class="plat-corps">
@@ -345,17 +347,21 @@ def schema_entreprise(cfg: dict) -> dict:
         "@id": f"{SITE}/#entreprise",
         "name": cfg["entreprise"],
         "alternateName": f"{cfg['entreprise']} — {cfg['baseline']}",
+        # La cuisine créole reste la signature, mais la catégorie annoncée est
+        # « traiteur » : c'est ce que cherchent les mariages, les entreprises et
+        # les communes, et beaucoup renonçaient en croyant la carte 100 % créole.
         "description": (
-            "Traiteur ambulant spécialisé en cuisine réunionnaise et créole, en "
-            f"{cfg['departement']} depuis {cfg['creation']}. Repas livrés à partir "
-            f"de {cfg['minimumParts']} parts, buffets et prestations événementielles."),
+            f"Traiteur en {cfg['departement']} depuis {cfg['creation']}, spécialisé "
+            "en cuisine réunionnaise et créole et composant aussi des repas plus "
+            f"classiques. Repas livrés à partir de {cfg['minimumParts']} parts, "
+            "buffets et prestations événementielles."),
         "url": f"{SITE}/",
         "logo": f"{SITE}/images/logo@2x.png",
         "image": f"{SITE}/images/partage.jpg",
         "telephone": cfg["telephoneLien"],
         "email": cfg["email"],
         "foundingDate": str(cfg["creation"]),
-        "servesCuisine": ["Réunionnaise", "Créole"],
+        "servesCuisine": ["Réunionnaise", "Créole", "Française"],
         "priceRange": "10 € - 30 €",
         "currenciesAccepted": "EUR",
         "paymentAccepted": "Espèces, Chèque, Virement bancaire",

@@ -164,7 +164,7 @@
           <picture>
             <source type="image/avif" srcset="images/${echapper(p.slug)}.avif">
             <source type="image/webp" srcset="images/${echapper(p.slug)}.webp">
-            <img src="images/${echapper(p.slug)}.jpg" alt="${echapper(p.nom)}, plat créole préparé par Le Paille en Queue, traiteur réunionnais en Dordogne" loading="lazy" decoding="async" width="600" height="450">
+            <img src="images/${echapper(p.slug)}.jpg" alt="${echapper(p.nom)}, plat créole préparé par Le Paille en Queue, traiteur en Dordogne" loading="lazy" decoding="async" width="600" height="450">
           </picture>
         </div>
         <div class="plat-corps">
@@ -259,6 +259,7 @@
       "data-mention-non-compris": d.mentionNonCompris,
       "data-mention-livraison": d.mentionLivraison,
       "data-mention-delai": d.mentionDelai,
+      "data-mention-autres-cuisines": d.mentionAutresCuisines,
     };
     Object.entries(mentions).forEach(([attr, texte]) => {
       if (texte) $$(`[${attr}]`).forEach((el) => { el.textContent = texte; });

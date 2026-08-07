@@ -110,6 +110,7 @@ insert into reglages (telephone, telephone_lien, email, ville_affichee, minimum_
     "mentionNonCompris": "Le service, la vaisselle et le pain ne sont jamais compris dans nos prix. Pain 1 \u20ac et vaisselle 0,40 \u20ac par personne, service sur devis.",
     "mentionLivraison": "Nous nous d\u00e9pla\u00e7ons jusqu''\u00e0 50 km autour de Montpeyroux : livraison 5 \u20ac jusqu''\u00e0 10 km, 10 \u20ac au-del\u00e0. Plus loin, sur devis.",
     "mentionDelai": "Commande \u00e0 passer 4 \u00e0 5 jours \u00e0 l''avance.",
+    "mentionAutresCuisines": "La carte ci-dessous est notre sp\u00e9cialit\u00e9. Pour un \u00e9v\u00e9nement, nous composons aussi des repas plus classiques, ou un menu qui m\u00eale les deux : parlez-nous de vos invit\u00e9s.",
     "plats": "@produits:plat",
     "entrees": "@produits:entree",
     "buffet": {

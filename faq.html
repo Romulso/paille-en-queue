@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Questions fréquentes — Le Paille en Queue</title>
-<meta name="description" content="Minimum de commande, délai, zone de déplacement, tarifs des suppléments, plats sans porc, allergies : les réponses avant de commander votre repas créole.">
+<meta name="description" content="Cuisine créole ou classique, minimum de commande, délai, zone de déplacement, suppléments, plats sans porc, allergies : les réponses avant de commander.">
 <link rel="canonical" href="https://lepaille-en-queue.fr/faq.html">
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="style.css?v=19">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -17,7 +17,7 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="Le Paille en Queue">
 <meta property="og:title" content="Questions fréquentes — Le Paille en Queue">
-<meta property="og:description" content="Minimum de commande, délai, zone de déplacement, tarifs des suppléments, plats sans porc, allergies : les réponses avant de commander votre repas créole.">
+<meta property="og:description" content="Cuisine créole ou classique, minimum de commande, délai, zone de déplacement, suppléments, plats sans porc, allergies : les réponses avant de commander.">
 <meta property="og:image" content="https://lepaille-en-queue.fr/images/partage.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -27,6 +27,11 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Faites-vous autre chose que de la cuisine créole ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui. La cuisine réunionnaise est notre signature et ce que l'on vient chercher chez nous, mais nous sommes traiteur avant tout : nous composons aussi des repas plus classiques, ou un menu qui mêle les deux. C'est souvent la meilleure formule pour un mariage ou une fête communale, où les goûts sont très différents d'une table à l'autre. Dites-nous qui sont vos invités, nous construisons le menu avec vous." }
+    },
     {
       "@type": "Question",
       "name": "À partir de combien de parts commandez-vous ?",
@@ -121,7 +126,7 @@
       "@id": "https://lepaille-en-queue.fr/#entreprise",
       "name": "Le Paille en Queue",
       "alternateName": "Le Paille en Queue — Spécialités créoles",
-      "description": "Traiteur ambulant spécialisé en cuisine réunionnaise et créole, en Dordogne depuis 2009. Repas livrés à partir de 10 parts, buffets et prestations événementielles.",
+      "description": "Traiteur en Dordogne depuis 2009, spécialisé en cuisine réunionnaise et créole et composant aussi des repas plus classiques. Repas livrés à partir de 10 parts, buffets et prestations événementielles.",
       "url": "https://lepaille-en-queue.fr/",
       "logo": "https://lepaille-en-queue.fr/images/logo@2x.png",
       "image": "https://lepaille-en-queue.fr/images/partage.jpg",
@@ -130,7 +135,8 @@
       "foundingDate": "2009",
       "servesCuisine": [
         "Réunionnaise",
-        "Créole"
+        "Créole",
+        "Française"
       ],
       "priceRange": "10 € - 30 €",
       "currenciesAccepted": "EUR",
@@ -306,7 +312,7 @@
     <div class="enveloppe-etroite">
       <p class="fil"><a href="index.html">Accueil</a> · Questions fréquentes</p>
       <span class="sur-titre">Bon à savoir</span>
-      <h1>Questions fréquentes<br>sur nos repas créoles</h1>
+      <h1>Questions fréquentes<br>sur nos repas</h1>
       <p class="chapo">
         Les réponses aux questions qu'on nous pose le plus souvent au téléphone.
         Si la vôtre n'y est pas, appelez Karine, elle répondra plus vite que ce
@@ -322,6 +328,25 @@
         <h2 class="faq-groupe">Commander et se faire livrer</h2>
 
         <details open>
+          <summary>Faites-vous autre chose que de la cuisine créole&nbsp;?</summary>
+          <div class="reponse">
+            <p>
+              Oui. La cuisine réunionnaise est notre signature, et c'est ce que
+              l'on vient chercher chez nous — mais nous sommes <b>traiteur avant
+              tout</b>. Nous composons aussi des repas plus classiques, ou un menu
+              qui mêle les deux.
+            </p>
+            <p>
+              C'est souvent la meilleure formule pour un mariage ou une fête
+              communale, où les goûts changent beaucoup d'une table à l'autre :
+              un vin d'honneur créole qui surprend, puis un plat que personne ne
+              laissera dans son assiette. Dites-nous qui sont vos invités, nous
+              construisons le menu avec vous.
+            </p>
+          </div>
+        </details>
+
+        <details>
           <summary>À partir de combien de parts commandez-vous&nbsp;?</summary>
           <div class="reponse">
             <p>
@@ -604,7 +629,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=18"></script>
+<script src="site.js?v=19"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

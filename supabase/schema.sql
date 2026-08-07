@@ -248,7 +248,7 @@ create trigger reglages_modifie
 -- ============================================================================
 -- Le site public ne lit jamais cette base : il lit du HTML statique. Personne
 -- d'autre que Karine et Romu n'a donc besoin d'y accéder. D'où une règle unique
--- et stricte : tout est fermé, sauf aux personnes connectées.
+-- et stricte : tout est fermé, sauf aux comptes connus.
 --
 -- Piège : activer RLS sans créer de politique rend la table muette. Aucune
 -- erreur, juste zéro ligne renvoyée. Les deux vont toujours ensemble.
@@ -260,23 +260,50 @@ alter table marches     enable row level security;
 alter table avis        enable row level security;
 alter table reglages    enable row level security;
 
-create policy "connectes: tout" on produits
-  for all to authenticated using (true) with check (true);
 
-create policy "connectes: tout" on menus
-  for all to authenticated using (true) with check (true);
+-- Le cahier des charges proposait d'ouvrir les tables à tout compte connecté.
+-- C'est suffisant tant que personne ne peut créer de compte — mais
+-- l'inscription est restée ouverte pendant les premières heures du projet,
+-- sans que rien ne le signale, et la clé publishable figure dans un dépôt
+-- public. Il suffisait de s'inscrire pour obtenir la lecture et l'écriture sur
+-- la carte et les prix.
+--
+-- L'inscription est désormais fermée. Cette liste est la seconde serrure :
+-- même rouverte par mégarde, elle ne donnerait plus rien.
+--
+-- Ajouter une personne : une seule ligne à modifier, ici. Attention, un compte
+-- absent de la liste ne verra aucune erreur, seulement des tableaux vides.
 
-create policy "connectes: tout" on menu_lignes
-  for all to authenticated using (true) with check (true);
+create or replace function public.est_autorise()
+returns boolean
+language sql
+stable
+as $$
+  select coalesce(auth.jwt() ->> 'email', '') in (
+    'lepailleenqueue33@gmail.com'
+  );
+$$;
 
-create policy "connectes: tout" on marches
-  for all to authenticated using (true) with check (true);
+comment on function public.est_autorise() is
+  'Comptes autorisés sur le backoffice. Ajouter une adresse ici suffit.';
 
-create policy "connectes: tout" on avis
-  for all to authenticated using (true) with check (true);
+create policy "comptes autorises: tout" on produits
+  for all to authenticated using (public.est_autorise()) with check (public.est_autorise());
 
-create policy "connectes: tout" on reglages
-  for all to authenticated using (true) with check (true);
+create policy "comptes autorises: tout" on menus
+  for all to authenticated using (public.est_autorise()) with check (public.est_autorise());
+
+create policy "comptes autorises: tout" on menu_lignes
+  for all to authenticated using (public.est_autorise()) with check (public.est_autorise());
+
+create policy "comptes autorises: tout" on marches
+  for all to authenticated using (public.est_autorise()) with check (public.est_autorise());
+
+create policy "comptes autorises: tout" on avis
+  for all to authenticated using (public.est_autorise()) with check (public.est_autorise());
+
+create policy "comptes autorises: tout" on reglages
+  for all to authenticated using (public.est_autorise()) with check (public.est_autorise());
 
 
 -- ============================================================================

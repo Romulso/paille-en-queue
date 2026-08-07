@@ -45,30 +45,64 @@ SORTIE = modele.RACINE / "supabase" / "donnees-initiales.sql"
 # Écriture des valeurs SQL
 # --------------------------------------------------------------------------
 
-def valeur(v) -> str:
-    """Une valeur Python écrite en littéral SQL.
+def texte_sql(s: str) -> str:
+    """Une chaîne SQL, garantie en pur ASCII.
 
-    Le seul échappement nécessaire dans du texte est le doublement des
-    apostrophes — et il y en a partout dans les descriptions créoles
-    (« jusqu'à ce que », « l'océan Indien »).
+    Pourquoi ne pas simplement écrire les accents
+    ---------------------------------------------
+    Ce fichier est destiné à être collé dans l'éditeur SQL de Supabase, et ce
+    trajet passe par le presse-papiers puis par le navigateur. On a constaté
+    qu'il pouvait réinterpréter l'UTF-8 en MacRoman en chemin : « Réunion »
+    arrive alors en base sous la forme « R√©union », sans la moindre erreur
+    pour le signaler.
+
+    Un fichier en pur ASCII est immunisé : aucune conversion d'encodage ne
+    peut l'abîmer. Les caractères accentués sont écrits en échappements
+    \\uXXXX dans une chaîne E'…', que PostgreSQL décode lui-même.
+
+    Le doublement des apostrophes reste nécessaire : il y en a partout dans
+    les descriptions créoles (« jusqu'à ce que », « l'océan Indien »).
     """
+    if s.isascii():
+        return "'" + s.replace("'", "''") + "'"
+
+    morceaux = []
+    for c in s:
+        point = ord(c)
+        if c == "'":
+            morceaux.append("''")
+        elif c == "\\":
+            morceaux.append("\\\\")
+        elif point < 128:
+            morceaux.append(c)
+        elif point <= 0xFFFF:
+            morceaux.append(f"\\u{point:04x}")
+        else:
+            morceaux.append(f"\\U{point:08x}")
+    return "E'" + "".join(morceaux) + "'"
+
+
+def valeur(v) -> str:
+    """Une valeur Python écrite en littéral SQL."""
     if v is None:
         return "null"
     if isinstance(v, bool):
         return "true" if v else "false"
     if isinstance(v, (int, float)):
         return str(v)
-    return "'" + str(v).replace("'", "''") + "'"
+    return texte_sql(str(v))
 
 
 def json_sql(v) -> str:
     """Un objet JSON destiné à une colonne « json ».
 
-    ensure_ascii=False garde les accents lisibles dans le fichier SQL, et on
-    ne trie surtout pas les clés : leur ordre est précisément ce que le
-    gabarit est chargé de préserver.
+    ensure_ascii=True fait écrire les accents en \\uXXXX par la bibliothèque
+    JSON elle-même : le littéral reste en ASCII pour la même raison que
+    ci-dessus, et PostgreSQL conserve ce texte tel quel — le type « json » ne
+    normalise pas. Les clés ne sont surtout pas triées : leur ordre est
+    précisément ce que le gabarit est chargé de préserver.
     """
-    return valeur(json.dumps(v, ensure_ascii=False, indent=2)) + "::json"
+    return texte_sql(json.dumps(v, ensure_ascii=True, indent=2)) + "::json"
 
 
 def insertion(table: str, colonnes: list[str], lignes: list[dict],
@@ -110,19 +144,27 @@ def construire() -> str:
         return [json_sql(l["gabarits"]) if c == "gabarits" else valeur(l[c])
                 for c in cols_reglages]
 
+    # Les commentaires eux-mêmes sont sans accents, volontairement : affichés
+    # abîmés dans l'éditeur Supabase, ils feraient douter de l'intégrité des
+    # données alors que celles-ci sont protégées par les échappements \uXXXX.
     bloc = [
         "-- " + "=" * 74,
-        "-- Le Paille en Queue — données initiales",
+        "-- Le Paille en Queue - import initial",
         "-- " + "=" * 74,
         "--",
-        "-- Fichier ENGENDRÉ par outils/generer-seed-supabase.py.",
-        "-- Ne pas le modifier à la main : modifier data/*.json et relancer.",
+        "-- Fichier engendre par outils/generer-seed-supabase.py.",
+        "-- Ne pas le modifier a la main : modifier data/*.json et relancer.",
         "--",
-        "-- À exécuter dans l'éditeur SQL de Supabase, après schema.sql.",
-        "-- Ré-exécutable : les tables sont vidées avant remplissage.",
+        "-- A executer dans l'editeur SQL de Supabase, apres schema.sql.",
+        "-- Re-executable : les tables sont videes avant remplissage.",
+        "--",
+        "-- Ce fichier est en pur ASCII, commentaires compris. Le trajet",
+        "-- presse-papiers puis navigateur peut reinterpreter l'UTF-8 en chemin,",
+        "-- et \"Reunion\" arriverait en base abime, sans erreur pour le dire.",
+        "-- Les accents sont donc ecrits en \\uXXXX et decodes par PostgreSQL.",
         "-- " + "=" * 74,
         "",
-        "-- « cascade » vide aussi menu_lignes, qui référence menus.",
+        "-- \"cascade\" vide aussi menu_lignes, qui reference menus.",
         "truncate menu_lignes, menus, produits, marches, avis, reglages cascade;",
         "",
         "-- " + "-" * 74,
@@ -140,7 +182,7 @@ def construire() -> str:
                    tables["menu_lignes"], ligne_menu),
         "",
         "-- " + "-" * 74,
-        f"-- Marchés ({len(tables['marches'])})",
+        f"-- Marches ({len(tables['marches'])})",
         "-- " + "-" * 74,
         *insertion("marches", cols_marches, tables["marches"]),
         "",
@@ -150,16 +192,16 @@ def construire() -> str:
         *insertion("avis", cols_avis, tables["avis"]),
         "",
         "-- " + "-" * 74,
-        "-- Réglages — ligne unique, gabarits compris",
+        "-- Reglages - ligne unique, gabarits compris",
         "-- " + "-" * 74,
         *insertion("reglages", cols_reglages, [reglages], ligne_reglages),
         "",
         "-- " + "-" * 74,
-        "-- Contrôle : les comptes attendus",
+        "-- Controle : les comptes attendus",
         "-- " + "-" * 74,
-        f"--   produits {len(tables['produits'])} · menus {len(tables['menus'])} · "
-        f"lignes de menu {len(tables['menu_lignes'])} · "
-        f"marchés {len(tables['marches'])} · avis {len(tables['avis'])}",
+        f"--   produits {len(tables['produits'])} | menus {len(tables['menus'])} | "
+        f"lignes de menu {len(tables['menu_lignes'])} | "
+        f"marches {len(tables['marches'])} | avis {len(tables['avis'])}",
         "--",
         "--   select 'produits' t, count(*) from produits",
         "--   union all select 'menus', count(*) from menus",
@@ -169,7 +211,16 @@ def construire() -> str:
         "--   union all select 'reglages', count(*) from reglages;",
         "",
     ]
-    return "\n".join(bloc) + "\n"
+    sql = "\n".join(bloc) + "\n"
+
+    # Garde-fou : le fichier ne doit jamais contenir un octet non ASCII. Si
+    # cette exception se déclenche, c'est qu'un chemin d'écriture a été ajouté
+    # sans passer par texte_sql(), et les accents repartiraient sans protection.
+    if not sql.isascii():
+        fautifs = [l for l in sql.splitlines() if not l.isascii()][:3]
+        raise SystemExit("Le SQL engendré n'est pas en pur ASCII :\n  "
+                         + "\n  ".join(fautifs))
+    return sql
 
 
 if __name__ == "__main__":

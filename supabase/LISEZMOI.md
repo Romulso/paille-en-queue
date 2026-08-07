@@ -72,18 +72,21 @@ inscription ouverte n'est qu'une porte de plus.
 
 ### 5 · Raccorder le backoffice
 
-**Project Settings → API**, puis reporter dans `backoffice.html`, bloc
+> **Déjà fait** pour le projet `ktdlmdidtfptkudrnyzi`. À refaire seulement si
+> le projet change.
+
+**Project Settings → API Keys**, puis reporter dans `backoffice.html`, bloc
 `RÉGLAGES` en bas du fichier :
 
 - `Project URL` → `SUPABASE_URL`
-- clé `anon` / `public` → `SUPABASE_ANON`
+- clé **publishable** (autrefois « anon ») → `SUPABASE_ANON`
 
-Ces deux valeurs sont publiables : sans compte, elles ne donnent accès à rien,
-puisque RLS ferme les six tables.
+Ces deux valeurs sont publiables — c'est le sens du mot. Sans compte, elles ne
+donnent accès à rien, puisque RLS ferme les six tables.
 
-> ⛔ La clé `service_role` ne doit **jamais** figurer dans ce fichier ni dans
-> aucun autre fichier du dépôt. Elle contourne RLS. Elle ne servira qu'en
-> phase 3, dans les secrets GitHub Actions.
+> ⛔ La clé **secret** (autrefois « service_role ») ne doit **jamais** figurer
+> dans ce fichier ni dans aucun autre fichier du dépôt. Elle contourne RLS.
+> Elle ne servira qu'en phase 3, dans les secrets GitHub Actions.
 
 Tant que les deux valeurs sont vides, `backoffice.html` affiche ces
 instructions au lieu d'un écran cassé.

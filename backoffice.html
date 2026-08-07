@@ -187,12 +187,15 @@
 // ===========================================================================
 // RÉGLAGES — à remplir après la création du projet Supabase
 // ===========================================================================
-// Project Settings → API. La clé « anon / public » uniquement : elle ne donne
-// accès à rien sans connexion, parce que RLS est actif sur les six tables.
-// La clé « service_role » ne doit jamais figurer ici.
+// Project Settings → API Keys. La clé « publishable » (autrefois « anon »)
+// uniquement : elle ne donne accès à rien sans connexion, parce que RLS est
+// actif sur les six tables. Son nom le dit — elle est faite pour être publiée.
+//
+// La clé « secret » (autrefois « service_role ») ne doit jamais figurer ici :
+// elle contourne RLS et ouvrirait la base à tous les visiteurs du dépôt.
 
-const SUPABASE_URL  = "";
-const SUPABASE_ANON = "";
+const SUPABASE_URL  = "https://ktdlmdidtfptkudrnyzi.supabase.co";
+const SUPABASE_ANON = "sb_publishable_mmyRoaBrbSWEMPpcHziPJg_aWXBBWVX";
 
 // ===========================================================================
 

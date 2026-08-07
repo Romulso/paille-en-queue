@@ -9,20 +9,21 @@
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); }
-  .bo { max-width: 980px; margin: 0 auto; padding: 26px 18px 70px; }
+  .bo { max-width: 980px; margin: 0 auto; padding: 26px 18px 90px; }
   .bo h1 { font-size: clamp(25px, 5.5vw, 36px); }
   .bo h1 em { display: block; font-style: normal; font-size: .46em; color: var(--piment); }
 
-  /* --- barre de session ---------------------------------------------- */
+  /* --- barre de session ------------------------------------------------ */
   .session {
     display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
     background: #fff; border: 1px solid var(--ligne); border-radius: var(--rayon-s);
-    padding: 11px 15px; margin: 20px 0 4px; font-size: 14px;
+    padding: 11px 15px; margin: 20px 0 16px; font-size: 14px;
+    position: sticky; top: 8px; z-index: 5;
   }
   .session .qui { margin-right: auto; color: var(--encre-douce); }
   .session .qui b { color: var(--encre); }
 
-  /* --- connexion ------------------------------------------------------ */
+  /* --- connexion -------------------------------------------------------- */
   .connexion {
     background: #fff; border: 1px solid var(--ligne); border-radius: var(--rayon);
     padding: 26px; max-width: 420px; margin: 30px auto;
@@ -42,35 +43,70 @@
   }
   .connexion button { width: 100%; }
 
-  /* --- onglets -------------------------------------------------------- */
-  .onglets { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 20px; }
+  /* --- onglets ---------------------------------------------------------- */
+  .onglets { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
   .onglets button {
     padding: 9px 17px; border-radius: 100px; border: 1.5px solid var(--ligne);
     background: transparent; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: .2s;
   }
   .onglets button[aria-selected="true"] { background: var(--encre); border-color: var(--encre); color: var(--vanille); }
   .panneau[hidden] { display: none; }
-  .panneau h2 { font-size: 19px; margin: 26px 0 10px; }
+  .panneau h2 { font-size: 19px; margin: 28px 0 12px; }
   .panneau h2:first-child { margin-top: 0; }
+  .panneau h2 small { font-weight: 400; color: var(--encre-tenue); font-size: 14px; margin-left: 8px; }
 
-  /* --- tableaux de lecture -------------------------------------------- */
-  .cadre { overflow-x: auto; border: 1px solid var(--ligne); border-radius: var(--rayon-s); background: #fff; }
-  table.donnees { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
-  table.donnees th, table.donnees td { padding: 9px 13px; text-align: left; vertical-align: top; }
-  table.donnees thead th {
-    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--encre-tenue); border-bottom: 1.5px solid var(--ligne); white-space: nowrap;
+  /* --- fiches ----------------------------------------------------------- */
+  .fiche {
+    background: #fff; border: 1px solid var(--ligne); border-radius: var(--rayon-s);
+    padding: 15px 17px; margin-bottom: 11px;
   }
-  table.donnees tbody tr + tr td { border-top: 1px solid var(--ligne); }
-  table.donnees td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  table.donnees td.long { min-width: 260px; color: var(--encre-douce); }
-  .puce {
-    display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 11.5px;
-    font-weight: 700; background: var(--sable); color: var(--encre);
+  .fiche.inactive { opacity: .55; }
+  .fiche-tete { display: flex; align-items: center; gap: 7px; margin-bottom: 13px; }
+  .fiche-tete strong { font-family: var(--titre); font-size: 17px; margin-right: auto; }
+  .grille { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 660px) {
+    .grille.c2 { grid-template-columns: 1fr 1fr; }
+    .grille.c3 { grid-template-columns: 2fr 1fr 1fr; }
+    .grille.c4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
   }
-  .puce.oui { background: rgba(16,80,63,.12); color: var(--vetiver); }
-  .puce.non { background: rgba(196,41,31,.10); color: var(--piment); }
+  .grille label {
+    font-size: 11.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--encre-tenue); display: block; margin-bottom: 5px;
+  }
+  .grille input, .grille textarea, .grille select {
+    width: 100%; padding: 9px 12px; border: 1.5px solid var(--ligne);
+    border-radius: 9px; background: var(--vanille); font-size: 15px; font-family: inherit;
+  }
+  .grille textarea { min-height: 68px; resize: vertical; line-height: 1.5; }
+  .grille input:focus, .grille textarea:focus, .grille select:focus {
+    outline: none; border-color: var(--lagon); box-shadow: 0 0 0 3px rgba(13,125,140,.15);
+  }
+  /* Le sélecteur reprend « .grille label » pour l'emporter sur lui : sans
+     cela, la case à cocher hériterait des majuscules des étiquettes. */
+  .grille label.bascule {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14.5px; font-weight: 600; white-space: nowrap;
+    text-transform: none; letter-spacing: 0; color: var(--encre); margin-bottom: 0;
+  }
+  .bascule input { width: auto; margin: 0; }
 
+  /* --- listes de libellés (composition des menus) ----------------------- */
+  .lignes { display: grid; gap: 7px; }
+  .ligne-item { display: flex; gap: 7px; align-items: center; }
+  .ligne-item input { flex: 1; }
+
+  /* --- boutons ---------------------------------------------------------- */
+  .mini {
+    border: 1.5px solid var(--ligne); background: #fff; color: var(--encre-douce); cursor: pointer;
+    font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 100px; transition: .2s;
+  }
+  .mini:hover:not(:disabled) { border-color: var(--encre); color: var(--encre); }
+  .mini:disabled { opacity: .3; cursor: default; }
+  .mini-danger:hover { border-color: var(--piment); color: var(--piment); }
+  .mini-carre { padding: 6px 10px; line-height: 1; }
+  .ajouter { margin-top: 4px; }
+
+  /* --- messages --------------------------------------------------------- */
   .avertissement {
     border-left: 3px solid var(--curcuma); background: rgba(230,161,42,.10);
     padding: 13px 17px; border-radius: 0 var(--rayon-s) var(--rayon-s) 0;
@@ -83,20 +119,15 @@
     font-size: 14.5px; color: var(--encre-douce); margin: 14px 0;
   }
   .erreur code, .avertissement code { font-size: 13px; background: rgba(0,0,0,.05); padding: 1px 5px; border-radius: 4px; }
-  .etat { font-size: 13.5px; color: var(--vetiver); font-weight: 600; min-height: 1.4em; }
+  .etat { font-size: 13.5px; font-weight: 600; min-height: 1.4em; color: var(--vetiver); }
+  .etat.rouge { color: var(--piment); }
 
-  details.brut { margin-top: 12px; }
+  details.brut { margin-top: 14px; }
   details.brut summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--encre-douce); }
   details.brut pre {
     margin-top: 10px; padding: 14px; background: #fff; border: 1px solid var(--ligne);
     border-radius: var(--rayon-s); overflow-x: auto; font-size: 12.5px; line-height: 1.5;
   }
-
-  .mini {
-    border: 1.5px solid var(--ligne); background: #fff; color: var(--encre-douce); cursor: pointer;
-    font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 100px; transition: .2s;
-  }
-  .mini:hover { border-color: var(--encre); color: var(--encre); }
 </style>
 </head>
 <body>
@@ -105,50 +136,29 @@
 
   <h1>Le Paille en Queue<em>backoffice</em></h1>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- Écran affiché tant que les clés Supabase ne sont pas renseignées    -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Écran affiché tant que les clés Supabase ne sont pas renseignées -->
   <section id="ecran-reglage" hidden>
-    <div class="erreur">
-      <b>Le backoffice n'est pas encore raccordé à Supabase.</b>
-    </div>
+    <div class="erreur"><b>Le backoffice n'est pas encore raccordé à Supabase.</b></div>
     <p class="chapo">Deux valeurs à coller dans le code de cette page, tout en bas,
-      dans le bloc <code>RÉGLAGES</code> :</p>
-    <ol style="font-size:15px;line-height:1.9;margin:14px 0 0 20px;color:var(--encre-douce)">
-      <li>Ouvrir le projet sur <code>supabase.com</code>, menu <b>Project Settings → API</b>.</li>
-      <li>Copier <b>Project URL</b> dans <code>SUPABASE_URL</code>.</li>
-      <li>Copier la clé <b>anon / public</b> dans <code>SUPABASE_ANON</code>.</li>
-    </ol>
-    <div class="avertissement" style="margin-top:20px">
-      Ces deux valeurs sont publiques et peuvent figurer dans le dépôt : sans
-      compte, elles ne donnent accès à rien, car chaque table est fermée par
-      RLS. La clé <b>service_role</b>, elle, ne doit <b>jamais</b> apparaître
-      ici — elle contourne RLS et ouvrirait la base à tout le monde.
-    </div>
+      dans le bloc <code>RÉGLAGES</code> : <b>Project URL</b> et la clé
+      <b>publishable</b>, depuis <b>Project Settings → API Keys</b>.</p>
   </section>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- Connexion                                                           -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Connexion -->
   <section id="ecran-connexion" hidden>
     <form class="connexion" id="form-connexion">
       <h2>Connexion</h2>
       <p>Cette page est réservée à Karine et Romu.</p>
-
       <label for="courriel">Adresse e-mail</label>
       <input type="email" id="courriel" autocomplete="username" required>
-
       <label for="motdepasse">Mot de passe</label>
       <input type="password" id="motdepasse" autocomplete="current-password" required>
-
       <button class="pastille pastille-pleine" type="submit">Se connecter</button>
       <p class="etat" id="etat-connexion" role="status" style="margin-top:14px"></p>
     </form>
   </section>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- Application                                                         -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Application -->
   <section id="ecran-appli" hidden>
 
     <div class="session">
@@ -159,10 +169,10 @@
     </div>
 
     <div class="avertissement">
-      <b>Phase 1 : lecture seule.</b> Cette page affiche ce que contient la base,
-      pour vérifier que l'import est fidèle. Les modifications arrivent en
-      phase 2. En attendant, le contenu du site se modifie toujours depuis
-      <code>admin.html</code>.
+      <b>Chaque modification est enregistrée aussitôt</b>, dès que vous quittez le
+      champ. Il n'y a pas de bouton « Enregistrer ».
+      <br>Le site public, lui, se met à jour un peu plus tard : la publication
+      passe toutes les quinze minutes environ.
     </div>
 
     <div class="onglets" role="tablist">
@@ -185,11 +195,11 @@
 
 <script type="module">
 // ===========================================================================
-// RÉGLAGES — à remplir après la création du projet Supabase
+// RÉGLAGES
 // ===========================================================================
 // Project Settings → API Keys. La clé « publishable » (autrefois « anon »)
 // uniquement : elle ne donne accès à rien sans connexion, parce que RLS est
-// actif sur les six tables. Son nom le dit — elle est faite pour être publiée.
+// actif sur les six tables et restreint aux comptes listés dans est_autorise().
 //
 // La clé « secret » (autrefois « service_role ») ne doit jamais figurer ici :
 // elle contourne RLS et ouvrirait la base à tous les visiteurs du dépôt.
@@ -206,10 +216,577 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const ecran = (nom) => ["reglage", "connexion", "appli"].forEach(
   (e) => { $(`#ecran-${e}`).hidden = e !== nom; });
 
-function demarrer() {
-  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+const JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
+const FAMILLES = [
+  ["plat", "Plats"], ["entree", "Entrées et apéritif"],
+  ["boisson", "Boissons"], ["supplement", "Suppléments"],
+];
+const CATEGORIES = ["volaille", "porc", "boeuf-agneau", "mer", "autre"];
+const BLOCS = [["entree", "Entrée"], ["plat", "Plat au choix"],
+               ["dessert", "Dessert"], ["inclus", "Compris"]];
 
-  /* ---------- session ---------- */
+let sb = null;
+const donnees = {};   // produits, menus, menu_lignes, marches, avis, reglages
+
+
+/* =========================================================================
+   Dialogue avec la base
+   ========================================================================= */
+
+function dire(texte, rouge = false) {
+  const el = $("#etat-appli");
+  el.textContent = texte;
+  el.classList.toggle("rouge", rouge);
+}
+
+/* Traduit les erreurs de la base en phrases compréhensibles. Le code 23505
+   est la violation d'unicité : en pratique, toujours un slug déjà pris. */
+function expliquer(erreur) {
+  if (!erreur) return "";
+  if (erreur.code === "23505") return "Ce raccourci (slug) est déjà utilisé par un autre élément.";
+  if (erreur.code === "23514") return "Valeur refusée : vérifiez le prix, le jour ou la catégorie.";
+  if (erreur.code === "23502") return "Un champ obligatoire est vide.";
+  return erreur.message || "L'enregistrement a échoué.";
+}
+
+async function enregistrer(table, id, patch) {
+  dire("Enregistrement…");
+  const { error } = await sb.from(table).update(patch).eq("id", id);
+  if (error) { dire(expliquer(error), true); return false; }
+  dire("Enregistré ✓");
+  return true;
+}
+
+async function creer(table, valeurs) {
+  dire("Création…");
+  const { data, error } = await sb.from(table).insert(valeurs).select().single();
+  if (error) { dire(expliquer(error), true); return null; }
+  dire("Ajouté ✓");
+  return data;
+}
+
+async function supprimer(table, id) {
+  dire("Suppression…");
+  const { error } = await sb.from(table).delete().eq("id", id);
+  if (error) { dire(expliquer(error), true); return false; }
+  dire("Supprimé ✓");
+  return true;
+}
+
+/* L'ordre d'affichage sur le site est porté par la colonne « ordre ». Monter
+   un élément, c'est échanger son rang avec celui du voisin — deux écritures,
+   pas une renumérotation complète. */
+async function deplacer(table, liste, index, sens) {
+  const a = liste[index], b = liste[index + sens];
+  if (!b) return;
+  dire("Déplacement…");
+  const [ra, rb] = await Promise.all([
+    sb.from(table).update({ ordre: b.ordre }).eq("id", a.id),
+    sb.from(table).update({ ordre: a.ordre }).eq("id", b.id),
+  ]);
+  if (ra.error || rb.error) { dire(expliquer(ra.error || rb.error), true); return; }
+  [a.ordre, b.ordre] = [b.ordre, a.ordre];
+  dire("Déplacé ✓");
+  dessiner();
+}
+
+const rangSuivant = (liste) =>
+  liste.length ? Math.max(...liste.map((l) => l.ordre)) + 1 : 0;
+
+
+/* =========================================================================
+   Briques d'interface
+   ========================================================================= */
+
+const echapper = (v) => String(v ?? "").replace(/[&<>"]/g, (c) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* Un slug lisible depuis le nom : sert de nom de fichier photo, donc pas
+   d'accent ni d'espace. Proposé à la création, modifiable ensuite. */
+const enSlug = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "")
+  .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+
+/* Un champ de saisie. « surSortie » est appelé quand la valeur change et que
+   l'utilisateur quitte le champ : c'est là qu'on écrit en base. */
+function champ(etiquette, valeur, surSortie, options = {}) {
+  const { type = "texte", choix, pas, min, aide } = options;
+  const enveloppe = document.createElement("div");
+  const id = "c" + Math.random().toString(36).slice(2, 9);
+
+  const balise = type === "zone" ? "textarea" : type === "liste" ? "select" : "input";
+  const el = document.createElement(balise);
+  el.id = id;
+  if (balise === "input") el.type = type === "nombre" ? "number" : type === "date" ? "date" : "text";
+  if (pas !== undefined) el.step = pas;
+  if (min !== undefined) el.min = min;
+  if (choix) {
+    choix.forEach(([v, libelle]) => {
+      const o = document.createElement("option");
+      o.value = v; o.textContent = libelle;
+      el.appendChild(o);
+    });
+  }
+  el.value = valeur === null || valeur === undefined ? "" : valeur;
+  el.addEventListener("change", () => surSortie(el.value.trim ? el.value.trim() : el.value));
+
+  enveloppe.innerHTML = `<label for="${id}">${echapper(etiquette)}</label>`;
+  enveloppe.appendChild(el);
+  if (aide) {
+    const p = document.createElement("small");
+    p.style.cssText = "display:block;margin-top:4px;color:var(--encre-tenue);font-size:12px";
+    p.textContent = aide;
+    enveloppe.appendChild(p);
+  }
+  return enveloppe;
+}
+
+function bascule(etiquette, valeur, surChangement) {
+  const enveloppe = document.createElement("div");
+  const l = document.createElement("label");
+  l.className = "bascule";
+  const c = document.createElement("input");
+  c.type = "checkbox"; c.checked = !!valeur;
+  c.addEventListener("change", () => surChangement(c.checked));
+  l.appendChild(c);
+  l.appendChild(document.createTextNode(" " + etiquette));
+  enveloppe.style.paddingTop = "22px";
+  enveloppe.appendChild(l);
+  return enveloppe;
+}
+
+/* Une fiche : un titre, les flèches d'ordre, et la suppression. */
+function fiche(titre, { index, liste, table, actif = true } = {}) {
+  const f = document.createElement("div");
+  f.className = "fiche" + (actif ? "" : " inactive");
+
+  const tete = document.createElement("div");
+  tete.className = "fiche-tete";
+  tete.innerHTML = `<strong>${echapper(titre || "Sans nom")}</strong>`;
+
+  if (liste) {
+    [["↑", -1], ["↓", 1]].forEach(([signe, sens]) => {
+      const b = document.createElement("button");
+      b.className = "mini mini-carre"; b.type = "button"; b.textContent = signe;
+      b.title = sens < 0 ? "Monter" : "Descendre";
+      b.disabled = !liste[index + sens];
+      b.addEventListener("click", () => deplacer(table, liste, index, sens));
+      tete.appendChild(b);
+    });
+    const s = document.createElement("button");
+    s.className = "mini mini-danger"; s.type = "button"; s.textContent = "Supprimer";
+    s.addEventListener("click", async () => {
+      if (!confirm(`Supprimer « ${titre} » définitivement ?`)) return;
+      if (await supprimer(table, liste[index].id)) { await charger(); }
+    });
+    tete.appendChild(s);
+  }
+
+  f.appendChild(tete);
+  return f;
+}
+
+function grille(classe, ...enfants) {
+  const g = document.createElement("div");
+  g.className = "grille " + classe;
+  enfants.filter(Boolean).forEach((e) => g.appendChild(e));
+  return g;
+}
+
+function boutonAjouter(libelle, action) {
+  const b = document.createElement("button");
+  b.className = "mini ajouter"; b.type = "button"; b.textContent = libelle;
+  b.addEventListener("click", action);
+  return b;
+}
+
+/* Un prix : vide veut dire « sur devis », et la base attend alors null. */
+const versPrix = (v) => v === "" ? null : Number(String(v).replace(",", "."));
+
+
+/* =========================================================================
+   Onglet Marchés
+   ========================================================================= */
+
+function dessinerMarches() {
+  const zone = $("#p-marches");
+  zone.textContent = "";
+  const liste = donnees.marches;
+
+  const titre = document.createElement("h2");
+  titre.innerHTML = `Marchés <small>${liste.length}</small>`;
+  zone.appendChild(titre);
+
+  liste.forEach((m, i) => {
+    const maj = (patch) => { Object.assign(m, patch); enregistrer("marches", m.id, patch); };
+    const estDate = !JOURS.includes(m.jour);
+
+    const f = fiche(m.lieu, { index: i, liste, table: "marches", actif: m.actif });
+
+    f.appendChild(grille("c2",
+      champ("Lieu", m.lieu, (v) => { maj({ lieu: v }); dessinerMarches(); }),
+      champ("Jour", estDate ? "date-unique" : m.jour, (v) => {
+        if (v === "date-unique") { m.jour = new Date().toISOString().slice(0, 10); }
+        else { m.jour = v; }
+        maj({ jour: m.jour }); dessinerMarches();
+      }, { type: "liste", choix: [...JOURS.map((j) => [j, j]), ["date-unique", "Date précise…"]] }),
+    ));
+
+    if (estDate) {
+      f.appendChild(grille("c2",
+        champ("Date", m.jour, (v) => maj({ jour: v }), { type: "date" }),
+      ));
+    }
+
+    f.appendChild(grille("c3",
+      champ("Type", m.type, (v) => maj({ type: v }),
+            { type: "liste", choix: [["matin", "matin"], ["nocturne", "nocturne"]] }),
+      champ("Horaire", m.horaire, (v) => maj({ horaire: v }),
+            { aide: "ex. À partir de 19 h" }),
+      champ("Fin de saison", m.jusquau || "", (v) => maj({ jusquau: v || null }),
+            { type: "date", aide: "vide = toute l'année" }),
+    ));
+
+    f.appendChild(grille("c2",
+      champ("Précision", m.details, (v) => maj({ details: v }), { type: "zone" }),
+      bascule("Affiché sur le site", m.actif, (v) => { maj({ actif: v }); dessinerMarches(); }),
+    ));
+
+    zone.appendChild(f);
+  });
+
+  zone.appendChild(boutonAjouter("+ Ajouter un marché", async () => {
+    const cree = await creer("marches", {
+      lieu: "Nouvelle commune", jour: "samedi", type: "nocturne",
+      horaire: "À partir de 19 h", details: "", ordre: rangSuivant(liste), actif: false,
+    });
+    if (cree) await charger();
+  }));
+}
+
+
+/* =========================================================================
+   Onglet Carte
+   ========================================================================= */
+
+function dessinerCarte() {
+  const zone = $("#p-carte");
+  zone.textContent = "";
+
+  FAMILLES.forEach(([famille, libelle]) => {
+    const liste = donnees.produits.filter((p) => p.famille === famille);
+
+    const titre = document.createElement("h2");
+    titre.innerHTML = `${echapper(libelle)} <small>${liste.length}</small>`;
+    zone.appendChild(titre);
+
+    liste.forEach((p, i) => {
+      const maj = (patch) => { Object.assign(p, patch); enregistrer("produits", p.id, patch); };
+      const f = fiche(p.nom, { index: i, liste, table: "produits", actif: p.actif });
+
+      f.appendChild(grille("c3",
+        champ("Nom", p.nom, (v) => { maj({ nom: v }); dessinerCarte(); }),
+        champ("Prix", p.prix, (v) => maj({ prix: versPrix(v) }),
+              { type: "nombre", pas: "0.01", min: "0", aide: "vide = sur devis" }),
+        famille === "plat"
+          ? champ("Catégorie", p.categorie, (v) => maj({ categorie: v }),
+                  { type: "liste", choix: CATEGORIES.map((c) => [c, c]) })
+          : champ("Unité", p.unite || "", (v) => maj({ unite: v || null }),
+                  { aide: "ex. la pièce, les 6" }),
+      ));
+
+      f.appendChild(grille("c2",
+        champ("Description", p.description, (v) => maj({ description: v }), { type: "zone" }),
+        grille("c2",
+          champ("Raccourci (photo)", p.slug, (v) => maj({ slug: v }),
+                { aide: "nom du fichier image" }),
+          grille("c2",
+            (famille === "plat" || famille === "entree")
+              ? bascule("Signature", p.vedette, (v) => maj({ vedette: v }))
+              : null,
+            bascule("Affiché", p.actif, (v) => { maj({ actif: v }); dessinerCarte(); }),
+          ),
+        ),
+      ));
+
+      zone.appendChild(f);
+    });
+
+    zone.appendChild(boutonAjouter(`+ Ajouter dans « ${libelle} »`, async () => {
+      const nom = "Nouveau";
+      const cree = await creer("produits", {
+        famille, nom, slug: enSlug(nom) + "-" + Date.now().toString(36).slice(-4),
+        description: "", prix: 10,
+        // La contrainte de la base impose une catégorie aux plats, et
+        // seulement à eux : la respecter ici évite un refus incompréhensible.
+        categorie: famille === "plat" ? "autre" : null,
+        unite: famille === "plat" ? null : "la part",
+        vedette: false, ordre: rangSuivant(liste), actif: false,
+      });
+      if (cree) await charger();
+    }));
+  });
+}
+
+
+/* =========================================================================
+   Onglet Menus
+   ========================================================================= */
+
+function dessinerMenus() {
+  const zone = $("#p-menus");
+  zone.textContent = "";
+  const liste = donnees.menus;
+
+  const titre = document.createElement("h2");
+  titre.innerHTML = `Menus <small>${liste.length}</small>`;
+  zone.appendChild(titre);
+
+  liste.forEach((m, i) => {
+    const maj = (patch) => { Object.assign(m, patch); enregistrer("menus", m.id, patch); };
+    const f = fiche(m.nom, { index: i, liste, table: "menus", actif: m.actif });
+
+    f.appendChild(grille("c4",
+      champ("Nom", m.nom, (v) => { maj({ nom: v }); dessinerMenus(); }),
+      champ("Prix", m.prix, (v) => maj({ prix: versPrix(v) }), { type: "nombre", pas: "0.01", min: "0" }),
+      champ("Prix haut", m.prix_max, (v) => maj({ prix_max: versPrix(v) }),
+            { type: "nombre", pas: "0.01", min: "0", aide: "vide = prix unique" }),
+      bascule("Affiché", m.actif, (v) => { maj({ actif: v }); dessinerMenus(); }),
+    ));
+
+    f.appendChild(grille("c2",
+      champ("Résumé", m.resume, (v) => maj({ resume: v }), { type: "zone" }),
+      grille("c2",
+        champ("Motif du prix haut", m.supplement_motif || "",
+              (v) => maj({ supplement_motif: v || null }),
+              { aide: "ex. avec un plat poisson" }),
+        champ("Raccourci", m.slug, (v) => maj({ slug: v })),
+      ),
+    ));
+
+    BLOCS.forEach(([bloc, libelle]) => {
+      const lignes = donnees.menu_lignes
+        .filter((l) => l.menu_id === m.id && l.bloc === bloc)
+        .sort((a, b) => a.ordre - b.ordre);
+
+      const bloc_el = document.createElement("div");
+      bloc_el.style.marginTop = "14px";
+      bloc_el.innerHTML = `<label style="font-size:11.5px;font-weight:700;letter-spacing:.07em;
+        text-transform:uppercase;color:var(--encre-tenue);display:block;margin-bottom:6px">${libelle}</label>`;
+
+      const conteneur = document.createElement("div");
+      conteneur.className = "lignes";
+
+      lignes.forEach((l) => {
+        const item = document.createElement("div");
+        item.className = "ligne-item";
+        const input = document.createElement("input");
+        input.value = l.libelle;
+        input.addEventListener("change", () => {
+          l.libelle = input.value.trim();
+          enregistrer("menu_lignes", l.id, { libelle: l.libelle });
+        });
+        const sup = document.createElement("button");
+        sup.className = "mini mini-carre mini-danger"; sup.type = "button"; sup.textContent = "×";
+        sup.title = "Retirer";
+        sup.addEventListener("click", async () => {
+          if (await supprimer("menu_lignes", l.id)) await charger();
+        });
+        item.append(input, sup);
+        conteneur.appendChild(item);
+      });
+
+      bloc_el.appendChild(conteneur);
+      bloc_el.appendChild(boutonAjouter("+ Ligne", async () => {
+        const cree = await creer("menu_lignes", {
+          menu_id: m.id, bloc, libelle: "À compléter",
+          ordre: lignes.length ? Math.max(...lignes.map((l) => l.ordre)) + 1 : 0,
+        });
+        if (cree) await charger();
+      }));
+      f.appendChild(bloc_el);
+    });
+
+    zone.appendChild(f);
+  });
+
+  zone.appendChild(boutonAjouter("+ Ajouter un menu", async () => {
+    const cree = await creer("menus", {
+      nom: "Nouveau menu", slug: "menu-" + Date.now().toString(36).slice(-5),
+      resume: "", prix: 18, ordre: rangSuivant(liste), actif: false,
+    });
+    if (cree) await charger();
+  }));
+}
+
+
+/* =========================================================================
+   Onglet Avis
+   ========================================================================= */
+
+function dessinerAvis() {
+  const zone = $("#p-avis");
+  zone.textContent = "";
+  const liste = donnees.avis;
+
+  const titre = document.createElement("h2");
+  titre.innerHTML = `Avis clients <small>${liste.length}</small>`;
+  zone.appendChild(titre);
+
+  const garde = document.createElement("div");
+  garde.className = "avertissement";
+  garde.innerHTML = "<b>N'inscrivez que de vrais avis</b>, avec l'accord de la personne. "
+    + "Un faux témoignage est une pratique commerciale trompeuse, et cela se repère vite. "
+    + "Prénom et initiale suffisent.";
+  zone.appendChild(garde);
+
+  liste.forEach((a, i) => {
+    const maj = (patch) => { Object.assign(a, patch); enregistrer("avis", a.id, patch); };
+    const f = fiche(a.auteur, { index: i, liste, table: "avis", actif: a.publie });
+
+    f.appendChild(grille("c3",
+      champ("Auteur", a.auteur, (v) => { maj({ auteur: v }); dessinerAvis(); },
+            { aide: "prénom + initiale" }),
+      champ("Note", a.note, (v) => maj({ note: Number(v) }),
+            { type: "liste", choix: [5, 4, 3, 2, 1].map((n) => [n, "★".repeat(n)]) }),
+      bascule("Publié sur le site", a.publie, (v) => { maj({ publie: v }); dessinerAvis(); }),
+    ));
+
+    f.appendChild(grille("c2",
+      champ("Contexte", a.contexte, (v) => maj({ contexte: v }),
+            { aide: "ex. Mariage à Coutras, juin 2026" }),
+      champ("Témoignage", a.texte, (v) => maj({ texte: v }), { type: "zone" }),
+    ));
+
+    zone.appendChild(f);
+  });
+
+  zone.appendChild(boutonAjouter("+ Ajouter un avis", async () => {
+    const cree = await creer("avis", {
+      auteur: "Prénom N.", note: 5, contexte: "", texte: "",
+      publie: false, ordre: rangSuivant(liste),
+    });
+    if (cree) await charger();
+  }));
+}
+
+
+/* =========================================================================
+   Onglet Réglages
+   ========================================================================= */
+
+const CHAMPS_REGLAGES = [
+  ["telephone", "Téléphone affiché", {}],
+  ["telephone_lien", "Téléphone (format international)", { aide: "+33627352328" }],
+  ["email", "E-mail", {}],
+  ["ville_affichee", "Ville affichée", {}],
+  ["minimum_parts", "Minimum de parts", { type: "nombre", min: "1" }],
+  ["rayon_livraison_km", "Rayon de livraison (km)", { type: "nombre", min: "1" }],
+  ["frais_livraison_proche", "Livraison — jusqu'à 10 km (€)", { type: "nombre", pas: "0.01" }],
+  ["frais_livraison_loin", "Livraison — au-delà (€)", { type: "nombre", pas: "0.01" }],
+  ["facebook", "Lien Facebook", {}],
+  ["instagram", "Lien Instagram", {}],
+  ["google_business_profile", "Lien fiche Google", {}],
+  ["avis_google_note", "Note Google", { aide: "ex. 5,0" }],
+  ["avis_google_nombre", "Nombre d'avis Google", {}],
+  ["avis_facebook_taux", "Taux Facebook", { aide: "ex. 100 %" }],
+  ["avis_facebook_nombre", "Nombre d'avis Facebook", {}],
+  ["abonnes_facebook", "Abonnés Facebook", { aide: "ex. 2 900" }],
+];
+
+function dessinerReglages() {
+  const zone = $("#p-reglages");
+  zone.textContent = "";
+  const r = donnees.reglages;
+  if (!r) return;
+
+  const titre = document.createElement("h2");
+  titre.textContent = "Réglages";
+  zone.appendChild(titre);
+
+  const f = document.createElement("div");
+  f.className = "fiche";
+  const g = document.createElement("div");
+  g.className = "grille c2";
+
+  CHAMPS_REGLAGES.forEach(([cle, libelle, options]) => {
+    g.appendChild(champ(libelle, r[cle], (v) => {
+      const valeur = options.type === "nombre" ? Number(String(v).replace(",", ".")) : v;
+      r[cle] = valeur;
+      enregistrer("reglages", r.id, { [cle]: valeur });
+    }, options));
+  });
+
+  f.appendChild(g);
+  zone.appendChild(f);
+
+  const brut = document.createElement("details");
+  brut.className = "brut";
+  brut.innerHTML = `<summary>Avancé — la forme des fichiers publiés (lecture seule)</summary>
+    <p class="etat" style="margin:10px 0;font-weight:400">Ce bloc conserve l'ordre des clés et
+      les commentaires des fichiers du site. Les repères <code>@produits:plat</code>,
+      <code>@menus</code>, <code>@reglage:…</code> sont remplacés par vos données au moment
+      de la publication. À ne modifier qu'en connaissance de cause.</p>
+    <pre>${echapper(JSON.stringify(r.gabarits ?? {}, null, 2))}</pre>`;
+  zone.appendChild(brut);
+}
+
+
+/* =========================================================================
+   Chargement et rendu
+   ========================================================================= */
+
+function dessiner() {
+  dessinerMarches();
+  dessinerCarte();
+  dessinerMenus();
+  dessinerAvis();
+  dessinerReglages();
+}
+
+async function charger() {
+  dire("Lecture…");
+
+  // Une seule salve : les six requêtes sont indépendantes, les enchaîner
+  // ferait attendre six allers-retours au lieu d'un.
+  const [produits, menus, lignes, marches, avis, reglages] = await Promise.all([
+    sb.from("produits").select("*").order("ordre"),
+    sb.from("menus").select("*").order("ordre"),
+    sb.from("menu_lignes").select("*").order("ordre"),
+    sb.from("marches").select("*").order("ordre"),
+    sb.from("avis").select("*").order("ordre"),
+    sb.from("reglages").select("*").limit(1).maybeSingle(),
+  ]);
+
+  const souci = [produits, menus, lignes, marches, avis, reglages].find((r) => r.error);
+  if (souci) {
+    dire("", false);
+    $("#p-marches").innerHTML = `<div class="erreur">
+      <b>La base n'a rien renvoyé.</b> ${echapper(souci.error.message)}
+      <br><br>Si le message ne dit rien de précis et que les tables sont bien
+      remplies, la cause la plus fréquente est une table sur laquelle RLS est
+      actif <b>sans politique</b> : elle ne renvoie alors aucune ligne, sans
+      erreur. Vérifier avec la requête en fin de <code>supabase/schema.sql</code>.
+    </div>`;
+    return;
+  }
+
+  Object.assign(donnees, {
+    produits: produits.data, menus: menus.data, menu_lignes: lignes.data,
+    marches: marches.data, avis: avis.data, reglages: reglages.data,
+  });
+
+  dessiner();
+  const total = produits.data.length + menus.data.length + marches.data.length + avis.data.length;
+  dire(`${total} enregistrements`);
+}
+
+
+/* =========================================================================
+   Session
+   ========================================================================= */
+
+function demarrer() {
+  sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
   // onAuthStateChange se déclenche aussi au chargement, session restaurée
   // comprise : inutile d'appeler getSession() en plus, ce serait deux
@@ -218,7 +795,7 @@ function demarrer() {
     if (session) {
       ecran("appli");
       $("#qui").textContent = session.user.email;
-      charger(sb);
+      charger();
     } else {
       ecran("connexion");
     }
@@ -235,13 +812,12 @@ function demarrer() {
     // Message volontairement vague : préciser lequel des deux est faux
     // indiquerait à un inconnu quelles adresses existent.
     etat.textContent = error ? "Adresse ou mot de passe incorrect." : "";
-    $("#motdepasse").value = error ? "" : $("#motdepasse").value;
+    if (error) $("#motdepasse").value = "";
   });
 
   $("#deconnexion").addEventListener("click", () => sb.auth.signOut());
-  $("#recharger").addEventListener("click", () => charger(sb));
+  $("#recharger").addEventListener("click", () => charger());
 
-  /* ---------- onglets ---------- */
   $$(".onglets button").forEach((onglet) => {
     onglet.addEventListener("click", () => {
       $$(".onglets button").forEach((o) => {
@@ -253,143 +829,11 @@ function demarrer() {
   });
 }
 
-/* ---------- affichage ---------- */
-
-const echapper = (v) => String(v ?? "").replace(/[&<>"]/g, (c) =>
-  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-
-const euros = (v) => v === null || v === undefined
-  ? '<span class="puce">sur devis</span>'
-  : `${Number(v) % 1 === 0 ? Number(v) : Number(v).toFixed(2).replace(".", ",")} €`;
-
-const ouinon = (v) => v
-  ? '<span class="puce oui">oui</span>'
-  : '<span class="puce non">non</span>';
-
-function tableau(colonnes, lignes) {
-  if (!lignes.length) return '<p class="etat">Aucune ligne.</p>';
-  const tete = colonnes.map((c) => `<th>${echapper(c.titre)}</th>`).join("");
-  const corps = lignes.map((l) =>
-    "<tr>" + colonnes.map((c) => {
-      const v = c.rendu ? c.rendu(l) : echapper(l[c.cle]);
-      return `<td class="${c.classe || ""}">${v}</td>`;
-    }).join("") + "</tr>").join("");
-  return `<div class="cadre"><table class="donnees">
-    <thead><tr>${tete}</tr></thead><tbody>${corps}</tbody></table></div>`;
-}
-
-async function charger(sb) {
-  const etat = $("#etat-appli");
-  etat.textContent = "Lecture…";
-
-  // Une seule salve : les six requêtes sont indépendantes, les enchaîner
-  // ferait attendre six allers-retours au lieu d'un.
-  const [produits, menus, lignes, marches, avis, reglages] = await Promise.all([
-    sb.from("produits").select("*").order("famille").order("ordre"),
-    sb.from("menus").select("*").order("ordre"),
-    sb.from("menu_lignes").select("*").order("ordre"),
-    sb.from("marches").select("*").order("ordre"),
-    sb.from("avis").select("*").order("ordre"),
-    sb.from("reglages").select("*").limit(1).maybeSingle(),
-  ]);
-
-  const souci = [produits, menus, lignes, marches, avis, reglages]
-    .find((r) => r.error);
-  if (souci) {
-    etat.textContent = "";
-    $("#p-marches").innerHTML = `<div class="erreur">
-      <b>La base n'a rien renvoyé.</b> ${echapper(souci.error.message)}
-      <br><br>Si le message ne dit rien de précis et que les tables sont bien
-      remplies, la cause la plus fréquente est une table sur laquelle RLS est
-      actif <b>sans politique</b> : elle ne renvoie alors aucune ligne, sans
-      erreur. Vérifier avec la requête en fin de <code>supabase/schema.sql</code>.
-    </div>`;
-    return;
-  }
-
-  const famille = (f) => produits.data.filter((p) => p.famille === f);
-
-  /* --- Marchés --- */
-  $("#p-marches").innerHTML = `<h2>Marchés (${marches.data.length})</h2>` + tableau([
-    { titre: "Lieu", cle: "lieu" },
-    { titre: "Jour", cle: "jour" },
-    { titre: "Type", rendu: (m) => `<span class="puce">${echapper(m.type)}</span>` },
-    { titre: "Horaire", cle: "horaire" },
-    { titre: "Précision", cle: "details", classe: "long" },
-    { titre: "Jusqu'au", rendu: (m) => m.jusquau ? echapper(m.jusquau) : "—" },
-    { titre: "Actif", rendu: (m) => ouinon(m.actif) },
-  ], marches.data);
-
-  /* --- Carte --- */
-  const bloc = (titre, f, avecCategorie) => `<h2>${titre} (${famille(f).length})</h2>` + tableau([
-    { titre: "Nom", cle: "nom" },
-    { titre: "Prix", rendu: (p) => euros(p.prix), classe: "num" },
-    { titre: "Unité", rendu: (p) => p.unite ? echapper(p.unite) : "la part" },
-    ...(avecCategorie ? [{ titre: "Catégorie", cle: "categorie" }] : []),
-    { titre: "Signature", rendu: (p) => ouinon(p.vedette) },
-    { titre: "Description", cle: "description", classe: "long" },
-  ], famille(f));
-
-  $("#p-carte").innerHTML =
-    bloc("Plats", "plat", true) +
-    bloc("Entrées et apéritif", "entree", false) +
-    bloc("Boissons", "boisson", false) +
-    bloc("Suppléments", "supplement", false);
-
-  /* --- Menus --- */
-  const BLOCS = { entree: "Entrée", plat: "Plat au choix", dessert: "Dessert", inclus: "Compris" };
-  $("#p-menus").innerHTML = `<h2>Menus (${menus.data.length})</h2>` +
-    menus.data.map((m) => {
-      const prix = m.prix_max ? `${euros(m.prix)} à ${euros(m.prix_max)}` : euros(m.prix);
-      const contenu = Object.entries(BLOCS).map(([cle, titre]) => {
-        const items = lignes.data.filter((l) => l.menu_id === m.id && l.bloc === cle);
-        if (!items.length) return "";
-        return `<tr><td><b>${titre}</b></td><td class="long">${
-          items.map((i) => echapper(i.libelle)).join(" · ")}</td></tr>`;
-      }).join("");
-      return `<h2 style="margin-bottom:4px">${echapper(m.nom)} — ${prix}</h2>
-        <p class="etat" style="margin-bottom:10px">${echapper(m.resume)}${
-          m.supplement_motif ? ` · prix haut ${echapper(m.supplement_motif)}` : ""}</p>
-        <div class="cadre"><table class="donnees"><tbody>${contenu}</tbody></table></div>`;
-    }).join("");
-
-  /* --- Avis --- */
-  $("#p-avis").innerHTML = `<h2>Avis (${avis.data.length})</h2>` + tableau([
-    { titre: "Auteur", cle: "auteur" },
-    { titre: "Note", rendu: (a) => "★".repeat(a.note), classe: "num" },
-    { titre: "Contexte", cle: "contexte" },
-    { titre: "Texte", cle: "texte", classe: "long" },
-    { titre: "Publié", rendu: (a) => ouinon(a.publie) },
-  ], avis.data);
-
-  /* --- Réglages --- */
-  const r = reglages.data || {};
-  const editables = Object.entries(r)
-    .filter(([c]) => !["id", "gabarits", "modifie_le"].includes(c))
-    .map(([c, v]) => ({ champ: c, valeur: v }));
-
-  $("#p-reglages").innerHTML = `<h2>Réglages</h2>` + tableau([
-    { titre: "Champ", cle: "champ" },
-    { titre: "Valeur", cle: "valeur", classe: "long" },
-  ], editables) + `
-    <details class="brut">
-      <summary>Gabarits — la forme des fichiers JSON (lecture seule)</summary>
-      <p class="etat" style="margin:10px 0">Ce bloc conserve l'ordre des clés et
-        les commentaires des fichiers <code>data/*.json</code>. Les repères
-        <code>@produits:plat</code>, <code>@menus</code>, <code>@reglage:…</code>
-        sont remplacés par les données de la base au moment de la publication.</p>
-      <pre>${echapper(JSON.stringify(r.gabarits ?? {}, null, 2))}</pre>
-    </details>`;
-
-  const total = produits.data.length + menus.data.length + marches.data.length + avis.data.length;
-  etat.textContent = `${total} enregistrements lus`;
-}
-
-/* ---------- démarrage ---------- */
-// En dernier, volontairement : demarrer() finit par appeler charger(), qui se
-// sert des fonctions d'affichage déclarées ci-dessus en « const ». Lancer le
-// démarrage plus haut dans le fichier fonctionnerait tant que Supabase rappelle
-// de façon asynchrone, et casserait le jour où ce ne serait plus le cas.
+/* ---------- démarrage ----------
+   En dernier, volontairement : demarrer() finit par appeler charger(), qui se
+   sert des fonctions déclarées ci-dessus en « const ». Lancer le démarrage plus
+   haut dans le fichier fonctionnerait tant que Supabase rappelle de façon
+   asynchrone, et casserait le jour où ce ne serait plus le cas. */
 
 if (!SUPABASE_URL || !SUPABASE_ANON) {
   ecran("reglage");

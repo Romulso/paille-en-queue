@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Backoffice — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=23">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); }
@@ -178,12 +178,7 @@
       <button class="mini" type="button" id="deconnexion">Se déconnecter</button>
     </div>
 
-    <div class="avertissement">
-      <b>Chaque modification est enregistrée aussitôt</b>, dès que vous quittez le
-      champ. Il n'y a pas de bouton « Enregistrer ».
-      <br>Le site public, lui, se met à jour un peu plus tard : la publication
-      passe toutes les quinze minutes environ.
-    </div>
+    <div class="avertissement" id="bandeau-publication"></div>
 
     <div class="onglets" role="tablist">
       <button role="tab" id="o-demandes" aria-controls="p-demandes" aria-selected="true">Commandes</button>
@@ -218,6 +213,15 @@
 
 const SUPABASE_URL  = "https://ktdlmdidtfptkudrnyzi.supabase.co";
 const SUPABASE_ANON = "sb_publishable_mmyRoaBrbSWEMPpcHziPJg_aWXBBWVX";
+
+// Passer à true le jour où le workflow .github/workflows/publier.yml est actif
+// et où le secret SUPABASE_SERVICE_KEY est déposé sur GitHub.
+//
+// Tant que c'est false, le bandeau dit la vérité : les modifications sont bien
+// enregistrées, mais elles n'atteignent pas le site. Annoncer une publication
+// qui n'existe pas serait pire que de ne rien annoncer — Karine changerait un
+// prix, irait vérifier sur le site, et conclurait que l'outil ne marche pas.
+const PUBLICATION_AUTOMATIQUE = false;
 
 // ===========================================================================
 
@@ -976,6 +980,17 @@ async function charger() {
 
 function demarrer() {
   sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  $("#bandeau-publication").innerHTML = PUBLICATION_AUTOMATIQUE
+    ? "<b>Chaque modification est enregistrée aussitôt</b>, dès que vous quittez "
+      + "le champ. Il n'y a pas de bouton « Enregistrer ».<br>Le site public, lui, "
+      + "se met à jour un peu plus tard : la publication passe toutes les quinze "
+      + "minutes environ."
+    : "<b>Chaque modification est enregistrée aussitôt</b>, dès que vous quittez "
+      + "le champ. Il n'y a pas de bouton « Enregistrer ».<br><b>En revanche, le "
+      + "site public ne change pas encore</b> : la publication automatique n'est "
+      + "pas activée. Vos modifications sont conservées et partiront toutes "
+      + "ensemble le jour où elle le sera. Rien ne se perd.";
 
   // onAuthStateChange se déclenche aussi au chargement, session restaurée
   // comprise : inutile d'appeler getSession() en plus, ce serait deux

@@ -94,9 +94,17 @@
     }
 
     // Marque la page courante dans les deux menus.
-    const ici = location.pathname.split("/").pop() || "index.html";
+    // L'accueil s'écrit « / » dans les liens (l'URL canonique) mais
+    // « index.html » dans un chemin de fichier : on ramène les deux à la même
+    // forme, sinon la page d'accueil ne serait jamais marquée comme courante.
+    const normaliser = (chemin) => {
+      const dernier = chemin.split("/").pop();
+      return dernier === "" || dernier === "index.html" ? "/" : dernier;
+    };
+    const ici = normaliser(location.pathname);
     $$(".nav a, .menu-mobile a").forEach((a) => {
-      if (a.getAttribute("href") === ici) a.setAttribute("aria-current", "page");
+      const cible = (a.getAttribute("href") || "").split("#")[0];
+      if (cible && normaliser(cible) === ici) a.setAttribute("aria-current", "page");
     });
   }
 

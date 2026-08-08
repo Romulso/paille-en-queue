@@ -3,7 +3,7 @@
 Site vitrine du Paille en Queue, traiteur créole en Dordogne.
 HTML, CSS et JavaScript classiques : **aucun logiciel à installer, aucune
 compilation, aucun abonnement**. Le contenu qui change souvent vit dans des
-fichiers du dossier `data/`, modifiables depuis `admin.html`.
+fichiers du dossier `data/`, modifiables depuis `backoffice.html`.
 
 ---
 
@@ -18,7 +18,7 @@ fichiers du dossier `data/`, modifiables depuis `admin.html`.
 | `devis.html` | Formulaire de demande de devis |
 | `faq.html` | Questions fréquentes |
 | `mentions-legales.html` | Mentions légales et RGPD |
-| `admin.html` | **Page privée** d'édition du contenu |
+| `backoffice.html` | **Page privée** d'édition du contenu, protégée par mot de passe |
 | `style.css` | Toute la mise en forme |
 | `site.js` | Les comportements (menus, filtres, formulaire) |
 | `data/*.json` | Le contenu modifiable |
@@ -107,7 +107,7 @@ intermédiaire. **Formspree** est le plus simple et gratuit jusqu'à
    de passe et de confirmer l'adresse e-mail).
 2. Créer un formulaire, appelé par exemple « Devis site ». Formspree donne une
    adresse du type `https://formspree.io/f/xxxxxxxx`.
-3. Ouvrir `admin.html`, onglet **Réglages**, coller cette adresse dans le champ
+3. Ouvrir `backoffice.html`, onglet **Réglages**, coller cette adresse dans le champ
    « Adresse d'envoi du formulaire de devis », puis **Télécharger config.json**
    et remplacer `data/config.json`.
 4. Remettre le site en ligne (`git add -A && git commit -m "Formulaire branché"
@@ -143,7 +143,7 @@ une alternative sans création de compte. Il faut alors renseigner deux lignes :
 
 ## 5 · Modifier le contenu
 
-Ouvrir `admin.html` **depuis le site en ligne** (ou depuis le serveur local de
+Ouvrir `backoffice.html` **depuis le site en ligne** (ou depuis le serveur local de
 l'étape 2). Quatre onglets :
 
 - **Marchés** — ajouter, modifier, supprimer les marchés. Tant que la liste est
@@ -307,9 +307,9 @@ vaisselle et le service. Point tranché, les menus sont à jour.
 - [ ] **Trois vrais avis clients** — à demander à des clients récents.
 - [ ] **La fiche Google Business Profile** — gratuite, et de loin le meilleur
       levier pour être trouvé sur « traiteur réunionnais Dordogne ». Une fois
-      créée, coller son lien dans `admin.html` → **Réglages** → « Lien de la
+      créée, coller son lien dans `backoffice.html` → **Réglages** → « Lien de la
       fiche Google » : il est repris dans les données structurées du site.
-- [ ] **Les coordonnées GPS** — `admin.html` → **Réglages** → latitude et
+- [ ] **Les coordonnées GPS** — `backoffice.html` → **Réglages** → latitude et
       longitude. Elles disent à Google où l'entreprise se trouve réellement.
       Tant qu'elles sont vides, le site n'annonce aucune position plutôt qu'une
       position approximative, qui ferait plus de mal que de bien.

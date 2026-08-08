@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
 
-# admin.html et apercu.html portent une balise « noindex » dans leur code.
-# Il ne faut surtout pas les interdire ici : un robot à qui l'on interdit de
+# backoffice.html porte une balise « noindex » dans son code.
+# Il ne faut surtout pas l'interdire ici : un robot à qui l'on interdit de
 # lire la page ne peut pas y découvrir le « noindex », et l'adresse finit par
 # apparaître quand même dans les résultats, sans description.
 

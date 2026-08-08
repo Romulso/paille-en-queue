@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Backoffice — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=23">
+<link rel="stylesheet" href="style.css?v=24">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); }
@@ -132,6 +132,64 @@
     font-weight: 700; background: var(--sable); color: var(--encre);
   }
 
+  /* --- devis imprimable ------------------------------------------------- */
+  /* Pas de bibliothèque PDF : le document est mis en page en HTML, et
+     « Imprimer → Enregistrer au format PDF » du navigateur produit le
+     fichier. On garde ainsi les polices du site, les accents corrects, et
+     aucune dépendance — ce qui vaut mieux qu'un moteur PDF en JavaScript
+     pour un document d'une page. */
+  #zone-devis { display: none; }
+  #zone-devis.ouvert { display: block; max-width: 900px; margin: 0 auto; padding: 0 18px 60px; }
+
+  .devis { background: #fff; border: 1px solid var(--ligne); border-radius: var(--rayon-s); padding: 34px 38px; }
+  .devis-tete { display: flex; gap: 24px; align-items: flex-start; border-bottom: 2px solid var(--piment); padding-bottom: 18px; }
+  .devis-tete img { width: 96px; height: auto; }
+  .devis-emetteur { font-size: 13px; line-height: 1.55; color: var(--encre-douce); }
+  .devis-emetteur b { display: block; font-family: var(--titre); font-size: 19px; color: var(--encre); margin-bottom: 3px; }
+  .devis-ref { margin-left: auto; text-align: right; font-size: 13px; color: var(--encre-douce); }
+  .devis-ref b { display: block; font-family: var(--titre); font-size: 22px; color: var(--piment); }
+
+  .devis-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin: 24px 0 22px; }
+  .devis-parties h3 { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--encre-tenue); margin-bottom: 7px; }
+  .devis-parties p { font-size: 14px; line-height: 1.6; margin: 0; }
+
+  table.devis-lignes { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.devis-lignes th {
+    font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--encre-tenue);
+    text-align: left; padding: 0 8px 7px; border-bottom: 1.5px solid var(--ligne);
+  }
+  table.devis-lignes td { padding: 7px 8px; border-bottom: 1px solid var(--ligne); vertical-align: middle; }
+  table.devis-lignes .n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.devis-lignes input {
+    border: 1px solid transparent; border-radius: 6px; padding: 5px 7px; font: inherit;
+    background: var(--vanille); width: 100%;
+  }
+  table.devis-lignes input:hover { border-color: var(--ligne); }
+  table.devis-lignes input:focus { outline: none; border-color: var(--lagon); background: #fff; }
+  table.devis-lignes input.n { text-align: right; }
+  table.devis-lignes td.qte input, table.devis-lignes td.pu input { max-width: 92px; }
+
+  .devis-totaux { margin-top: 18px; margin-left: auto; width: min(340px, 100%); font-size: 14.5px; }
+  .devis-totaux div { display: flex; justify-content: space-between; padding: 6px 0; }
+  .devis-totaux .total { border-top: 2px solid var(--encre); margin-top: 6px; padding-top: 10px; font-family: var(--titre); font-size: 19px; }
+  .devis-totaux .acompte { color: var(--piment); font-weight: 700; }
+
+  .devis-conditions { margin-top: 26px; font-size: 12.5px; line-height: 1.65; color: var(--encre-douce); }
+  .devis-conditions h3 { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--encre-tenue); margin-bottom: 6px; }
+  .devis-signature { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 24px; font-size: 12.5px; }
+  .devis-signature div { border: 1px dashed var(--ligne); border-radius: var(--rayon-s); padding: 12px 14px; min-height: 92px; }
+
+  @media print {
+    /* Le navigateur n'imprime que le devis : le reste du backoffice
+       disparaît, et le document tient sur une page A4. */
+    .bo, .session { display: none !important; }
+    #zone-devis.ouvert { padding: 0; max-width: none; }
+    .devis { border: 0; padding: 0; }
+    .sans-impression { display: none !important; }
+    table.devis-lignes input { background: transparent; border-color: transparent; }
+    @page { size: A4; margin: 14mm; }
+  }
+
   details.brut { margin-top: 14px; }
   details.brut summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--encre-douce); }
   details.brut pre {
@@ -199,6 +257,10 @@
   </section>
 
 </div>
+
+<!-- Le devis vit hors de .bo : à l'impression, tout le backoffice disparaît
+     et il ne reste que ce bloc. -->
+<div id="zone-devis"></div>
 
 <script type="module">
 // ===========================================================================
@@ -522,6 +584,13 @@ function dessinerDemandes() {
       actions.insertAdjacentHTML("beforeend",
         `<a class="mini" href="mailto:${echapper(d.email)}?subject=${objet}">✉ ${echapper(d.email)}</a>`);
     }
+    const devis = document.createElement("button");
+    devis.className = "mini"; devis.type = "button";
+    devis.style.cssText = "border-color:var(--vetiver);color:var(--vetiver)";
+    devis.textContent = "Établir le devis";
+    devis.addEventListener("click", () => ouvrirDevis(d));
+    actions.appendChild(devis);
+
     actions.insertAdjacentHTML("beforeend",
       `<span class="mini" style="border-style:dashed;cursor:default">Reçue le ${dateFr(d.recu_le)}</span>`);
     f.appendChild(actions);
@@ -558,6 +627,206 @@ function dessinerDemandes() {
     f.appendChild(detail);
 
     zone.appendChild(f);
+  });
+}
+
+
+/* =========================================================================
+   Le devis
+   =========================================================================
+   Un devis se fabrique en trente secondes à partir d'une demande : le client,
+   la date, les convives et les plats cochés sont déjà là, et les prix sont
+   dans la même base. Restait à les assembler.
+
+   Tout est modifiable avant impression — une demande n'est jamais un devis
+   exact. Karine ajuste les quantités, ajoute une ligne, et imprime. */
+
+const euros = (n) => (Math.round(n * 100) / 100)
+  .toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+
+/* Les libellés cochés dans le formulaire portent parfois leur tarif entre
+   parenthèses (« Vaisselle (0,40 € par personne) ») : on ne garde que le nom
+   pour retrouver le produit dans la carte. */
+const nomSeul = (libelle) => String(libelle).split(" (")[0].trim();
+
+/* Une quantité par défaut. Ce qui se vend « la part » ou « par personne » suit
+   le nombre de convives ; le reste (le litre, les 6, les 16) part à 1, à la
+   main de Karine ensuite. */
+function quantiteParDefaut(produit, convives) {
+  const u = (produit && produit.unite) || "la part";
+  return /part|personne|pièce|piece/i.test(u) ? (convives || 1) : 1;
+}
+
+function lignesDepuisDemande(d) {
+  const lignes = [];
+  const convives = d.convives || 1;
+  const parNom = (n) => donnees.produits.find((p) => p.nom === nomSeul(n));
+
+  const menu = donnees.menus.find((m) => m.nom === nomSeul(d.formule || ""));
+  if (menu) {
+    lignes.push({ libelle: `${menu.nom} — entrée, plat, dessert`,
+                  qte: convives, pu: Number(menu.prix) });
+  }
+
+  [...(d.plats || []), ...(d.entrees_boissons || [])].forEach((n) => {
+    const p = parNom(n);
+    if (p) lignes.push({ libelle: p.nom, qte: quantiteParDefaut(p, convives),
+                         pu: p.prix === null ? 0 : Number(p.prix) });
+  });
+
+  (d.supplements || []).forEach((n) => {
+    const p = parNom(n);
+    if (p) lignes.push({ libelle: p.nom, qte: quantiteParDefaut(p, convives),
+                         pu: p.prix === null ? 0 : Number(p.prix) });
+  });
+
+  // La distance n'est pas connue depuis le formulaire : la ligne existe, le
+  // montant se choisit entre les deux tarifs affichés en aide.
+  lignes.push({ libelle: "Livraison", qte: 1, pu: 0 });
+
+  return lignes.length ? lignes : [{ libelle: "", qte: convives, pu: 0 }];
+}
+
+let devisCourant = null;   // { demande, lignes, remise }
+
+function ouvrirDevis(d) {
+  devisCourant = { demande: d, lignes: lignesDepuisDemande(d) };
+  dessinerDevis();
+  $("#zone-devis").classList.add("ouvert");
+  $("#zone-devis").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function dessinerDevis() {
+  const { demande: d, lignes } = devisCourant;
+  const zone = $("#zone-devis");
+  const cfg = (donnees.reglages.gabarits && donnees.reglages.gabarits.config) || {};
+  const r = donnees.reglages;
+
+  const total = lignes.reduce((s, l) => s + (Number(l.qte) || 0) * (Number(l.pu) || 0), 0);
+  const acompte = total * (Number(cfg.acompte) || 30) / 100;
+
+  const reference = "DEV-" + new Date(d.recu_le).toISOString().slice(0, 10).replace(/-/g, "")
+    + "-" + String(d.id).slice(0, 4).toUpperCase();
+
+  const clientLignes = [
+    d.structure, d.nom, d.commune, d.telephone, d.email,
+  ].filter(Boolean).join("<br>");
+
+  const evenement = [
+    d.type_evenement,
+    d.date_evenement ? `le ${dateFr(d.date_evenement)}` : null,
+    d.heure_service ? `à ${d.heure_service}` : null,
+    d.convives ? `${d.convives} convives` : null,
+    d.type_lieu,
+  ].filter(Boolean).join("<br>");
+
+  zone.innerHTML = `
+    <div class="sans-impression" style="display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 14px">
+      <button class="mini" type="button" id="devis-imprimer">Imprimer / Enregistrer en PDF</button>
+      <button class="mini" type="button" id="devis-ligne">+ Ajouter une ligne</button>
+      <button class="mini" type="button" id="devis-fermer">Fermer</button>
+      <span class="etat" style="align-self:center">Tout est modifiable avant impression.</span>
+    </div>
+
+    <div class="devis">
+      <div class="devis-tete">
+        <img src="images/logo@2x.png" alt="">
+        <div class="devis-emetteur">
+          <b>${echapper(cfg.entreprise || "Le Paille en Queue")}</b>
+          ${echapper(cfg.gerante || "")}<br>
+          ${echapper(cfg.adresseLegale || "")}<br>
+          ${echapper(r.telephone || "")} · ${echapper(r.email || "")}<br>
+          SIRET ${echapper(cfg.siret || "")} · ${echapper(cfg.rcs || "")}
+        </div>
+        <div class="devis-ref">
+          <b>DEVIS</b>
+          ${echapper(reference)}<br>
+          Établi le ${dateFr(new Date().toISOString())}<br>
+          Valable ${echapper(cfg.validiteDevis || "1 mois")}
+        </div>
+      </div>
+
+      <div class="devis-parties">
+        <div>
+          <h3>Client</h3>
+          <p>${clientLignes || "—"}</p>
+        </div>
+        <div>
+          <h3>Prestation</h3>
+          <p>${evenement || "—"}</p>
+        </div>
+      </div>
+
+      <table class="devis-lignes">
+        <thead><tr>
+          <th style="width:52%">Désignation</th><th class="n">Qté</th>
+          <th class="n">P.U.</th><th class="n">Total</th><th class="sans-impression"></th>
+        </tr></thead>
+        <tbody>${lignes.map((l, i) => `
+          <tr>
+            <td><input value="${echapper(l.libelle)}" data-champ="libelle" data-i="${i}"></td>
+            <td class="qte"><input class="n" type="number" min="0" step="1" value="${l.qte}" data-champ="qte" data-i="${i}"></td>
+            <td class="pu"><input class="n" type="number" min="0" step="0.01" value="${l.pu}" data-champ="pu" data-i="${i}"></td>
+            <td class="n">${euros((Number(l.qte) || 0) * (Number(l.pu) || 0))}</td>
+            <td class="sans-impression"><button class="mini mini-carre mini-danger" data-suppr="${i}" title="Retirer">×</button></td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
+
+      <div class="devis-totaux">
+        <div class="total"><span>Total</span><span>${euros(total)}</span></div>
+        <div class="acompte"><span>Acompte à la signature (${echapper(cfg.acompte || 30)} %)</span><span>${euros(acompte)}</span></div>
+        <div><span>Solde à la livraison</span><span>${euros(total - acompte)}</span></div>
+      </div>
+
+      <div class="devis-conditions">
+        <h3>Conditions</h3>
+        <p>
+          ${echapper(donnees.reglages.gabarits.carte ? donnees.reglages.gabarits.carte.mentionNonCompris || "" : "")}
+          Livraison ${echapper(r.frais_livraison_proche)} € jusqu'à 10 km,
+          ${echapper(r.frais_livraison_loin)} € au-delà, dans un rayon de
+          ${echapper(r.rayon_livraison_km)} km autour de ${echapper(r.ville_affichee)}.
+          À partir de ${echapper(cfg.seuilCuisineSurPlace || 50)} convives, nous cuisinons sur le lieu de l'événement.
+          Commande à passer ${echapper(cfg.delaiCommande || "4 à 5 jours")} à l'avance.
+          Règlement en espèces avec reçu, par chèque ou par virement.
+        </p>
+        <p>
+          Karine Danna est titulaire de la formation à l'hygiène alimentaire (HACCP)
+          et l'entreprise est couverte par une assurance responsabilité civile
+          professionnelle. Contrôles réalisés par l'${echapper(cfg.controleOrganisme || "APAVE")}
+          de ${echapper(cfg.controleVille || "")} : résultat qualité
+          ${echapper(cfg.controleAnnee || "")} « ${echapper(cfg.controleResultat || "")} ».
+        </p>
+      </div>
+
+      <div class="devis-signature">
+        <div><b>Bon pour accord</b><br>Date et signature du client</div>
+        <div><b>Le Paille en Queue</b><br>${echapper(cfg.gerante || "")}</div>
+      </div>
+    </div>`;
+
+  // Les champs se recalculent à la volée : Karine voit le total bouger.
+  $$("#zone-devis input[data-champ]").forEach((el) => {
+    el.addEventListener("change", () => {
+      const l = devisCourant.lignes[Number(el.dataset.i)];
+      l[el.dataset.champ] = el.dataset.champ === "libelle" ? el.value : Number(el.value);
+      dessinerDevis();
+    });
+  });
+  $$("#zone-devis [data-suppr]").forEach((b) => {
+    b.addEventListener("click", () => {
+      devisCourant.lignes.splice(Number(b.dataset.suppr), 1);
+      dessinerDevis();
+    });
+  });
+  $("#devis-imprimer").addEventListener("click", () => window.print());
+  $("#devis-ligne").addEventListener("click", () => {
+    devisCourant.lignes.push({ libelle: "", qte: 1, pu: 0 });
+    dessinerDevis();
+  });
+  $("#devis-fermer").addEventListener("click", () => {
+    $("#zone-devis").classList.remove("ouvert");
+    devisCourant = null;
   });
 }
 

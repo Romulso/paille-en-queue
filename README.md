@@ -11,7 +11,7 @@ particuliers.
 
 HTML, CSS et JavaScript, sans framework ni étape de compilation. Le contenu qui
 change souvent vit dans `data/*.json` et s'édite depuis une page privée,
-`admin.html`.
+`backoffice.html`.
 
 - Aucune dépendance, aucun `node_modules`, aucun abonnement
 - Aucun cookie, aucun traceur, aucune ressource externe
@@ -28,7 +28,7 @@ marches.html            Calendrier des marchés
 devis.html              Formulaire de demande de devis
 faq.html                13 questions fréquentes
 mentions-legales.html   Mentions légales et RGPD
-admin.html              Édition du contenu (non référencé, exclu de Google)
+backoffice.html         Édition du contenu et carnet de commandes (privé)
 
 style.css               Mise en forme
 site.js                 Comportements

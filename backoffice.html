@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Backoffice — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=25">
+<link rel="stylesheet" href="style.css?v=26">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); }
@@ -306,6 +306,7 @@ const BLOCS = [["entree", "Entrée"], ["plat", "Plat au choix"],
 let sb = null;
 const donnees = {};   // produits, menus, menu_lignes, marches, avis, reglages, demandes
 const photos = {};    // slug -> la photo existe-t-elle dans images/ ?
+const photosEnAttente = new Set();  // envoyées, pas encore publiées
 
 
 /* =========================================================================
@@ -896,11 +897,35 @@ function dessinerMarches() {
    Onglet Carte
    ========================================================================= */
 
-/* Karine peut ajouter un plat, mais pas sa photo : les images restent dans
-   le dépôt (c'est un choix du cahier des charges, § 3). Le moins qu'on
-   puisse faire est de lui dire lesquelles manquent, pour qu'elle sache quoi
-   demander — un plat affiché sans photo montre un aplat de couleur au
-   visiteur, à l'endroit précis où il faudrait lui donner faim. */
+/* Envoi d'une photo.
+
+   La photo ne va pas directement sur le site : elle est déposée dans un
+   bucket Supabase qui ne sert que de boîte de transit. La publication la
+   rapatrie, la met au format des autres, fabrique l'AVIF et le WebP, et la
+   commit dans images/.
+
+   Le site continue donc de servir ses propres fichiers, sans jamais dépendre
+   de Supabase pour afficher une image — c'est la contrainte du § 2 du cahier
+   des charges, et elle vaut aussi pour les photos. */
+async function envoyerPhoto(produit, fichier) {
+  if (!fichier) return;
+  if (fichier.size > 15 * 1024 * 1024) {
+    dire("Photo trop lourde (15 Mo maximum).", true);
+    return;
+  }
+  dire("Envoi de la photo…");
+  const { error } = await sb.storage.from("photos-plats")
+    .upload(`${produit.slug}.jpg`, fichier, { upsert: true, contentType: fichier.type });
+  if (error) { dire(error.message || "L'envoi a échoué.", true); return; }
+  photosEnAttente.add(produit.slug);
+  dire("Photo envoyée ✓ — elle apparaîtra sur le site à la prochaine publication.");
+  dessinerCarte();
+}
+
+/* Karine peut ajouter un plat et sa photo, mais les images restent servies
+   par le site lui-même. On lui signale celles qui manquent : un plat affiché
+   sans photo montre un aplat de couleur au visiteur, à l'endroit précis où il
+   faudrait lui donner faim. */
 async function verifierPhotos() {
   const aVerifier = donnees.produits.filter((p) => p.actif && !(p.slug in photos));
   await Promise.all(aVerifier.map(async (p) => {
@@ -910,6 +935,45 @@ async function verifierPhotos() {
     } catch { photos[p.slug] = false; }
   }));
   if (aVerifier.length) dessinerCarte();
+}
+
+/* La ligne « photo » d'une fiche : l'état actuel, et le bouton d'envoi. */
+function champPhoto(p) {
+  const ligne = document.createElement("div");
+  ligne.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;gap:10px;"
+    + "margin-top:12px;padding-top:12px;border-top:1px solid var(--ligne)";
+
+  const etat = document.createElement("span");
+  etat.style.cssText = "font-size:13.5px;color:var(--encre-douce);margin-right:auto";
+  if (photosEnAttente.has(p.slug)) {
+    etat.innerHTML = "<b style=\"color:var(--vetiver)\">Photo envoyée</b> — "
+      + "en ligne à la prochaine publication.";
+  } else if (photos[p.slug] === false) {
+    etat.innerHTML = "<b style=\"color:var(--piment)\">Sans photo</b> — "
+      + "le plat s'affiche en aplat de couleur.";
+  } else if (photos[p.slug]) {
+    etat.textContent = "Photo en place.";
+  } else {
+    etat.textContent = "Photo : vérification…";
+  }
+
+  const etiquette = document.createElement("label");
+  etiquette.className = "mini";
+  etiquette.style.cssText = "cursor:pointer;display:inline-block";
+  etiquette.textContent = photos[p.slug] ? "Remplacer la photo" : "Envoyer une photo";
+
+  const entree = document.createElement("input");
+  entree.type = "file";
+  entree.accept = "image/*";
+  entree.style.display = "none";
+  entree.addEventListener("change", () => {
+    envoyerPhoto(p, entree.files[0]);
+    entree.value = "";
+  });
+  etiquette.appendChild(entree);
+
+  ligne.append(etat, etiquette);
+  return ligne;
 }
 
 function dessinerCarte() {
@@ -963,6 +1027,8 @@ function dessinerCarte() {
           ),
         ),
       ));
+
+      f.appendChild(champPhoto(p));
 
       zone.appendChild(f);
     });

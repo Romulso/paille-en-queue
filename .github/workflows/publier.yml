@@ -70,8 +70,11 @@ jobs:
 
       # Seul le PDF a une dépendance. L'export et la génération HTML tiennent
       # dans la bibliothèque standard.
+      # fpdf2 pour la carte en PDF, Pillow pour les photos déposées depuis le
+      # backoffice. L'export et la génération HTML tiennent dans la
+      # bibliothèque standard.
       - if: steps.secret.outputs.pret == 'oui'
-        run: pip install --quiet fpdf2
+        run: pip install --quiet fpdf2 pillow
 
       - name: Lire Supabase et réécrire data/*.json
         if: steps.secret.outputs.pret == 'oui'
@@ -87,6 +90,23 @@ jobs:
           else
             python outils/exporter-supabase.py
           fi
+
+      # Les photos déposées par Karine transitent par un bucket Supabase.
+      # On les rapatrie dans images/ : le site sert ensuite ses propres
+      # fichiers, sans jamais dépendre de Supabase pour afficher une image.
+      - name: Récupérer les photos déposées
+        id: photos
+        if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true
+        env:
+          SUPABASE_URL: https://ktdlmdidtfptkudrnyzi.supabase.co
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python outils/recuperer-photos.py
+
+      # L'optimiseur ne tourne que si une photo est arrivée : sans cela il
+      # relirait les quarante images à chaque passage pour ne rien changer.
+      - name: Fabriquer les formats AVIF et WebP
+        if: steps.photos.outputs.photos == 'oui'
+        run: python outils/optimiser-images.py
 
       - name: Régénérer le site
         if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true

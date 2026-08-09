@@ -1,0 +1,106 @@
+name: Publier le site
+
+# Karine modifie le contenu dans le backoffice, qui écrit dans Supabase. Ce
+# workflow va chercher la base, réécrit data/*.json, régénère le site et le
+# PDF, puis pousse. GitHub Pages republie derrière : le site public reste
+# entièrement statique, il n'interroge jamais Supabase.
+
+on:
+  schedule:
+    # Toutes les 15 minutes. GitHub traite ces déclenchements « au mieux » :
+    # en pratique le délai réel est plutôt de 15 à 30 minutes, auquel s'ajoute
+    # la construction de Pages. C'est le compromis accepté (CDC § 6).
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      verifier_seulement:
+        description: "Comparer sans rien écrire ni pousser"
+        type: boolean
+        default: false
+
+# Deux publications simultanées se marcheraient dessus au moment du push.
+# On laisse la première finir plutôt que de l'annuler : son commit est déjà
+# peut-être en cours.
+concurrency:
+  group: publier
+  cancel-in-progress: false
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+
+    # Indispensable. Depuis 2023 le jeton fourni aux workflows est en lecture
+    # seule par défaut — sans cette ligne, tout se déroule normalement et
+    # seul le « git push » final échoue.
+    permissions:
+      contents: write
+
+    steps:
+      # Tant que le secret n'a pas été déposé, le workflow s'arrête ici sans
+      # échouer : sinon il enverrait un mail d'erreur toutes les quinze
+      # minutes, et on finirait par ne plus les lire — y compris le jour où
+      # l'échec serait réel.
+      - name: Le secret est-il en place ?
+        id: secret
+        env:
+          CLE: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -z "$CLE" ]; then
+            echo "::warning::SUPABASE_SERVICE_KEY absent — publication ignorée."
+            echo "pret=non" >> "$GITHUB_OUTPUT"
+          else
+            echo "pret=oui" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.secret.outputs.pret == 'oui'
+
+      - uses: actions/setup-python@v5
+        if: steps.secret.outputs.pret == 'oui'
+        with:
+          python-version: '3.12'
+
+      # Seul le PDF a une dépendance. L'export et la génération HTML tiennent
+      # dans la bibliothèque standard.
+      - if: steps.secret.outputs.pret == 'oui'
+        run: pip install --quiet fpdf2
+
+      - name: Lire Supabase et réécrire data/*.json
+        if: steps.secret.outputs.pret == 'oui'
+        env:
+          # L'adresse du projet est publique : elle figure déjà dans
+          # backoffice.html, envoyé à tous les navigateurs.
+          SUPABASE_URL: https://ktdlmdidtfptkudrnyzi.supabase.co
+          # La clé secrète contourne RLS. Elle ne doit exister qu'ici.
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ "${{ inputs.verifier_seulement }}" = "true" ]; then
+            python outils/exporter-supabase.py --verifier
+          else
+            python outils/exporter-supabase.py
+          fi
+
+      - name: Régénérer le site et le PDF
+        if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true
+        run: |
+          python outils/generer-html.py
+          python outils/generer-menu-pdf.py
+
+      - name: Ce qui va être publié
+        if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true
+        run: git --no-pager diff --stat
+
+      - name: Committer s'il y a du changement
+        if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true
+        run: |
+          git config user.name  "Backoffice"
+          git config user.email "backoffice@lepaille-en-queue.fr"
+          git add -A
+          # Sans ce test, l'historique se remplirait d'un commit vide toutes
+          # les quinze minutes et deviendrait illisible en une journée.
+          if git diff --staged --quiet; then
+            echo "Rien de neuf."
+          else
+            git commit -m "Publication depuis le backoffice"
+            git push
+          fi

@@ -54,6 +54,14 @@ jobs:
 
       - uses: actions/checkout@v4
         if: steps.secret.outputs.pret == 'oui'
+        with:
+          # Historique complet, et non le seul dernier commit.
+          # outils/generer-html.py date chaque page du sitemap d'après la date
+          # de son dernier commit. Avec le clone superficiel par défaut, git ne
+          # connaît qu'un commit : les dix pages recevaient toutes la même date,
+          # et le sitemap changeait à chaque publication — donc un commit
+          # toutes les quinze minutes, pour rien.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         if: steps.secret.outputs.pret == 'oui'
@@ -80,11 +88,24 @@ jobs:
             python outils/exporter-supabase.py
           fi
 
-      - name: Régénérer le site et le PDF
+      - name: Régénérer le site
+        if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true
+        run: python outils/generer-html.py
+
+      - name: Régénérer le PDF, seulement si les données ont changé
         if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true
         run: |
-          python outils/generer-html.py
-          python outils/generer-menu-pdf.py
+          # Le PDF porte la date du jour et une date de création interne : le
+          # régénérer à chaque passage produirait un fichier différent toutes
+          # les quinze minutes, alors que les prix n'ont pas bougé. On ne le
+          # refait donc que lorsque data/ a réellement changé — et la date
+          # imprimée devient celle du dernier changement de tarifs, ce qui est
+          # plus juste que « aujourd'hui ».
+          if git diff --quiet -- data/; then
+            echo "Données inchangées : le PDF reste tel quel."
+          else
+            python outils/generer-menu-pdf.py
+          fi
 
       - name: Ce qui va être publié
         if: steps.secret.outputs.pret == 'oui' && inputs.verifier_seulement != true

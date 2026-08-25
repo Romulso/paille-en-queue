@@ -1,0 +1,30 @@
+# Configuration de la publication GitHub Pages.
+#
+# Pourquoi ce fichier existe
+# --------------------------
+# GitHub Pages sert la racine du dépôt telle quelle. Sans exclusion, les
+# fichiers de développement se retrouvent lisibles par n'importe qui :
+# lepaille-en-queue.fr/CDC-BACKOFFICE.md répondait 200, tout comme les
+# scripts Python et les fichiers SQL.
+#
+# Aucun secret ne s'y trouve — les clés sensibles vivent dans les secrets
+# GitHub, jamais dans le dépôt. Mais publier l'architecture et les politiques
+# de sécurité du backoffice, c'est offrir un plan des lieux à qui viendrait
+# fouiller. Autant ne pas le faire.
+#
+# NE JAMAIS EXCLURE data/ : site.js va y chercher le contenu des pages
+# (data/config.json, data/carte.json…). Le site cesserait de fonctionner.
+
+exclude:
+  # Documentation interne
+  - README.md
+  - GUIDE.md
+  - CDC-BACKOFFICE.md
+  - notes-privees/
+
+  # Outillage : scripts de génération, schéma de base, migrations
+  - outils/
+  - supabase/
+
+  # Réglages du dépôt
+  - .gitignore

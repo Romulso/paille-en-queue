@@ -7,3 +7,6 @@ images/originaux/
 
 # Cache Python, créé dès qu'un script en importe un autre (outils/modele.py)
 __pycache__/
+
+# Notes de travail : le site sert les .md publiquement, celles-ci restent locales
+notes-privees/

@@ -9,7 +9,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=28">
+<link rel="stylesheet" href="style.css?v=29">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -785,8 +785,41 @@
         <span>Prix par part, de 10 à 12 € selon le plat.</span>
         <span>Riz et sauce piquante compris.</span>
         <span data-mention-delai>Commande à passer 4 à 5 jours à l'avance.</span>
-        <span>Photos d'illustration en attendant nos propres clichés — voir les <a href="mentions-legales.html">crédits</a>.</span>
+        <span>Quatre plats sont photographiés chez nous, les autres sont encore illustrés — voir les <a href="mentions-legales.html">crédits</a>.</span>
       </p>
+    </div>
+  </section>
+
+  <!-- ---------- Au-delà du créole ---------- -->
+  <section class="section sombre sombre-mer">
+    <div class="enveloppe duo">
+      <div class="duo-media apparait">
+        <div class="photo" data-nom="Une entrée à l'assiette">
+          <picture>
+            <source type="image/avif" srcset="images/cuisine-classique.avif">
+            <source type="image/webp" srcset="images/cuisine-classique.webp">
+            <img src="images/cuisine-classique.jpg" alt="Entrées à l'assiette préparées par Le Paille en Queue : carottes râpées et taboulé, dressées au trait de réduction balsamique" loading="lazy" decoding="async" width="1000" height="800">
+          </picture>
+        </div>
+      </div>
+      <div class="apparait">
+        <span class="sur-titre">Autre chose que du créole</span>
+        <h2>La carte n'est pas toute notre cuisine</h2>
+        <p>
+          La cuisine réunionnaise est notre signature, celle pour laquelle on
+          nous appelle. Mais nous sommes traiteur avant tout : pour un mariage,
+          une fête communale ou un repas d'entreprise, nous préparons aussi des
+          entrées et des plats plus classiques — ou un menu qui mêle les deux.
+        </p>
+        <p>
+          C'est souvent la meilleure formule quand les goûts sont très
+          différents d'une table à l'autre. Dites-nous qui sont vos invités,
+          nous construisons le menu avec vous.
+        </p>
+        <div class="groupe-boutons">
+          <a class="pastille pastille-or" href="devis.html">Parler de votre menu</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1050,6 +1083,26 @@
         <span>30 % d'acompte à la signature, solde à la livraison.</span>
       </p>
     </div>
+
+    <div class="enveloppe duo">
+      <div class="apparait">
+        <h3>Le dessert des trois menus</h3>
+        <p>
+          Une salade de fruits frais, taillée le jour même et servie en verrine.
+          Sa composition suit la saison et l'arrivage. Les menus Lagon et Volcan
+          y ajoutent une part de gâteau.
+        </p>
+      </div>
+      <div class="duo-media apparait">
+        <div class="photo" data-nom="Salade de fruits">
+          <picture>
+            <source type="image/avif" srcset="images/salade-fruits.avif">
+            <source type="image/webp" srcset="images/salade-fruits.webp">
+            <img src="images/salade-fruits.jpg" alt="Verrines de salade de fruits frais, le dessert des menus du Paille en Queue" loading="lazy" decoding="async" width="1000" height="800">
+          </picture>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ---------- Appel final ---------- -->
@@ -1140,7 +1193,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=28"></script>
+<script src="site.js?v=29"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

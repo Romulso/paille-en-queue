@@ -9,7 +9,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="style.css?v=28">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -883,7 +883,7 @@
   </section>
 
   <!-- ---------- Buffet ---------- -->
-  <section class="section sombre">
+  <section class="section sombre" id="buffet">
     <div class="enveloppe duo">
       <div>
         <span class="sur-titre">Cocktails et vins d'honneur</span>
@@ -893,10 +893,6 @@
           nous composons un buffet à partager. Les gens circulent, se servent,
           et la soirée démarre toute seule.
         </p>
-        <div class="groupe-boutons">
-          <a class="pastille pastille-or" href="devis.html">Composer mon buffet</a>
-        </div>
-      </div>
       <ul class="liste-buffet" id="zone-buffet"><!--auto:zone-buffet-->
         <li>Bouchons</li>
         <li>Samoussas</li>
@@ -906,6 +902,19 @@
         <li>Brochettes de crevettes à la plancha</li>
       <!--/auto:zone-buffet-->
       </ul>
+        <div class="groupe-boutons">
+          <a class="pastille pastille-or" href="devis.html">Composer mon buffet</a>
+        </div>
+      </div>
+      <div class="duo-media apparait">
+        <div class="photo" data-nom="Notre buffet">
+          <picture>
+            <source type="image/avif" srcset="images/buffet.avif">
+            <source type="image/webp" srcset="images/buffet.webp">
+            <img src="images/buffet.jpg" alt="Buffet créole du Paille en Queue : assiette apéritive, verrines de fruits, samoussas, assiettes d'entrée, beignets et brochettes de crevettes" loading="lazy" decoding="async" width="1400" height="1120">
+          </picture>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1131,7 +1140,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=27"></script>
+<script src="site.js?v=28"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

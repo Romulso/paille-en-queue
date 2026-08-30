@@ -9,7 +9,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preload" href="fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="style.css?v=28">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <meta name="theme-color" content="#c4291f">
@@ -406,6 +406,38 @@
     </div>
   </section>
 
+  <!-- ---------- Le buffet en images ---------- -->
+  <section class="section sombre">
+    <div class="enveloppe duo">
+      <div class="duo-media apparait">
+        <div class="photo" data-nom="Notre buffet">
+          <picture>
+            <source type="image/avif" srcset="images/buffet.avif">
+            <source type="image/webp" srcset="images/buffet.webp">
+            <img src="images/buffet.jpg" alt="Buffet créole du Paille en Queue : assiette apéritive, verrines de fruits, samoussas, assiettes d'entrée, beignets et brochettes de crevettes" loading="lazy" decoding="async" width="1400" height="1120">
+          </picture>
+        </div>
+      </div>
+      <div class="apparait">
+        <span class="sur-titre">En images</span>
+        <h2>À quoi ressemble un buffet</h2>
+        <p>
+          Ce sont nos plats, photographiés sur de vraies prestations : assiettes
+          apéritives, verrines de fruits, samoussas sur plateau, beignets et
+          brochettes de crevettes à l'ananas.
+        </p>
+        <p>
+          Rien n'est imposé. On part de ce que vous imaginez, du nombre de
+          convives et de l'heure du service, et on compose le buffet avec vous.
+        </p>
+        <div class="groupe-boutons">
+          <a class="pastille pastille-or" href="devis.html">Composer mon buffet</a>
+        </div>
+        <p><a class="lien-fleche" href="carte.html#buffet">Voir ce qu'on met dedans</a></p>
+      </div>
+    </div>
+  </section>
+
   <!-- ---------- Garanties ---------- -->
   <section class="section">
     <div class="enveloppe">
@@ -619,7 +651,7 @@
   <a class="pastille pastille-pleine" href="devis.html">Devis</a>
 </div>
 
-<script src="site.js?v=27"></script>
+<script src="site.js?v=28"></script>
 <script>document.getElementById("annee").textContent = new Date().getFullYear();</script>
 </body>
 </html>

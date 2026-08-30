@@ -988,6 +988,9 @@ a.preuve:hover { border-color: var(--piment); transform: translateY(-2px); }
   color: #fff;
 }
 .liste-buffet li:last-child { border-bottom: 0; }
+/* Dans un duo, la liste suit le chapô : il lui faut son propre écart. */
+.duo .liste-buffet { margin-top: 26px; }
+.duo .groupe-boutons + p { margin-top: 18px; }
 .liste-buffet li::before {
   content: "";
   position: absolute;

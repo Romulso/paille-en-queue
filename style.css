@@ -1447,6 +1447,30 @@ a.preuve:hover { border-color: var(--piment); transform: translateY(-2px); }
 .choix:has(input:focus-visible) { outline: 3px solid var(--lagon); outline-offset: 3px; }
 .choix .choix-prix { font-size: 12.5px; opacity: .7; }
 
+/* Le consentement n'est pas une étiquette parmi d'autres. Tant qu'il portait
+   la classe .choix, il ressemblait aux pastilles facultatives qui le
+   précèdent : une phrase dans un cadre arrondi, sans case visible. Il lui
+   faut une vraie case, cochable, que l'on reconnaît au premier coup d'oeil. */
+.consentement {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 4px;
+  max-width: 48ch;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--encre-douce);
+}
+.consentement input {
+  flex: none;
+  width: 19px;
+  height: 19px;
+  margin: 1px 0 0;
+  accent-color: var(--piment);
+  cursor: pointer;
+}
+
 .envoi {
   display: flex;
   flex-wrap: wrap;

@@ -612,7 +612,18 @@
       messageKO.classList.remove("est-visible");
 
       if ($("#site-web").value) return;          // piège à robots
-      if (!form.reportValidity()) return;
+
+      /* Un champ invalide peut se trouver loin sous l'écran, ou être trop
+         petit pour que le navigateur y accroche sa bulle : le bouton donne
+         alors l'impression de ne rien faire, et la demande est perdue. On
+         amène le champ sous les yeux avant de laisser parler le navigateur. */
+      const fautif = [...form.elements]
+        .find((e) => e.willValidate && !e.checkValidity());
+      if (fautif) {
+        (fautif.closest("label") || fautif).scrollIntoView({ block: "center" });
+        fautif.reportValidity();
+        return;
+      }
 
       const donnees = new FormData(form);
       donnees.delete("site-web");

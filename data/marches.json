@@ -1,5 +1,4 @@
 {
-  "_lisezmoi": "Les marchés où Karine est présente. Modifiable depuis admin.html (onglet Marchés). « jour » : lundi…dimanche pour un marché hebdomadaire, ou une date au format AAAA-MM-JJ pour une date unique. « type » : matin ou nocturne. « jusquau » (facultatif, AAAA-MM-JJ) borne un marché de saison : passée cette date, il disparaît tout seul de la page. Tant que la liste est vide, la page affiche une invitation à téléphoner.",
   "marches": [
     {
       "lieu": "Le Pizou",
@@ -41,5 +40,6 @@
       "precision": "",
       "jusquau": ""
     }
-  ]
+  ],
+  "_lisezmoi": "Les marchés où Karine est présente. Modifiable depuis backoffice.html (onglet Marchés). « jour » : lundi…dimanche pour un marché hebdomadaire, ou une date au format AAAA-MM-JJ pour une date unique. « type » : matin ou nocturne. « jusquau » (facultatif, AAAA-MM-JJ) borne un marché de saison : passée cette date, il disparaît tout seul de la page. Tant que la liste est vide, la page affiche une invitation à téléphoner."
 }

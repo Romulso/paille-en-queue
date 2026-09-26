@@ -1,11 +1,81 @@
 {
-  "_lisezmoi": "La carte complète. Modifiable depuis admin.html (onglet Carte). Les prix sont en euros, par part. Le champ « image » pointe vers images/<nom-du-fichier> : tant que le fichier n'existe pas, le site affiche un joli aplat coloré à la place.",
-  "mentionPart": "Tous les plats sont servis avec le riz et la sauce piquante.",
-  "mentionMinimum": "Commande à partir de 10 parts.",
-  "mentionNonCompris": "Le service, la vaisselle et le pain ne sont jamais compris dans nos prix. Pain 1 € et vaisselle 0,40 € par personne, service sur devis.",
-  "mentionLivraison": "Nous nous déplaçons jusqu'à 50 km autour de Montpeyroux : livraison 5 € jusqu'à 10 km, 10 € au-delà. Plus loin, sur devis.",
-  "mentionDelai": "Commande à passer 4 à 5 jours à l'avance.",
-  "mentionAutresCuisines": "La carte ci-dessous est notre spécialité. Pour un événement, nous composons aussi des repas plus classiques, ou un menu qui mêle les deux : parlez-nous de vos invités.",
+  "menus": [
+    {
+      "nom": "Menu Créole",
+      "slug": "menu-creole",
+      "prix": 18,
+      "prixMax": null,
+      "resume": "L'essentiel de la table réunionnaise, en trois services.",
+      "entree": [
+        "Salade d'accras de morue",
+        "2 samoussas au choix"
+      ],
+      "plats": [
+        "Cari poisson ou crevettes",
+        "Poulet coco, ananas, massalé ou colombo",
+        "Porc, dinde ou rougail saucisses"
+      ],
+      "dessert": [
+        "Salade de fruits de saison"
+      ],
+      "inclus": [
+        "Riz et sauce piquante"
+      ]
+    },
+    {
+      "nom": "Menu Lagon",
+      "slug": "menu-lagon",
+      "prix": 24,
+      "prixMax": 26,
+      "supplementMotif": "avec un plat poisson, crevettes ou morue",
+      "resume": "Une entrée à l'assiette et des plats plus généreux : le menu des grandes occasions.",
+      "entree": [
+        "Assiette de brochettes de crevettes à la plancha",
+        "2 samoussas au choix",
+        "Accras de morue"
+      ],
+      "plats": [
+        "Poulet colombo",
+        "Curry de dinde",
+        "Bœuf massalé",
+        "Crevettes coco",
+        "Cari d'agneau"
+      ],
+      "dessert": [
+        "Salade de fruits exotiques selon la saison",
+        "Part de gâteau"
+      ],
+      "inclus": [
+        "Riz et sauce piquante"
+      ]
+    },
+    {
+      "nom": "Menu Volcan",
+      "slug": "menu-volcan",
+      "prix": 28,
+      "prixMax": 30,
+      "supplementMotif": "avec un plat poisson, crevettes ou morue",
+      "resume": "Notre menu le plus abouti, construit autour des produits les plus nobles de la carte.",
+      "entree": [
+        "Crevettes coco",
+        "2 samoussas au choix",
+        "Accras de morue"
+      ],
+      "plats": [
+        "Bœuf massalé",
+        "Cari d'agneau",
+        "Cari crevettes ou poisson (espadon)",
+        "Curry de dinde aux cèpes"
+      ],
+      "dessert": [
+        "Salade de fruits de saison",
+        "Part de gâteau"
+      ],
+      "inclus": [
+        "Riz et sauce piquante"
+      ]
+    }
+  ],
   "plats": [
     {
       "nom": "Rougail saucisses",
@@ -128,6 +198,18 @@
       "description": "Crevettes nacrées dans un lait de coco parfumé au combava et au gingembre. Le plat le plus demandé sur les buffets."
     }
   ],
+  "buffet": {
+    "texte": "Pour un cocktail, un vin d'honneur ou une inauguration, nous composons un buffet créole à partager.",
+    "titre": "En buffet",
+    "elements": [
+      "Bouchons",
+      "Samoussas",
+      "Accras de morue",
+      "Boudins créoles",
+      "Brochettes tomate-fromage",
+      "Brochettes de crevettes à la plancha"
+    ]
+  },
   "entrees": [
     {
       "nom": "Samoussas",
@@ -154,19 +236,17 @@
       "description": "Les petites bouchées vapeur réunionnaises, héritage chinois de l'île. Servies avec leur sauce."
     }
   ],
-  "buffet": {
-    "titre": "En buffet",
-    "texte": "Pour un cocktail, un vin d'honneur ou une inauguration, nous composons un buffet créole à partager.",
-    "elements": [
-      "Bouchons",
-      "Samoussas",
-      "Accras de morue",
-      "Boudins créoles",
-      "Brochettes tomate-fromage",
-      "Brochettes de crevettes à la plancha"
-    ]
-  },
-  "_supplements": "Prestations jamais comprises dans les prix, facturées en plus si le client les demande. Un prix à null s'affiche « sur devis ».",
+  "boissons": [
+    {
+      "nom": "Punch planteur",
+      "slug": "punch-planteur",
+      "prix": 12,
+      "unite": "le litre",
+      "description": "Notre planteur maison, préparé la veille pour que les fruits aient le temps de parfumer le rhum."
+    }
+  ],
+  "_lisezmoi": "La carte complète. Modifiable depuis backoffice.html (onglet Carte). Les prix sont en euros, par part. Le champ « image » pointe vers images/<nom-du-fichier> : tant que le fichier n'existe pas, le site affiche un joli aplat coloré à la place.",
+  "mentionPart": "Tous les plats sont servis avec le riz et la sauce piquante.",
   "supplements": [
     {
       "nom": "Pain",
@@ -190,90 +270,10 @@
       "description": "Une ou plusieurs personnes pour dresser, servir et débarrasser. Chiffré selon la durée et le nombre de convives."
     }
   ],
-  "boissons": [
-    {
-      "nom": "Punch planteur",
-      "slug": "punch-planteur",
-      "prix": 12,
-      "unite": "le litre",
-      "description": "Notre planteur maison, préparé la veille pour que les fruits aient le temps de parfumer le rhum."
-    }
-  ],
-  "menus": [
-    {
-      "nom": "Menu Créole",
-      "slug": "menu-creole",
-      "prix": 18,
-      "prixMax": null,
-      "resume": "L'essentiel de la table réunionnaise, en trois services.",
-      "entree": [
-        "Salade d'accras de morue",
-        "2 samoussas au choix"
-      ],
-      "plats": [
-        "Cari poisson ou crevettes",
-        "Poulet coco, ananas, massalé ou colombo",
-        "Porc, dinde ou rougail saucisses"
-      ],
-      "dessert": [
-        "Salade de fruits de saison"
-      ],
-      "inclus": [
-        "Riz et sauce piquante"
-      ]
-    },
-    {
-      "nom": "Menu Lagon",
-      "slug": "menu-lagon",
-      "prix": 24,
-      "prixMax": 26,
-      "supplementMotif": "avec un plat poisson, crevettes ou morue",
-      "resume": "Une entrée à l'assiette et des plats plus généreux : le menu des grandes occasions.",
-      "entree": [
-        "Assiette de brochettes de crevettes à la plancha",
-        "2 samoussas au choix",
-        "Accras de morue"
-      ],
-      "plats": [
-        "Poulet colombo",
-        "Curry de dinde",
-        "Bœuf massalé",
-        "Crevettes coco",
-        "Cari d'agneau"
-      ],
-      "dessert": [
-        "Salade de fruits exotiques selon la saison",
-        "Part de gâteau"
-      ],
-      "inclus": [
-        "Riz et sauce piquante"
-      ]
-    },
-    {
-      "nom": "Menu Volcan",
-      "slug": "menu-volcan",
-      "prix": 28,
-      "prixMax": 30,
-      "supplementMotif": "avec un plat poisson, crevettes ou morue",
-      "resume": "Notre menu le plus abouti, construit autour des produits les plus nobles de la carte.",
-      "entree": [
-        "Crevettes coco",
-        "2 samoussas au choix",
-        "Accras de morue"
-      ],
-      "plats": [
-        "Bœuf massalé",
-        "Cari d'agneau",
-        "Cari crevettes ou poisson (espadon)",
-        "Curry de dinde aux cèpes"
-      ],
-      "dessert": [
-        "Salade de fruits de saison",
-        "Part de gâteau"
-      ],
-      "inclus": [
-        "Riz et sauce piquante"
-      ]
-    }
-  ]
+  "_supplements": "Prestations jamais comprises dans les prix, facturées en plus si le client les demande. Un prix à null s'affiche « sur devis ».",
+  "mentionDelai": "Commande à passer 4 à 5 jours à l'avance.",
+  "mentionMinimum": "Commande à partir de 10 parts.",
+  "mentionLivraison": "Nous nous déplaçons jusqu'à 50 km autour de Montpeyroux : livraison 5 € jusqu'à 10 km, 10 € au-delà. Plus loin, sur devis.",
+  "mentionNonCompris": "Le service, la vaisselle et le pain ne sont jamais compris dans nos prix. Pain 1 € et vaisselle 0,40 € par personne, service sur devis.",
+  "mentionAutresCuisines": "La carte ci-dessous est notre spécialité. Pour un événement, nous composons aussi des repas plus classiques, ou un menu qui mêle les deux : parlez-nous de vos invités."
 }

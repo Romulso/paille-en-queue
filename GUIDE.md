@@ -159,6 +159,18 @@ panneau, remplacer le fichier correspondant dans `data/`, **lancer les deux
 commandes de l'étape 7**, puis remettre le site en ligne. Rien n'est publié
 avant cette étape : on peut donc essayer sans crainte.
 
+### L'onglet « Formulaire »
+
+Il montre, sur trente jours, combien de personnes ont ouvert le formulaire de
+devis, combien ont commencé à le remplir, et combien sont allées au bout.
+
+**Ce qu'il faut regarder, c'est l'encadré du haut.** S'il est vert, tout va
+bien. S'il est rouge, cela veut dire que des gens remplissent le formulaire
+sans qu'aucune demande n'arrive : quelque chose bloque, et le tableau « Ce qui
+arrête les visiteurs » nomme le champ fautif. Prévenir Romuald dans ce cas.
+
+Le panneau ne contient aucune donnée personnelle, seulement des compteurs.
+
 ---
 
 ## 6 · Ajouter les photos

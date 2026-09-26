@@ -55,7 +55,9 @@ TABLES = ("produits", "menus", "menu_lignes", "marches", "avis", "reglages")
 # écrit dans data/*.json, qui part dans un dépôt GitHub public. L'assertion
 # n'est pas décorative : elle fait échouer la publication plutôt que de publier
 # le carnet de commandes le jour où quelqu'un ajoutera la table par commodité.
-JAMAIS_EXPORTEES = ("demandes",)
+# « mesures » ne contient aucune donnée personnelle, mais ce sont des chiffres
+# d'exploitation : ils n'ont rien à faire sur le site public.
+JAMAIS_EXPORTEES = ("demandes", "mesures")
 assert not set(TABLES) & set(JAMAIS_EXPORTEES), \
     "Une table de données personnelles figure dans TABLES : publication annulée."
 

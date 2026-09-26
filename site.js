@@ -606,6 +606,12 @@
     const messageKO = $("#message-erreur");
     const bouton = $("#bouton-envoi");
 
+    // Quatre repères, de l'arrivée sur la page jusqu'à l'envoi. Le premier
+    // remplissage ne compte qu'une fois : once retire l'écouteur ensuite.
+    compter(cfg, "devis_ouvert");
+    form.addEventListener("input", () => compter(cfg, "devis_commence"),
+                          { once: true });
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       messageOK.classList.remove("est-visible");
@@ -620,6 +626,7 @@
       const fautif = [...form.elements]
         .find((e) => e.willValidate && !e.checkValidity());
       if (fautif) {
+        compter(cfg, "devis_bloque", fautif.name || fautif.id);
         (fautif.closest("label") || fautif).scrollIntoView({ block: "center" });
         fautif.reportValidity();
         return;
@@ -654,6 +661,7 @@
         if (!r.ok) throw new Error(r.status);
         // La demande est partie : on la consigne au carnet, sans attendre et
         // sans que le visiteur ait à s'en soucier.
+        compter(cfg, "devis_envoye");
         consignerDemande(cfg, donnees);
         form.reset();
         messageOK.textContent = "Merci ! Votre demande est bien partie. Karine vous répond sous 48 h avec un devis détaillé.";
@@ -667,6 +675,37 @@
         bouton.textContent = libelle;
       }
     });
+  }
+
+  /* Compte un passage, sans rien savoir de qui passe.
+
+     Quatre compteurs seulement : formulaire ouvert, commencé, bloqué, envoyé.
+     Aucun cookie, aucun identifiant, aucune adresse IP, rien qui permette de
+     suivre quelqu'un d'une page à l'autre. La base ne reçoit qu'une date, un
+     nom d'événement et, pour un blocage, le nom du champ fautif ; elle
+     additionne. On ne peut donc pas reconstituer un parcours, et il n'y a
+     pas de bandeau de consentement à afficher.
+
+     C'est né d'un défaut : pendant soixante et un jours, le formulaire a
+     refusé les demandes sans que personne puisse le voir. L'écart entre
+     « commencé » et « envoyé » l'aurait montré en une semaine.
+
+     Jamais bloquant, jamais attendu : si la base ne répond pas, le visiteur
+     n'en sait rien et son envoi suit son cours. */
+  function compter(cfg, evenement, detail) {
+    const base = (cfg && cfg.supabaseUrl) || "";
+    const cle = (cfg && cfg.supabaseClePublique) || "";
+    if (!base || !cle) return;
+    fetch(`${base}/rest/v1/rpc/compter`, {
+      method: "POST",
+      headers: {
+        "apikey": cle,
+        "Authorization": `Bearer ${cle}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ p_evenement: evenement, p_detail: detail || "" }),
+      keepalive: true,
+    }).catch(() => {});
   }
 
   /* Consigne la demande dans le carnet de commandes (Supabase).

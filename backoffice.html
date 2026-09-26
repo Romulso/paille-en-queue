@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Backoffice — Le Paille en Queue</title>
-<link rel="stylesheet" href="style.css?v=30">
+<link rel="stylesheet" href="style.css?v=31">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <style>
   body { background: var(--vanille-2); }
@@ -121,6 +121,18 @@
   .erreur code, .avertissement code { font-size: 13px; background: rgba(0,0,0,.05); padding: 1px 5px; border-radius: 4px; }
   .etat { font-size: 13.5px; font-weight: 600; min-height: 1.4em; color: var(--vetiver); }
   .etat.rouge { color: var(--piment); }
+  /* --- panneau du formulaire ------------------------------------------- */
+  .chiffres { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin: 4px 0 20px; }
+  .chiffre { border: 1px solid var(--ligne); border-radius: 10px; padding: 14px 16px; background: #fff; }
+  .chiffre b { display: block; font-family: var(--titre); font-size: 30px; line-height: 1.1; }
+  .chiffre span { font-size: 13px; color: var(--encre-douce); }
+  .verdict { border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; font-size: 14.5px; line-height: 1.55; }
+  .verdict.bon { background: #e8f3ee; border: 1px solid #1d6b4f; }
+  .verdict.mauvais { background: #fdeceb; border: 1px solid var(--piment); }
+  .jours { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+  .jours th, .jours td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--ligne); }
+  .jours th:first-child, .jours td:first-child { text-align: left; }
+  .jours th { font-size: 12.5px; color: var(--encre-douce); font-weight: 600; }
 
   /* Tableau du détail d'une demande, replié par défaut. */
   .cadre { overflow-x: auto; border: 1px solid var(--ligne); border-radius: var(--rayon-s); background: var(--vanille); }
@@ -245,6 +257,7 @@
       <button role="tab" id="o-menus"    aria-controls="p-menus"    aria-selected="false">Menus</button>
       <button role="tab" id="o-avis"     aria-controls="p-avis"     aria-selected="false">Avis</button>
       <button role="tab" id="o-reglages" aria-controls="p-reglages" aria-selected="false">Réglages</button>
+      <button role="tab" id="o-mesures"  aria-controls="p-mesures"  aria-selected="false">Formulaire</button>
     </div>
 
     <section class="panneau" id="p-demandes" role="tabpanel" aria-labelledby="o-demandes"></section>
@@ -253,6 +266,7 @@
     <section class="panneau" id="p-menus"    role="tabpanel" aria-labelledby="o-menus"    hidden></section>
     <section class="panneau" id="p-avis"     role="tabpanel" aria-labelledby="o-avis"     hidden></section>
     <section class="panneau" id="p-reglages" role="tabpanel" aria-labelledby="o-reglages" hidden></section>
+    <section class="panneau" id="p-mesures"  role="tabpanel" aria-labelledby="o-mesures"  hidden></section>
 
   </section>
 
@@ -1257,6 +1271,148 @@ function dessinerReglages() {
    Chargement et rendu
    ========================================================================= */
 
+/* =========================================================================
+   Le formulaire de devis, en chiffres
+
+   Né d'un défaut : du 27 juillet au 26 septembre 2026, une case à cocher
+   obligatoire et invisible a refusé toutes les demandes, sans message. Rien
+   ne permettait de le voir. Trois compteurs suffisent à ce qu'un blocage
+   saute aux yeux en une semaine.
+   ========================================================================= */
+
+function ilYa(jours) {
+  const d = new Date(Date.now() - jours * 86400000);
+  return d.toISOString().slice(0, 10);
+}
+
+function dessinerMesures() {
+  const zone = $("#p-mesures");
+  zone.textContent = "";
+  const lignes = donnees.mesures || [];
+
+  const titre = document.createElement("h2");
+  titre.innerHTML = "Le formulaire de devis <small>30 derniers jours</small>";
+  zone.appendChild(titre);
+
+  const total = (evenement, depuis) => lignes
+    .filter((l) => l.evenement === evenement && (!depuis || l.jour >= depuis))
+    .reduce((n, l) => n + l.compteur, 0);
+
+  const ouvert = total("devis_ouvert");
+  const commence = total("devis_commence");
+  const envoye = total("devis_envoye");
+  const bloque = total("devis_bloque");
+
+  if (!lignes.length) {
+    const vide = document.createElement("p");
+    vide.className = "etat";
+    vide.style.fontWeight = "400";
+    vide.textContent = "Rien encore. Les compteurs se remplissent au fur et à "
+      + "mesure des visites : revenez dans quelques jours.";
+    zone.appendChild(vide);
+    return;
+  }
+
+  /* Le verdict d'abord, c'est la seule chose à regarder au quotidien.
+     Sur sept jours : si des gens commencent à remplir et que rien ne part,
+     quelque chose bloque, et il faut le savoir tout de suite. */
+  const semaine = ilYa(7);
+  const cSemaine = total("devis_commence", semaine);
+  const eSemaine = total("devis_envoye", semaine);
+  const verdict = document.createElement("div");
+  if (cSemaine >= 3 && eSemaine === 0) {
+    verdict.className = "verdict mauvais";
+    verdict.innerHTML = "<b>Quelque chose bloque.</b> " + cSemaine + " personne(s) ont "
+      + "commencé à remplir le formulaire cette semaine, et aucune demande n'est "
+      + "partie. Regardez ci-dessous quel champ coince, puis prévenez Romuald.";
+  } else if (eSemaine > 0) {
+    verdict.className = "verdict bon";
+    verdict.innerHTML = "<b>Le formulaire fonctionne.</b> " + eSemaine + " demande(s) "
+      + "envoyée(s) cette semaine.";
+  } else {
+    verdict.className = "verdict";
+    verdict.style.background = "var(--vanille-2)";
+    verdict.innerHTML = "<b>Semaine calme.</b> Personne n'a rempli le formulaire ces "
+      + "sept derniers jours. Rien d'anormal sur un site de cette taille ; "
+      + "c'est l'absence d'envoi <i>malgré</i> des remplissages qui doit alerter.";
+  }
+  zone.appendChild(verdict);
+
+  const taux = commence ? Math.round((envoye / commence) * 100) : null;
+  const chiffres = document.createElement("div");
+  chiffres.className = "chiffres";
+  chiffres.innerHTML = [
+    ["Pages ouvertes", ouvert],
+    ["Ont commencé à remplir", commence],
+    ["Demandes envoyées", envoye],
+    ["Vont au bout", taux === null ? "—" : taux + " %"],
+  ].map(([libelle, valeur]) =>
+    `<div class="chiffre"><b>${valeur}</b><span>${libelle}</span></div>`).join("");
+  zone.appendChild(chiffres);
+
+  /* Les champs qui bloquent. C'est le tableau qui aurait fait gagner deux
+     mois : le nom du champ fautif, et combien de fois il a arrêté quelqu'un. */
+  if (bloque) {
+    const parChamp = new Map();
+    lignes.filter((l) => l.evenement === "devis_bloque").forEach((l) => {
+      parChamp.set(l.detail, (parChamp.get(l.detail) || 0) + l.compteur);
+    });
+    const h3 = document.createElement("h3");
+    h3.textContent = "Ce qui arrête les visiteurs";
+    h3.style.margin = "22px 0 4px";
+    zone.appendChild(h3);
+
+    const p = document.createElement("p");
+    p.style.cssText = "font-size:14px;color:var(--encre-douce);margin:0 0 6px";
+    p.textContent = "Un champ mal rempli n'a rien d'anormal : une date au mauvais "
+      + "format, un e-mail sans arobase. C'est quand le même champ revient sans "
+      + "cesse qu'il faut se demander s'il est clair.";
+    zone.appendChild(p);
+
+    const t = document.createElement("table");
+    t.className = "jours";
+    t.innerHTML = "<tr><th>Champ</th><th>Fois</th></tr>"
+      + [...parChamp.entries()].sort((a, b) => b[1] - a[1])
+          .map(([champ, n]) => `<tr><td>${echapper(champ || "(sans nom)")}</td><td>${n}</td></tr>`)
+          .join("");
+    zone.appendChild(t);
+  }
+
+  // Le détail jour par jour, pour situer un creux ou une rupture.
+  const jours = [...new Set(lignes.map((l) => l.jour))].sort().reverse().slice(0, 14);
+  const parJour = (jour, evenement) => lignes
+    .filter((l) => l.jour === jour && l.evenement === evenement)
+    .reduce((n, l) => n + l.compteur, 0);
+
+  const h3j = document.createElement("h3");
+  h3j.textContent = "Jour par jour";
+  h3j.style.margin = "26px 0 4px";
+  zone.appendChild(h3j);
+
+  const tj = document.createElement("table");
+  tj.className = "jours";
+  tj.innerHTML = "<tr><th>Jour</th><th>Ouvertures</th><th>Remplissages</th>"
+    + "<th>Blocages</th><th>Envois</th></tr>"
+    + jours.map((j) => `<tr><td>${new Date(j + "T12:00:00").toLocaleDateString("fr-FR",
+        { weekday: "short", day: "numeric", month: "short" })}</td>`
+      + `<td>${parJour(j, "devis_ouvert") || "·"}</td>`
+      + `<td>${parJour(j, "devis_commence") || "·"}</td>`
+      + `<td>${parJour(j, "devis_bloque") || "·"}</td>`
+      + `<td>${parJour(j, "devis_envoye") || "·"}</td></tr>`).join("");
+  zone.appendChild(tj);
+
+  const note = document.createElement("div");
+  note.className = "avertissement";
+  note.style.marginTop = "22px";
+  note.innerHTML = "<b>Aucune donnée personnelle ici.</b> Pas de cookie, pas "
+    + "d'adresse IP, pas d'identifiant de visiteur : seulement des compteurs "
+    + "additionnés par jour. Impossible de savoir qui est venu, ni de suivre "
+    + "quelqu'un d'une page à l'autre. C'est pourquoi le site n'affiche aucun "
+    + "bandeau de consentement.";
+  zone.appendChild(note);
+}
+
+
 function dessiner() {
   dessinerDemandes();
   dessinerMarches();
@@ -1264,6 +1420,7 @@ function dessiner() {
   dessinerMenus();
   dessinerAvis();
   dessinerReglages();
+  dessinerMesures();
 }
 
 async function charger() {
@@ -1271,7 +1428,7 @@ async function charger() {
 
   // Une seule salve : les six requêtes sont indépendantes, les enchaîner
   // ferait attendre six allers-retours au lieu d'un.
-  const [produits, menus, lignes, marches, avis, reglages, demandes] = await Promise.all([
+  const [produits, menus, lignes, marches, avis, reglages, demandes, mesures] = await Promise.all([
     sb.from("produits").select("*").order("ordre"),
     sb.from("menus").select("*").order("ordre"),
     sb.from("menu_lignes").select("*").order("ordre"),
@@ -1281,6 +1438,8 @@ async function charger() {
     // Le carnet de commandes : la plus récente d'abord, c'est celle qu'on
     // veut voir en ouvrant la page.
     sb.from("demandes").select("*").order("recu_le", { ascending: false }),
+    // Les compteurs du formulaire, sur trente jours glissants.
+    sb.from("mesures").select("*").gte("jour", ilYa(30)).order("jour", { ascending: false }),
   ]);
 
   const souci = [produits, menus, lignes, marches, avis, reglages, demandes].find((r) => r.error);
@@ -1300,6 +1459,9 @@ async function charger() {
     produits: produits.data, menus: menus.data, menu_lignes: lignes.data,
     marches: marches.data, avis: avis.data, reglages: reglages.data,
     demandes: demandes.data,
+    // Si la migration des mesures n'a pas été passée, on affiche simplement
+    // un panneau vide plutôt que de faire échouer tout le backoffice.
+    mesures: mesures.error ? [] : (mesures.data || []),
   });
 
   dessiner();
